@@ -1,4 +1,5 @@
 import 'package:cse_archive/bindings/home_binding.dart';
+import 'package:cse_archive/translations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:cse_archive/views/home/home_view.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class CSEArchive extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
+      translations: MyTranslations(),
       title: 'CSE Archive',
       locale: const Locale('fa', 'IR'),
       fallbackLocale: const Locale('fa', 'IR'),
