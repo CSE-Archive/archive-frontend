@@ -4,6 +4,7 @@ import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:cse_archive/views/home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   usePathUrlStrategy();
@@ -19,6 +20,9 @@ class CSEArchive extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       translations: MyTranslations(),
       title: 'CSE Archive',
+      theme: ThemeData(
+        textTheme: GoogleFonts.vazirmatnTextTheme(),
+      ),
       locale: const Locale('fa', 'IR'),
       fallbackLocale: const Locale('fa', 'IR'),
       color: Colors.white,

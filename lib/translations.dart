@@ -16,6 +16,9 @@ class MyTranslations extends Translations {
           'appbarCourses': 'دروس',
           'appbarReferences': 'رفرنس‌ها',
           'appbarTeachers': 'اساتید',
+          'seeAll': 'مشاهده‌ی همه',
+          'newResources': 'جدیدترین منابع',
+          'newReferences': 'جدیدترین رفرنس‌ها',
         }
       };
 }
