@@ -1,23 +1,25 @@
 import 'package:cse_archive/constants.dart';
 import 'package:cse_archive/controllers/appbar_controller.dart';
+import 'package:cse_archive/controllers/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 Widget appbarBuilder(BuildContext context) {
   var appbarController = Get.find<AppbarController>();
+  var themeController = Get.find<ThemeController>();
 
   return Container(
     height: 3.5 * kSizeDefault,
     decoration: BoxDecoration(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.primary,
       borderRadius: const BorderRadius.only(
         bottomLeft: Radius.circular(kSizeDefault),
         bottomRight: Radius.circular(kSizeDefault),
       ),
       boxShadow: [
         BoxShadow(
-          color: kColorPrimary.withOpacity(0.5),
+          color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
           offset: const Offset(0, kSizeDefault / 6),
           blurRadius: kSizeDefault / 2,
         ),
@@ -40,7 +42,7 @@ Widget appbarBuilder(BuildContext context) {
                       const EdgeInsets.symmetric(vertical: kSizeDefault / 2),
                   child: SvgPicture.asset(
                     kPathLogo,
-                    color: kColorPrimary,
+                    color: Theme.of(context).colorScheme.secondary,
                   ),
                 ),
               ),
@@ -53,8 +55,8 @@ Widget appbarBuilder(BuildContext context) {
                 style: Theme.of(context)
                     .textTheme
                     .bodyText1!
-                    .copyWith(color: kColorPrimary),
-                cursorColor: kColorPrimary,
+                    .copyWith(color: Theme.of(context).colorScheme.secondary),
+                cursorColor: Theme.of(context).colorScheme.secondary,
                 controller: appbarController.searchBarController,
                 decoration: InputDecoration(
                   isDense: true,
@@ -64,10 +66,14 @@ Widget appbarBuilder(BuildContext context) {
                   ),
                   border: InputBorder.none,
                   filled: true,
-                  fillColor: kColorPrimary.withOpacity(0.1),
+                  fillColor:
+                      Theme.of(context).colorScheme.secondary.withOpacity(0.1),
                   hintText: 'appbarSearch'.tr,
                   hintStyle: TextStyle(
-                    color: kColorPrimary.withOpacity(0.8),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .secondary
+                        .withOpacity(0.8),
                   ),
                 ),
               ),
@@ -77,46 +83,59 @@ Widget appbarBuilder(BuildContext context) {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CustomIconTextButton(label: 'appbarChart'.tr),
+                CustomTextButton(label: 'appbarChart'.tr),
                 const SizedBox(width: kSizeDefault),
-                CustomIconTextButton(label: 'appbarCourses'.tr),
+                CustomTextButton(label: 'appbarCourses'.tr),
                 const SizedBox(width: kSizeDefault),
-                CustomIconTextButton(label: 'appbarReferences'.tr),
+                CustomTextButton(label: 'appbarReferences'.tr),
                 const SizedBox(width: kSizeDefault),
-                CustomIconTextButton(label: 'appbarTeachers'.tr),
+                CustomTextButton(label: 'appbarTeachers'.tr),
               ],
             ),
             const Spacer(flex: 1),
-            PopupMenuButton<Language>(
-              icon: const Icon(
-                Icons.translate,
-                color: kColorPrimary,
-              ),
-              splashRadius: kSizeDefault,
-              tooltip: '',
-              onSelected: (language) => Get.updateLocale(
-                Locale(
-                  language.languageCode,
-                  language.countryCode,
-                ),
-              ),
-              itemBuilder: (BuildContext context) {
-                return appbarController.languages
-                    .map(
-                      (language) => PopupMenuItem(
-                        value: language,
-                        child: Text(
-                          language.label,
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1!
-                              .copyWith(color: kColorPrimary),
-                        ),
-                      ),
-                    )
-                    .toList();
+            IconButton(
+              onPressed: () {
+                Get.isDarkMode
+                    ? themeController.changeToLightTheme()
+                    : themeController.changeToDarkTheme();
               },
+              icon: Icon(
+                Get.isDarkMode ? Icons.light_mode : Icons.dark_mode,
+                size: 2 * kSizeDefault,
+                color: Theme.of(context).colorScheme.secondary,
+              ),
+              padding: EdgeInsets.zero,
             ),
+            // PopupMenuButton<Language>(
+            //   icon: Icon(
+            //     Icons.translate,
+            //     color: Theme.of(context).colorScheme.secondary,
+            //   ),
+            //   splashRadius: kSizeDefault,
+            //   tooltip: '',
+            //   onSelected: (language) => Get.updateLocale(
+            //     Locale(
+            //       language.languageCode,
+            //       language.countryCode,
+            //     ),
+            //   ),
+            //   itemBuilder: (BuildContext context) {
+            //     return appbarController.languages
+            //         .map(
+            //           (language) => PopupMenuItem(
+            //             value: language,
+            //             child: Text(
+            //               language.label,
+            //               style: Theme.of(context)
+            //                   .textTheme
+            //                   .bodyText1!
+            //                   .copyWith(color: Theme.of(context).colorScheme.secondary),
+            //             ),
+            //           ),
+            //         )
+            //         .toList();
+            //   },
+            // ),
           ],
         ),
       ),
@@ -124,22 +143,35 @@ Widget appbarBuilder(BuildContext context) {
   );
 }
 
-class CustomIconTextButton extends StatelessWidget {
-  const CustomIconTextButton({
+class CustomTextButton extends StatelessWidget {
+  const CustomTextButton({
     Key? key,
     required this.label,
+    this.onPressed,
   }) : super(key: key);
 
   final String label;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-      onPressed: () {},
+      onPressed: onPressed,
+      style: ButtonStyle(
+        shadowColor: MaterialStateProperty.all(
+          Colors.transparent,
+        ),
+        surfaceTintColor: MaterialStateProperty.all(
+          Colors.transparent,
+        ),
+        overlayColor: MaterialStateProperty.all(
+          Colors.transparent,
+        ),
+      ),
       child: Text(
         label,
         style: Theme.of(context).textTheme.bodyText1!.copyWith(
-              color: kColorPrimary,
+              color: Theme.of(context).colorScheme.secondary,
               fontWeight: FontWeight.bold,
             ),
       ),

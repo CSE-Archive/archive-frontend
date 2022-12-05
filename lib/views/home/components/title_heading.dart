@@ -26,13 +26,13 @@ class TitleHeading extends StatelessWidget {
           Text(
             title,
             style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: kColorPrimary,
+                  color: Theme.of(context).colorScheme.secondary,
                   fontWeight: FontWeight.bold,
                 ),
           ),
           Expanded(
             child: Divider(
-              color: kColorPrimary.withOpacity(0.5),
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
               indent: kSizeDefault,
               endIndent: kSizeDefault,
             ),

@@ -1,4 +1,3 @@
-import 'package:cse_archive/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -16,18 +15,18 @@ class SeeAllButton extends StatelessWidget {
       onPressed: onPressed,
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(
-          Colors.white,
+          Theme.of(context).colorScheme.primary,
         ),
         shadowColor: MaterialStateProperty.all(
-          kColorPrimary.withOpacity(0.5),
+          Theme.of(context).colorScheme.secondary.withOpacity(0.5),
         ),
         overlayColor: MaterialStateProperty.all(
-          Colors.white,
+          Theme.of(context).colorScheme.primary,
         ),
         shape: MaterialStateProperty.all(
-          const RoundedRectangleBorder(
+          RoundedRectangleBorder(
             borderRadius: BorderRadius.zero,
-            side: BorderSide(color: kColorPrimary),
+            side: BorderSide(color: Theme.of(context).colorScheme.secondary),
           ),
         ),
       ),
@@ -36,7 +35,7 @@ class SeeAllButton extends StatelessWidget {
         style: Theme.of(context)
             .textTheme
             .bodyMedium!
-            .copyWith(color: kColorPrimary),
+            .copyWith(color: Theme.of(context).colorScheme.secondary),
       ),
     );
   }

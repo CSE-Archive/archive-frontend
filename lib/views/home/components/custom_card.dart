@@ -1,4 +1,3 @@
-import 'package:cse_archive/constants.dart';
 import 'package:cse_archive/controllers/home/card_hover_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,7 +20,7 @@ class CustomCard extends StatelessWidget {
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: kColorPrimary.withOpacity(0.8),
+              color: Theme.of(context).colorScheme.secondary.withOpacity(0.8),
               blurRadius: cardHoverController.hover.isTrue ? 7 : 2,
             ),
           ],
@@ -38,8 +37,8 @@ class CustomCard extends StatelessWidget {
                   child: InkWell(
                     onTap: () {},
                     hoverColor: Colors.transparent,
-                    splashColor: kColorPrimary.withOpacity(0.1),
-                    highlightColor: kColorPrimary.withOpacity(0.05),
+                    splashColor: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                    highlightColor: Theme.of(context).colorScheme.secondary.withOpacity(0.05),
                     customBorder: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
                     ),

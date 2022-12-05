@@ -20,7 +20,7 @@ class HomeView extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.primary,
           child: ListView(
             children: [
               appbarBuilder(context),
@@ -58,7 +58,7 @@ class HomeView extends StatelessWidget {
                                 cardHoverController: CardHoverController(),
                                 child: Container(
                                   width: double.infinity,
-                                  color: Colors.white,
+                                  color: Theme.of(context).colorScheme.primary,
                                   padding: const EdgeInsets.all(kSizeDefault),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -70,7 +70,7 @@ class HomeView extends StatelessWidget {
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText1!
-                                            .copyWith(color: kColorPrimary),
+                                            .copyWith(color: Theme.of(context).colorScheme.secondary),
                                       ),
                                       const Spacer(),
                                       Text(
@@ -79,7 +79,7 @@ class HomeView extends StatelessWidget {
                                             .textTheme
                                             .bodySmall!
                                             .copyWith(
-                                              color: kColorPrimary
+                                              color: Theme.of(context).colorScheme.secondary
                                                   .withOpacity(0.7),
                                             ),
                                       ),
@@ -89,7 +89,7 @@ class HomeView extends StatelessWidget {
                                             .textTheme
                                             .bodySmall!
                                             .copyWith(
-                                              color: kColorPrimary
+                                              color: Theme.of(context).colorScheme.secondary
                                                   .withOpacity(0.7),
                                             ),
                                       ),
@@ -136,7 +136,7 @@ class HomeView extends StatelessWidget {
                               child: CustomCard(
                                 cardHoverController: CardHoverController(),
                                 child: Container(
-                                  color: Colors.white,
+                                  color: Theme.of(context).colorScheme.primary,
                                   padding: const EdgeInsets.all(kSizeDefault),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -148,7 +148,7 @@ class HomeView extends StatelessWidget {
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyText1!
-                                            .copyWith(color: kColorPrimary),
+                                            .copyWith(color: Theme.of(context).colorScheme.secondary),
                                       ),
                                       const SizedBox(height: kSizeDefault / 2),
                                       Text(
@@ -157,7 +157,7 @@ class HomeView extends StatelessWidget {
                                             .textTheme
                                             .bodySmall!
                                             .copyWith(
-                                              color: kColorPrimary
+                                              color: Theme.of(context).colorScheme.secondary
                                                   .withOpacity(0.7),
                                             ),
                                       ),
@@ -173,7 +173,7 @@ class HomeView extends StatelessWidget {
                                             fit: BoxFit.cover,
                                           ),
                                           border:
-                                              Border.all(color: kColorPrimary),
+                                              Border.all(color: Theme.of(context).colorScheme.secondary),
                                         ),
                                       ),
                                     ],
