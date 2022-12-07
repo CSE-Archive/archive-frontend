@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 class CustomThemes {
   static final darkTheme = ThemeData(
     textTheme: GoogleFonts.vazirmatnTextTheme(),
+    scaffoldBackgroundColor: kColorPrimary,
     colorScheme: const ColorScheme(
       brightness: Brightness.dark,
       primary: kColorPrimary,
@@ -22,6 +23,7 @@ class CustomThemes {
 
   static final lightTheme = ThemeData(
     textTheme: GoogleFonts.vazirmatnTextTheme(),
+    scaffoldBackgroundColor: Colors.white,
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
       primary: Colors.white,

@@ -107,6 +107,7 @@ Widget appbarBuilder(BuildContext context) {
                 size: 2 * kSizeDefault,
                 color: Theme.of(context).colorScheme.secondary,
               ),
+              splashRadius: 2,
               padding: EdgeInsets.zero,
             ),
             // PopupMenuButton<Language>(
