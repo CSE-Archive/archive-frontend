@@ -1,13 +1,11 @@
 import 'package:cse_archive/constants.dart';
 import 'package:cse_archive/controllers/appbar_controller.dart';
-import 'package:cse_archive/controllers/theme_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 Widget appbarBuilder(BuildContext context) {
   var appbarController = Get.find<AppbarController>();
-  var themeController = Get.find<ThemeController>();
 
   return Container(
     height: 3.5 * kSizeDefault,
@@ -95,9 +93,9 @@ Widget appbarBuilder(BuildContext context) {
             const Spacer(flex: 1),
             IconButton(
               onPressed: () {
-                Get.isDarkMode
-                    ? themeController.changeToLightTheme()
-                    : themeController.changeToDarkTheme();
+                Get.changeThemeMode(
+                  Get.isDarkMode ? ThemeMode.light : ThemeMode.dark,
+                );
               },
               icon: Icon(
                 Get.isDarkMode ? Icons.light_mode : Icons.dark_mode,
