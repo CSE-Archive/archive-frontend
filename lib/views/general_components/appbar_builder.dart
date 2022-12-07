@@ -48,34 +48,39 @@ Widget appbarBuilder(BuildContext context) {
             const SizedBox(width: kSizeDefault / 2),
             Expanded(
               flex: 10,
-              child: TextField(
-                maxLines: 1,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyText1!
-                    .copyWith(color: Theme.of(context).colorScheme.secondary),
-                cursorColor: Theme.of(context).colorScheme.secondary,
-                controller: appbarController.searchBarController,
-                decoration: InputDecoration(
-                  isDense: true,
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: kSizeDefault / 1.2,
-                    horizontal: kSizeDefault,
-                  ),
-                  border: InputBorder.none,
-                  filled: true,
-                  fillColor:
-                      Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-                  hintText: 'appbarSearch'.tr,
-                  hintStyle: TextStyle(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .secondary
-                        .withOpacity(0.8),
+              child: Obx(
+                () => TextField(
+                  maxLines: 1,
+                  onChanged: (text) => appbarController.detectTextDirection(text),
+                  textDirection: appbarController.searchBarTextDirection.value,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyText1!
+                      .copyWith(color: Theme.of(context).colorScheme.secondary),
+                  cursorColor: Theme.of(context).colorScheme.secondary,
+                  controller: appbarController.searchBarController,
+                  decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: kSizeDefault / 1.2,
+                      horizontal: kSizeDefault,
+                    ),
+                    border: InputBorder.none,
+                    filled: true,
+                    fillColor:
+                        Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                    hintText: 'appbarSearch'.tr,
+                    hintStyle: TextStyle(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .secondary
+                          .withOpacity(0.8),
+                    ),
                   ),
                 ),
               ),
             ),
+
             const Spacer(flex: 4),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -5,6 +5,7 @@ import 'package:cse_archive/controllers/home/resource_cards_controller.dart';
 import 'package:cse_archive/views/general_components/appbar_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart' as intl;
 
 import 'components/custom_card.dart';
 import 'components/title_heading.dart';
@@ -65,12 +66,28 @@ class HomeView extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        resource.title,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .copyWith(color: Theme.of(context).colorScheme.secondary),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              resource.title,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              textDirection:
+                                                  intl.Bidi.detectRtlDirectionality(
+                                                          resource.title)
+                                                      ? TextDirection.rtl
+                                                      : TextDirection.ltr,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1!
+                                                  .copyWith(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .secondary),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       const Spacer(),
                                       Text(
@@ -79,7 +96,9 @@ class HomeView extends StatelessWidget {
                                             .textTheme
                                             .bodySmall!
                                             .copyWith(
-                                              color: Theme.of(context).colorScheme.secondary
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary
                                                   .withOpacity(0.7),
                                             ),
                                       ),
@@ -89,7 +108,9 @@ class HomeView extends StatelessWidget {
                                             .textTheme
                                             .bodySmall!
                                             .copyWith(
-                                              color: Theme.of(context).colorScheme.secondary
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary
                                                   .withOpacity(0.7),
                                             ),
                                       ),
@@ -143,23 +164,56 @@ class HomeView extends StatelessWidget {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        reference.title,
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1!
-                                            .copyWith(color: Theme.of(context).colorScheme.secondary),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              reference.title,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              textDirection: intl.Bidi
+                                                      .detectRtlDirectionality(
+                                                          reference.title)
+                                                  ? TextDirection.rtl
+                                                  : TextDirection.ltr,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1!
+                                                  .copyWith(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary,
+                                                  ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       const SizedBox(height: kSizeDefault / 2),
-                                      Text(
-                                        reference.authors.join(', '),
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodySmall!
-                                            .copyWith(
-                                              color: Theme.of(context).colorScheme.secondary
-                                                  .withOpacity(0.7),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              reference.authors.join(', '),
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              textDirection: intl.Bidi
+                                                      .detectRtlDirectionality(
+                                                          reference.authors
+                                                              .join(', '))
+                                                  ? TextDirection.rtl
+                                                  : TextDirection.ltr,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodySmall!
+                                                  .copyWith(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary
+                                                        .withOpacity(0.7),
+                                                  ),
                                             ),
+                                          ),
+                                        ],
                                       ),
                                       const Spacer(),
                                       Container(
@@ -172,8 +226,10 @@ class HomeView extends StatelessWidget {
                                             ),
                                             fit: BoxFit.cover,
                                           ),
-                                          border:
-                                              Border.all(color: Theme.of(context).colorScheme.secondary),
+                                          border: Border.all(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary),
                                         ),
                                       ),
                                     ],
