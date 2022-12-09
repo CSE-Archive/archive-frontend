@@ -13,6 +13,7 @@ class ReferenceCardsController extends GetxController {
   void loadReferences() {
     references.addAll([
       ReferenceModel(
+        id: 1,
         title: 'Introduction to Algorithms, 4rd Edition',
         authors: [
           'Thomas H. Cormen',
@@ -21,8 +22,10 @@ class ReferenceCardsController extends GetxController {
           'Clifford Stein',
         ],
         image: 'assets/images/clrs.jpeg',
+        slug: 'introduction-to-algorithms-4rd-edition',
       ),
       ReferenceModel(
+        id: 1,
         title: 'Introduction to Algorithms, 4rd Edition',
         authors: [
           'Thomas H. Cormen',
@@ -31,8 +34,10 @@ class ReferenceCardsController extends GetxController {
           'Clifford Stein',
         ],
         image: 'assets/images/clrs.jpeg',
+        slug: 'introduction-to-algorithms-4rd-edition',
       ),
       ReferenceModel(
+        id: 1,
         title: 'Introduction to Algorithms, 4rd Edition',
         authors: [
           'Thomas H. Cormen',
@@ -41,8 +46,10 @@ class ReferenceCardsController extends GetxController {
           'Clifford Stein',
         ],
         image: 'assets/images/clrs.jpeg',
+        slug: 'introduction-to-algorithms-4rd-edition',
       ),
       ReferenceModel(
+        id: 1,
         title: 'Introduction to Algorithms, 4rd Edition',
         authors: [
           'Thomas H. Cormen',
@@ -51,8 +58,10 @@ class ReferenceCardsController extends GetxController {
           'Clifford Stein',
         ],
         image: 'assets/images/clrs.jpeg',
+        slug: 'introduction-to-algorithms-4rd-edition',
       ),
       ReferenceModel(
+        id: 1,
         title: 'Introduction to Algorithms, 4rd Edition',
         authors: [
           'Thomas H. Cormen',
@@ -61,8 +70,10 @@ class ReferenceCardsController extends GetxController {
           'Clifford Stein',
         ],
         image: 'assets/images/clrs.jpeg',
+        slug: 'introduction-to-algorithms-4rd-edition',
       ),
       ReferenceModel(
+        id: 1,
         title: 'Introduction to Algorithms, 4rd Edition',
         authors: [
           'Thomas H. Cormen',
@@ -71,8 +82,10 @@ class ReferenceCardsController extends GetxController {
           'Clifford Stein',
         ],
         image: 'assets/images/clrs.jpeg',
+        slug: 'introduction-to-algorithms-4rd-edition',
       ),
       ReferenceModel(
+        id: 1,
         title: 'Introduction to Algorithms, 4rd Edition',
         authors: [
           'Thomas H. Cormen',
@@ -81,8 +94,10 @@ class ReferenceCardsController extends GetxController {
           'Clifford Stein',
         ],
         image: 'assets/images/clrs.jpeg',
+        slug: 'introduction-to-algorithms-4rd-edition',
       ),
       ReferenceModel(
+        id: 1,
         title: 'Introduction to Algorithms, 4rd Edition',
         authors: [
           'Thomas H. Cormen',
@@ -91,8 +106,10 @@ class ReferenceCardsController extends GetxController {
           'Clifford Stein',
         ],
         image: 'assets/images/clrs.jpeg',
+        slug: 'introduction-to-algorithms-4rd-edition',
       ),
       ReferenceModel(
+        id: 1,
         title: 'Introduction to Algorithms, 4rd Edition',
         authors: [
           'Thomas H. Cormen',
@@ -101,8 +118,10 @@ class ReferenceCardsController extends GetxController {
           'Clifford Stein',
         ],
         image: 'assets/images/clrs.jpeg',
+        slug: 'introduction-to-algorithms-4rd-edition',
       ),
       ReferenceModel(
+        id: 1,
         title: 'Introduction to Algorithms, 4rd Edition',
         authors: [
           'Thomas H. Cormen',
@@ -111,6 +130,7 @@ class ReferenceCardsController extends GetxController {
           'Clifford Stein',
         ],
         image: 'assets/images/clrs.jpeg',
+        slug: 'introduction-to-algorithms-4rd-edition',
       ),
     ]);
   }

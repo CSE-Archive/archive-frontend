@@ -3,15 +3,8 @@ import 'package:get/get.dart';
 class MyTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
-        'en_US': {
-          'appbarSearch': 'Search...',
-          'appbarChart': 'CSE Chart',
-          'appbarCourses': 'Courses',
-          'appbarReferences': 'References',
-          'appbarTeachers': 'Teachers',
-        },
         'fa_IR': {
-          'appbarSearch': 'جستجو...',
+          'appbarSearch': 'جستجو ...',
           'appbarChart': 'چارت مهندسی کامپیوتر',
           'appbarCourses': 'دروس',
           'appbarReferences': 'رفرنس‌ها',
@@ -19,6 +12,14 @@ class MyTranslations extends Translations {
           'seeAll': 'مشاهده‌ی همه',
           'newResources': 'جدیدترین منابع',
           'newReferences': 'جدیدترین رفرنس‌ها',
-        }
+          'loading': "در حال بارگذاری ...",
+          'home': 'صفحه اصلی',
+          'references': 'رفرنس‌ها',
+          'referenceItemTitle': 'عنوان',
+          'referenceItemAuthors': 'نویسندگان',
+          'referenceItemDownload': 'دانلود رفرنس',
+          'referenceItemRelatedCourses': 'دروس مربوطه',
+          'courseUnit': 'واحد',
+        },
       };
 }

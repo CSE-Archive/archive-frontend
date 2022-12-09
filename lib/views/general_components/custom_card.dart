@@ -6,10 +6,12 @@ class CustomCard extends StatelessWidget {
   const CustomCard({
     Key? key,
     required this.cardHoverController,
+    required this.onPressed,
     required this.child,
   }) : super(key: key);
 
   final CardHoverController cardHoverController;
+  final void Function()? onPressed;
   final Widget child;
 
   @override
@@ -35,7 +37,7 @@ class CustomCard extends StatelessWidget {
                 child: Material(
                   color: Colors.transparent,
                   child: InkWell(
-                    onTap: () {},
+                    onTap: onPressed,
                     hoverColor: Colors.transparent,
                     splashColor: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
                     highlightColor: Theme.of(context).colorScheme.secondary.withOpacity(0.05),

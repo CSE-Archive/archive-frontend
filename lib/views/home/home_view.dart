@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart' as intl;
 
-import 'components/custom_card.dart';
-import 'components/title_heading.dart';
+import '../general_components/custom_card.dart';
+import '../general_components/title_heading.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -54,6 +54,7 @@ class HomeView extends StatelessWidget {
                               bottom: kSizeDefault,
                             ),
                             child: CustomCard(
+                              onPressed: () {},
                               cardHoverController: CardHoverController(),
                               child: Container(
                                 width: double.infinity,
@@ -152,6 +153,9 @@ class HomeView extends StatelessWidget {
                               bottom: kSizeDefault,
                             ),
                             child: CustomCard(
+                              onPressed: () => Get.toNamed(
+                                '/references/${reference.id}/${reference.slug}',
+                              ),
                               cardHoverController: CardHoverController(),
                               child: Container(
                                 color: Theme.of(context).colorScheme.primary,
@@ -169,7 +173,7 @@ class HomeView extends StatelessWidget {
                                             overflow: TextOverflow.ellipsis,
                                             textDirection: intl.Bidi
                                                     .detectRtlDirectionality(
-                                                        reference.title)
+                                                        reference.title,)
                                                 ? TextDirection.rtl
                                                 : TextDirection.ltr,
                                             style: Theme.of(context)

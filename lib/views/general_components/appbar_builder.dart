@@ -1,5 +1,6 @@
 import 'package:cse_archive/constants.dart';
 import 'package:cse_archive/controllers/appbar_controller.dart';
+import 'package:cse_archive/views/general_components/custom_text_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -34,7 +35,7 @@ Widget appbarBuilder(BuildContext context) {
             MouseRegion(
               cursor: SystemMouseCursors.click,
               child: GestureDetector(
-                onTap: () {},
+                onTap: () => Get.toNamed('/'),
                 child: Padding(
                   padding:
                       const EdgeInsets.symmetric(vertical: kSizeDefault / 2),
@@ -51,7 +52,8 @@ Widget appbarBuilder(BuildContext context) {
               child: Obx(
                 () => TextField(
                   maxLines: 1,
-                  onChanged: (text) => appbarController.detectTextDirection(text),
+                  onChanged: (text) =>
+                      appbarController.detectTextDirection(text),
                   textDirection: appbarController.searchBarTextDirection.value,
                   style: Theme.of(context)
                       .textTheme
@@ -67,8 +69,10 @@ Widget appbarBuilder(BuildContext context) {
                     ),
                     border: InputBorder.none,
                     filled: true,
-                    fillColor:
-                        Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+                    fillColor: Theme.of(context)
+                        .colorScheme
+                        .secondary
+                        .withOpacity(0.1),
                     hintText: 'appbarSearch'.tr,
                     hintStyle: TextStyle(
                       color: Theme.of(context)
@@ -145,40 +149,4 @@ Widget appbarBuilder(BuildContext context) {
       ),
     ),
   );
-}
-
-class CustomTextButton extends StatelessWidget {
-  const CustomTextButton({
-    Key? key,
-    required this.label,
-    this.onPressed,
-  }) : super(key: key);
-
-  final String label;
-  final void Function()? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: onPressed,
-      style: ButtonStyle(
-        shadowColor: MaterialStateProperty.all(
-          Colors.transparent,
-        ),
-        surfaceTintColor: MaterialStateProperty.all(
-          Colors.transparent,
-        ),
-        overlayColor: MaterialStateProperty.all(
-          Colors.transparent,
-        ),
-      ),
-      child: Text(
-        label,
-        style: Theme.of(context).textTheme.bodyText1!.copyWith(
-              color: Theme.of(context).colorScheme.secondary,
-              fontWeight: FontWeight.bold,
-            ),
-      ),
-    );
-  }
 }

@@ -34,10 +34,10 @@ class TitleHeading extends StatelessWidget {
             child: Divider(
               color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
               indent: kSizeDefault,
-              endIndent: kSizeDefault,
+              endIndent: (seeAllOnPressed != null) ? kSizeDefault : 0,
             ),
           ),
-          SeeAllButton(onPressed: seeAllOnPressed),
+          if (seeAllOnPressed != null) SeeAllButton(onPressed: seeAllOnPressed),
         ],
       ),
     );
