@@ -31,10 +31,14 @@ class TitleHeading extends StatelessWidget {
                 ),
           ),
           Expanded(
-            child: Divider(
+            child: Container(
+              height: 1,
+              width: double.infinity,
               color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-              indent: kSizeDefault,
-              endIndent: (seeAllOnPressed != null) ? kSizeDefault : 0,
+              margin: EdgeInsets.only(
+                right: kSizeDefault,
+                left: (seeAllOnPressed != null) ? kSizeDefault : 0,
+              ),
             ),
           ),
           if (seeAllOnPressed != null) SeeAllButton(onPressed: seeAllOnPressed),

@@ -1,3 +1,5 @@
+import 'package:cse_archive/models/reference_model.dart';
+
 class ReferenceItemModel {
   ReferenceItemModel({
     required this.id,
@@ -7,6 +9,7 @@ class ReferenceItemModel {
     required this.slug,
     required this.url,
     required this.courses,
+    required this.references,
   });
 
   final int id;
@@ -16,4 +19,5 @@ class ReferenceItemModel {
   final String slug;
   final String url;
   final List<Map> courses;
+  final List<ReferenceModel> references;
 }

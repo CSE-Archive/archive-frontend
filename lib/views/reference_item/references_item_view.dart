@@ -4,6 +4,7 @@ import 'package:cse_archive/controllers/reference_item/reference_item_controller
 import 'package:cse_archive/views/general_components/appbar_builder.dart';
 import 'package:cse_archive/views/general_components/custom_card.dart';
 import 'package:cse_archive/views/general_components/path_builder.dart';
+import 'package:cse_archive/views/general_components/reference_cards_builder.dart';
 import 'package:cse_archive/views/general_components/title_heading.dart';
 import 'package:cse_archive/views/loading_view.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +17,11 @@ class ReferenceItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final id = int.parse(Get.parameters["id"]!);
-    var controller = Get.put(ReferenceItemController(referenceId: id));
+    final id = Get.parameters["id"];
+    final controller = Get.put(
+      ReferenceItemController(referenceId: int.parse(id!)),
+      tag: id,
+    );
 
     return Scaffold(
       body: ListView(
@@ -58,7 +62,7 @@ class ReferenceItemView extends StatelessWidget {
                           Theme.of(context).colorScheme.secondary
                         ],
                         center: const Alignment(-0.7, 0.1),
-                        radius: 2,
+                        radius: 1.5,
                       ),
                       // color: Theme.of(context).colorScheme.secondary,
                       borderRadius: BorderRadius.circular(kSizeDefault),
@@ -201,95 +205,103 @@ class ReferenceItemView extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 2 * kSizeDefault),
-                TitleHeading(title: 'referenceItemRelatedCourses'.tr),
-                SizedBox(
-                  height: 9 * kSizeDefault,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: data.courses.length,
-                    itemBuilder: (context, index) {
-                      var course = data.courses[index];
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          if (index == 0)
-                            const SizedBox(width: 2 * kSizeDefault),
-                          Container(
-                            width: 19 * kSizeDefault,
-                            margin: const EdgeInsets.only(
-                              left: kSizeDefault,
-                              top: kSizeDefault,
-                              bottom: kSizeDefault,
-                            ),
-                            child: CustomCard(
-                              onPressed: () {},
-                              cardHoverController: CardHoverController(),
-                              child: Container(
-                                width: double.infinity,
-                                color: Theme.of(context).colorScheme.primary,
-                                padding: const EdgeInsets.all(kSizeDefault),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            course['title'],
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1!
-                                                .copyWith(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary,
-                                                ),
+                if (data.courses.isNotEmpty)
+                  TitleHeading(title: 'referenceItemRelatedCourses'.tr),
+                if (data.courses.isNotEmpty)
+                  SizedBox(
+                    height: 9 * kSizeDefault,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: data.courses.length,
+                      itemBuilder: (context, index) {
+                        var course = data.courses[index];
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            if (index == 0)
+                              const SizedBox(width: 2 * kSizeDefault),
+                            Container(
+                              width: 19 * kSizeDefault,
+                              margin: const EdgeInsets.only(
+                                left: kSizeDefault,
+                                top: kSizeDefault,
+                                bottom: kSizeDefault,
+                              ),
+                              child: CustomCard(
+                                onPressed: () {},
+                                cardHoverController: CardHoverController(),
+                                child: Container(
+                                  width: double.infinity,
+                                  color: Theme.of(context).colorScheme.primary,
+                                  padding: const EdgeInsets.all(kSizeDefault),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              course['title'],
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .bodyText1!
+                                                  .copyWith(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .secondary,
+                                                  ),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    const Spacer(),
-                                    Text(
-                                      '${course['unit']} ${'courseUnit'.tr}',
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall!
-                                          .copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary
-                                                .withOpacity(0.7),
-                                          ),
-                                    ),
-                                    Text(
-                                      course['type'],
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall!
-                                          .copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary
-                                                .withOpacity(0.7),
-                                          ),
-                                    ),
-                                  ],
+                                        ],
+                                      ),
+                                      const Spacer(),
+                                      Text(
+                                        '${course['unit']} ${'courseUnit'.tr}',
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary
+                                                  .withOpacity(0.7),
+                                            ),
+                                      ),
+                                      Text(
+                                        course['type'],
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary
+                                                  .withOpacity(0.7),
+                                            ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          if (index == data.courses.length - 1)
-                            const SizedBox(width: kSizeDefault),
-                        ],
-                      );
-                    },
+                            if (index == data.courses.length - 1)
+                              const SizedBox(width: kSizeDefault),
+                          ],
+                        );
+                      },
+                    ),
                   ),
-                ),
+                const SizedBox(height: 2 * kSizeDefault),
+                if (data.courses.isNotEmpty)
+                  TitleHeading(title: 'referenceItemRelatedReferences'.tr),
+                if (data.courses.isNotEmpty)
+                  referenceCardsBuilder(data.references),
               ],
             ),
             onLoading: const LoadingView(),

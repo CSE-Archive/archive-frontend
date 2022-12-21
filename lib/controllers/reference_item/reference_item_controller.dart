@@ -1,4 +1,5 @@
 import 'package:cse_archive/models/reference_item_model.dart';
+import 'package:cse_archive/models/reference_model.dart';
 import 'package:get/get.dart';
 
 class ReferenceItemController extends GetxController
@@ -50,6 +51,20 @@ class ReferenceItemController extends GetxController
           'unit': 3,
           'type': 'تخصصی',
         },
+      ],
+      references: [
+        ReferenceModel(
+          id: 1,
+          title: 'Introduction to Algorithms, 4rd Edition',
+          authors: [
+            'Thomas H. Cormen',
+            'Charles E. Leiserson',
+            'Ronald L. Rivest',
+            'Clifford Stein',
+          ],
+          image: 'assets/images/clrs.jpeg',
+          slug: 'introduction-to-algorithms-4rd-edition',
+        ),
       ],
     );
 

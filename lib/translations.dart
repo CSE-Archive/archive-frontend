@@ -19,6 +19,7 @@ class MyTranslations extends Translations {
           'referenceItemAuthors': 'نویسندگان',
           'referenceItemDownload': 'دانلود رفرنس',
           'referenceItemRelatedCourses': 'دروس مربوطه',
+          'referenceItemRelatedReferences': 'رفرنس‌های مرتبط',
           'courseUnit': 'واحد',
         },
       };
