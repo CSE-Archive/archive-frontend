@@ -51,7 +51,6 @@ class HomeView extends StatelessWidget {
                       ),
                       child: CustomCard(
                         onPressed: () {},
-                        cardHoverController: CardHoverController(),
                         child: Container(
                           width: double.infinity,
                           color: Theme.of(context).colorScheme.primary,

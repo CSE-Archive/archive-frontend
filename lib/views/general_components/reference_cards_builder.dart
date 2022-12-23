@@ -31,7 +31,6 @@ Widget referenceCardsBuilder(List<ReferenceModel> references) {
                 onPressed: () => Get.toNamed(
                   '/references/${reference.id}/${reference.slug}',
                 ),
-                cardHoverController: CardHoverController(),
                 child: Container(
                   color: Theme.of(context).colorScheme.primary,
                   padding: const EdgeInsets.all(kSizeDefault),

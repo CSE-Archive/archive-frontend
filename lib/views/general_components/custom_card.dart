@@ -5,17 +5,17 @@ import 'package:get/get.dart';
 class CustomCard extends StatelessWidget {
   const CustomCard({
     Key? key,
-    required this.cardHoverController,
     required this.onPressed,
     required this.child,
   }) : super(key: key);
 
-  final CardHoverController cardHoverController;
   final void Function()? onPressed;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
+    final cardHoverController = CardHoverController();
+
     return Obx(
       () => AnimatedContainer(
         duration: const Duration(milliseconds: 100),
@@ -39,8 +39,14 @@ class CustomCard extends StatelessWidget {
                   child: InkWell(
                     onTap: onPressed,
                     hoverColor: Colors.transparent,
-                    splashColor: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
-                    highlightColor: Theme.of(context).colorScheme.secondary.withOpacity(0.05),
+                    splashColor: Theme.of(context)
+                        .colorScheme
+                        .secondary
+                        .withOpacity(0.1),
+                    highlightColor: Theme.of(context)
+                        .colorScheme
+                        .secondary
+                        .withOpacity(0.05),
                     customBorder: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.zero,
                     ),
