@@ -2,7 +2,7 @@ import 'package:cse_archive/constants.dart';
 import 'package:cse_archive/controllers/home/card_hover_controller.dart';
 import 'package:cse_archive/controllers/home/reference_cards_controller.dart';
 import 'package:cse_archive/controllers/home/resource_cards_controller.dart';
-import 'package:cse_archive/views/general_components/appbar_builder.dart';
+import 'package:cse_archive/views/general_components/basic_web_page.dart';
 import 'package:cse_archive/views/general_components/reference_cards_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,123 +19,114 @@ class HomeView extends StatelessWidget {
     var resourceCardsController = Get.find<ResourceCardsController>();
     var referenceCardsController = Get.find<ReferenceCardsController>();
 
-    return Scaffold(
-      body: SafeArea(
-        child: ListView(
-          children: [
-            appbarBuilder(context),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 2 * kSizeDefault),
-                TitleHeading(
-                  title: 'newResources'.tr,
-                  seeAllOnPressed: (() {}),
-                ),
-                SizedBox(
-                  height: 9 * kSizeDefault,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: resourceCardsController.resources.length,
-                    itemBuilder: (context, index) {
-                      var resource = resourceCardsController.resources[index];
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          if (index == 0)
-                            const SizedBox(width: 2 * kSizeDefault),
-                          Container(
-                            width: 19 * kSizeDefault,
-                            margin: const EdgeInsets.only(
-                              left: kSizeDefault,
-                              top: kSizeDefault,
-                              bottom: kSizeDefault,
-                            ),
-                            child: CustomCard(
-                              onPressed: () {},
-                              cardHoverController: CardHoverController(),
-                              child: Container(
-                                width: double.infinity,
-                                color: Theme.of(context).colorScheme.primary,
-                                padding: const EdgeInsets.all(kSizeDefault),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Text(
-                                            resource.title,
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            textDirection: intl.Bidi
-                                                    .detectRtlDirectionality(
-                                                        resource.title)
-                                                ? TextDirection.rtl
-                                                : TextDirection.ltr,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyText1!
-                                                .copyWith(
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .secondary),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const Spacer(),
-                                    Text(
-                                      resource.semester,
+    return basicWebPage(
+      context: context,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          TitleHeading(
+            title: 'newResources'.tr,
+            seeAllOnPressed: (() {}),
+          ),
+          SizedBox(
+            height: 9 * kSizeDefault,
+            child: ListView.builder(
+              shrinkWrap: true,
+              scrollDirection: Axis.horizontal,
+              itemCount: resourceCardsController.resources.length,
+              itemBuilder: (context, index) {
+                var resource = resourceCardsController.resources[index];
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (index == 0) const SizedBox(width: 2 * kSizeDefault),
+                    Container(
+                      width: 19 * kSizeDefault,
+                      margin: const EdgeInsets.only(
+                        left: kSizeDefault,
+                        top: kSizeDefault,
+                        bottom: kSizeDefault,
+                      ),
+                      child: CustomCard(
+                        onPressed: () {},
+                        cardHoverController: CardHoverController(),
+                        child: Container(
+                          width: double.infinity,
+                          color: Theme.of(context).colorScheme.primary,
+                          padding: const EdgeInsets.all(kSizeDefault),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: Text(
+                                      resource.title,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      textDirection:
+                                          intl.Bidi.detectRtlDirectionality(
+                                                  resource.title)
+                                              ? TextDirection.rtl
+                                              : TextDirection.ltr,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodySmall!
+                                          .bodyText1!
                                           .copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary
-                                                .withOpacity(0.7),
-                                          ),
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .secondary),
                                     ),
-                                    Text(
-                                      resource.teacher,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodySmall!
-                                          .copyWith(
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .secondary
-                                                .withOpacity(0.7),
-                                          ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ),
+                              const Spacer(),
+                              Text(
+                                resource.semester,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary
+                                          .withOpacity(0.7),
+                                    ),
+                              ),
+                              Text(
+                                resource.teacher,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodySmall!
+                                    .copyWith(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary
+                                          .withOpacity(0.7),
+                                    ),
+                              ),
+                            ],
                           ),
-                          if (index ==
-                              resourceCardsController.resources.length - 1)
-                            const SizedBox(width: kSizeDefault),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(height: 2 * kSizeDefault),
-                TitleHeading(
-                  title: 'newReferences'.tr,
-                  seeAllOnPressed: () {},
-                ),
-                referenceCardsBuilder(referenceCardsController.references),
-              ],
+                        ),
+                      ),
+                    ),
+                    if (index == resourceCardsController.resources.length - 1)
+                      const SizedBox(width: kSizeDefault),
+                  ],
+                );
+              },
             ),
-          ],
-        ),
+          ),
+          const SizedBox(height: 2 * kSizeDefault),
+          TitleHeading(
+            title: 'newReferences'.tr,
+            seeAllOnPressed: () {},
+          ),
+          referenceCardsBuilder(referenceCardsController.references),
+        ],
       ),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:cse_archive/views/general_components/basic_web_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,7 +7,8 @@ class LoadingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return basicWebPage(
+      context: context,
       body: Center(
         child: Text(
           'loading'.tr,
