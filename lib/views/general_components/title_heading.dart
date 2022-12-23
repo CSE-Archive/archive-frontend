@@ -15,35 +15,30 @@ class TitleHeading extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 2 * kSizeDefault,
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            style: Theme.of(context).textTheme.headline6!.copyWith(
-                  color: Theme.of(context).colorScheme.secondary,
-                  fontWeight: FontWeight.bold,
-                ),
-          ),
-          Expanded(
-            child: Container(
-              height: 1,
-              width: double.infinity,
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
-              margin: EdgeInsets.only(
-                right: kSizeDefault,
-                left: (seeAllOnPressed != null) ? kSizeDefault : 0,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          title,
+          style: Theme.of(context).textTheme.headline6!.copyWith(
+                color: Theme.of(context).colorScheme.secondary,
+                fontWeight: FontWeight.bold,
               ),
+        ),
+        Expanded(
+          child: Container(
+            height: 1,
+            width: double.infinity,
+            color: Theme.of(context).colorScheme.secondary.withOpacity(0.5),
+            margin: EdgeInsets.only(
+              right: kSizeDefault,
+              left: (seeAllOnPressed != null) ? kSizeDefault : 0,
             ),
           ),
-          if (seeAllOnPressed != null) SeeAllButton(onPressed: seeAllOnPressed),
-        ],
-      ),
+        ),
+        if (seeAllOnPressed != null) SeeAllButton(onPressed: seeAllOnPressed),
+      ],
     );
   }
 }

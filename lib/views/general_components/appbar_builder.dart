@@ -10,6 +10,7 @@ Widget appbarBuilder(BuildContext context) {
 
   return Container(
     height: 3.5 * kSizeDefault,
+    margin: const EdgeInsets.symmetric(horizontal: kSizeDefault / 2),
     decoration: BoxDecoration(
       color: Theme.of(context).colorScheme.primary,
       borderRadius: const BorderRadius.only(

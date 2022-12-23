@@ -1,5 +1,4 @@
 import 'package:cse_archive/constants.dart';
-import 'package:cse_archive/controllers/home/card_hover_controller.dart';
 import 'package:cse_archive/controllers/reference_item/reference_item_controller.dart';
 import 'package:cse_archive/views/general_components/basic_web_page.dart';
 import 'package:cse_archive/views/general_components/custom_card.dart';
@@ -29,92 +28,81 @@ class ReferenceItemView extends StatelessWidget {
         (data) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 2 * kSizeDefault,
-                bottom: kSizeDefault,
-              ),
-              child: pathBuilder(
-                context,
-                roots: {
-                  'home'.tr: () => Get.toNamed('/'),
-                  'references'.tr: () {},
-                  data!.title: () =>
-                      Get.toNamed('/references/${data.id}/${data.slug}'),
-                },
-              ),
+            pathBuilder(
+              context,
+              roots: {
+                'home'.tr: () => Get.toNamed('/'),
+                'references'.tr: () {},
+                data!.title: () =>
+                    Get.toNamed('/references/${data.id}/${data.slug}'),
+              },
             ),
+            const SizedBox(height: kSizeDefault),
             ConstrainedBox(
               constraints: const BoxConstraints(
                 minHeight: 22 * kSizeDefault,
               ),
               child: Container(
-                margin: const EdgeInsets.symmetric(
-                  horizontal: 2 * kSizeDefault,
-                ),
                 decoration: BoxDecoration(
-                  gradient: RadialGradient(
-                    colors: [
-                      Theme.of(context).colorScheme.primary,
-                      Theme.of(context).colorScheme.secondary
-                    ],
-                    center: const Alignment(-0.7, 0.1),
-                    radius: 1.5,
-                  ),
-                  // color: Theme.of(context).colorScheme.secondary,
+                  color: Theme.of(context).colorScheme.secondary,
                   borderRadius: BorderRadius.circular(kSizeDefault),
                 ),
                 padding: const EdgeInsets.all(kSizeDefault),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'referenceItemTitle'.tr,
-                          style:
-                              Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primary
-                                        .withOpacity(0.8),
-                                  ),
-                        ),
-                        Text(
-                          data.title,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        const SizedBox(height: kSizeDefault),
-                        Text(
-                          'referenceItemAuthors'.tr,
-                          style:
-                              Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primary
-                                        .withOpacity(0.8),
-                                  ),
-                        ),
-                        Text(
-                          data.authors.join('\n'),
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.primary,
-                              ),
-                        ),
-                      ],
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'referenceItemTitle'.tr,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.8),
+                                ),
+                          ),
+                          Text(
+                            data.title,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          const SizedBox(height: kSizeDefault),
+                          Text(
+                            'referenceItemAuthors'.tr,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.8),
+                                ),
+                          ),
+                          Text(
+                            data.authors.join('\n'),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                          ),
+                        ],
+                      ),
                     ),
                     const SizedBox(width: kSizeDefault),
-                    const Spacer(),
                     Container(
                       width: 17 * kSizeDefault,
                       height: 22 * kSizeDefault,
@@ -208,7 +196,7 @@ class ReferenceItemView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        if (index == 0) const SizedBox(width: 2 * kSizeDefault),
+                        if (index == 0) const SizedBox(width: kSizeDefault),
                         Container(
                           width: 19 * kSizeDefault,
                           margin: const EdgeInsets.only(
@@ -283,9 +271,10 @@ class ReferenceItemView extends StatelessWidget {
                 ),
               ),
             const SizedBox(height: 2 * kSizeDefault),
-            if (data.courses.isNotEmpty)
+            if (data.references.isNotEmpty)
               TitleHeading(title: 'referenceItemRelatedReferences'.tr),
-            if (data.courses.isNotEmpty) referenceCardsBuilder(data.references),
+            if (data.references.isNotEmpty)
+              referenceCardsBuilder(data.references),
           ],
         ),
         onLoading: const LoadingView(),

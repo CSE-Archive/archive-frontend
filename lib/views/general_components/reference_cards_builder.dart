@@ -1,5 +1,4 @@
 import 'package:cse_archive/constants.dart';
-import 'package:cse_archive/controllers/home/card_hover_controller.dart';
 import 'package:cse_archive/models/reference_model.dart';
 import 'package:cse_archive/views/general_components/custom_card.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,7 @@ Widget referenceCardsBuilder(List<ReferenceModel> references) {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            if (index == 0) const SizedBox(width: 2 * kSizeDefault),
+            if (index == 0) const SizedBox(width: kSizeDefault),
             Container(
               width: 19 * kSizeDefault,
               margin: const EdgeInsets.only(

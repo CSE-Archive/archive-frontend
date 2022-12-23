@@ -9,14 +9,20 @@ Widget basicWebPage({
   required Widget body,
 }) {
   return Scaffold(
-    body: SafeArea(
-      child: ListView(
-        children: [
-          appbar ?? appbarBuilder(context),
-          const SizedBox(height: 2 * kSizeDefault),
-          body,
-          const SizedBox(height: 2 * kSizeDefault),
-        ],
+    body: Center(
+      child: SizedBox(
+        width: kSizeMaxWidth,
+        child: ListView(
+          children: [
+            appbar ?? appbarBuilder(context),
+            const SizedBox(height: 2 * kSizeDefault),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2 * kSizeDefault),
+              child: body,
+            ),
+            const SizedBox(height: 2 * kSizeDefault),
+          ],
+        ),
       ),
     ),
   );

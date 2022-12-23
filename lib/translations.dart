@@ -15,12 +15,16 @@ class MyTranslations extends Translations {
           'loading': "در حال بارگذاری ...",
           'home': 'صفحه اصلی',
           'references': 'رفرنس‌ها',
+          'teachers': 'اساتید',
           'referenceItemTitle': 'عنوان',
           'referenceItemAuthors': 'نویسندگان',
           'referenceItemDownload': 'دانلود رفرنس',
           'referenceItemRelatedCourses': 'دروس مربوطه',
           'referenceItemRelatedReferences': 'رفرنس‌های مرتبط',
           'courseUnit': 'واحد',
+          'teacherItemEmails': 'ایمیل‌ها',
+          'teacherItemRelatedLinks': 'لینک‌های مرتبط',
+          'teacherItemDepartment': 'بخش',
         },
       };
 }

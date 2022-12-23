@@ -16,6 +16,7 @@ Widget pathBuilder(
           labelStyle: Theme.of(context).textTheme.bodySmall!.copyWith(
                 color: Theme.of(context).colorScheme.secondary,
               ),
+          showUnderline: false,
         ),
       )
       .toList();

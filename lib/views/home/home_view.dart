@@ -1,5 +1,4 @@
 import 'package:cse_archive/constants.dart';
-import 'package:cse_archive/controllers/home/card_hover_controller.dart';
 import 'package:cse_archive/controllers/home/reference_cards_controller.dart';
 import 'package:cse_archive/controllers/home/resource_cards_controller.dart';
 import 'package:cse_archive/views/general_components/basic_web_page.dart';
@@ -41,7 +40,7 @@ class HomeView extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    if (index == 0) const SizedBox(width: 2 * kSizeDefault),
+                    if (index == 0) const SizedBox(width: kSizeDefault),
                     Container(
                       width: 19 * kSizeDefault,
                       margin: const EdgeInsets.only(
@@ -50,7 +49,9 @@ class HomeView extends StatelessWidget {
                         bottom: kSizeDefault,
                       ),
                       child: CustomCard(
-                        onPressed: () {},
+                        onPressed: () => Get.toNamed(
+                          '/teachers/1/test',
+                        ),
                         child: Container(
                           width: double.infinity,
                           color: Theme.of(context).colorScheme.primary,
