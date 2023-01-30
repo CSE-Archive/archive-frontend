@@ -58,7 +58,7 @@ Widget appbarBuilder(BuildContext context) {
                   textDirection: appbarController.searchBarTextDirection.value,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText1!
+                      .bodyLarge!
                       .copyWith(color: Theme.of(context).colorScheme.secondary),
                   cursorColor: Theme.of(context).colorScheme.secondary,
                   controller: appbarController.searchBarController,
@@ -85,19 +85,35 @@ Widget appbarBuilder(BuildContext context) {
                 ),
               ),
             ),
-
             const Spacer(flex: 4),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CustomTextButton(label: 'appbarChart'.tr),
+                CustomTextButton(
+                  label: 'appbarChart'.tr,
+                  onPressed: () => Get.toNamed('/chart'),
+                  staticUnderline: appbarController.activeButton.value ==
+                      AppbarButtons.chart,
+                ),
                 const SizedBox(width: kSizeDefault),
-                CustomTextButton(label: 'appbarCourses'.tr),
+                CustomTextButton(
+                  label: 'appbarCourses'.tr,
+                  staticUnderline: appbarController.activeButton.value ==
+                      AppbarButtons.courses,
+                ),
                 const SizedBox(width: kSizeDefault),
-                CustomTextButton(label: 'appbarReferences'.tr),
+                CustomTextButton(
+                  label: 'appbarReferences'.tr,
+                  staticUnderline: appbarController.activeButton.value ==
+                      AppbarButtons.references,
+                ),
                 const SizedBox(width: kSizeDefault),
-                CustomTextButton(label: 'appbarTeachers'.tr),
+                CustomTextButton(
+                  label: 'appbarTeachers'.tr,
+                  staticUnderline: appbarController.activeButton.value ==
+                      AppbarButtons.teachers,
+                ),
               ],
             ),
             const Spacer(flex: 1),

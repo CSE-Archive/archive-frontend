@@ -16,7 +16,16 @@ class Language {
   final Widget? icon;
 }
 
+enum AppbarButtons {
+  none,
+  chart,
+  courses,
+  references,
+  teachers,
+}
+
 class AppbarController extends GetxController {
+  var activeButton = AppbarButtons.none.obs;
   var searchBarTextDirection = TextDirection.rtl.obs;
 
   late TextEditingController searchBarController;

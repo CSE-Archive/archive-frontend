@@ -103,7 +103,7 @@ class TeacherItemView extends StatelessWidget {
                                       'teacherItemDepartment'.tr,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .titleMedium!
+                                          .titleSmall!
                                           .copyWith(
                                             color: Theme.of(context)
                                                 .colorScheme
@@ -127,7 +127,7 @@ class TeacherItemView extends StatelessWidget {
                                         data.department,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .titleMedium!
+                                            .titleSmall!
                                             .copyWith(
                                               color: Theme.of(context)
                                                   .colorScheme
