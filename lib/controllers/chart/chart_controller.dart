@@ -1,4 +1,5 @@
 import 'package:cse_archive/models/chart_course_model.dart';
+import 'package:cse_archive/models/general.dart';
 import 'package:get/get.dart';
 
 class ChartController extends GetxController
@@ -11,7 +12,7 @@ class ChartController extends GetxController
 
   Future<void> fetchData() async {
     final literature = ChartCourseModel(
-      id: "1",
+      id: 1,
       name: "فارسی عمومی",
       type: CourseType.general,
       units: 3,
@@ -19,7 +20,7 @@ class ChartController extends GetxController
     );
 
     final english = ChartCourseModel(
-      id: "2",
+      id: 2,
       name: "انگلیسی عمومی معافی",
       type: CourseType.general,
       units: 3,
@@ -27,7 +28,7 @@ class ChartController extends GetxController
     );
 
     final physics1 = ChartCourseModel(
-      id: "3",
+      id: 3,
       name: "فیزیک یک",
       type: CourseType.basic,
       units: 3,
@@ -35,7 +36,7 @@ class ChartController extends GetxController
     );
 
     final fop = ChartCourseModel(
-      id: "7",
+      id: 7,
       name: "مبانی کامپیوتر و برنامه‌نویسی",
       type: CourseType.specialized,
       units: 3,
@@ -43,7 +44,7 @@ class ChartController extends GetxController
     );
 
     final computerLab = ChartCourseModel(
-      id: "4",
+      id: 4,
       name: "آز کامپیوتر",
       type: CourseType.specialized,
       units: 1,
@@ -53,7 +54,7 @@ class ChartController extends GetxController
     );
 
     final math1 = ChartCourseModel(
-      id: "5",
+      id: 5,
       name: "ریاضیات عمومی یک",
       type: CourseType.basic,
       units: 3,
@@ -61,7 +62,7 @@ class ChartController extends GetxController
     );
 
     final discrete = ChartCourseModel(
-      id: "6",
+      id: 6,
       name: "ساختمان گسسته",
       type: CourseType.specialized,
       units: 3,
@@ -74,7 +75,7 @@ class ChartController extends GetxController
 // Term 2
 
     final exercise1 = ChartCourseModel(
-      id: "8",
+      id: 8,
       name: "تربیت بدنی یک",
       type: CourseType.general,
       units: 1,
@@ -82,7 +83,7 @@ class ChartController extends GetxController
     );
 
     final expertEnglish = ChartCourseModel(
-      id: "9",
+      id: 9,
       name: "انگلیسی تخصصی",
       type: CourseType.specialized,
       units: 2,
@@ -92,7 +93,7 @@ class ChartController extends GetxController
     );
 
     final physics2 = ChartCourseModel(
-      id: "10",
+      id: 10,
       name: "فیزیک دو",
       type: CourseType.basic,
       units: 3,
@@ -103,7 +104,7 @@ class ChartController extends GetxController
     );
 
     final diff = ChartCourseModel(
-      id: "11",
+      id: 11,
       name: "معادلات دیفرانسیل",
       type: CourseType.basic,
       units: 3,
@@ -113,7 +114,7 @@ class ChartController extends GetxController
     );
 
     final math2 = ChartCourseModel(
-      id: "12",
+      id: 12,
       name: "ریاضیات عمومی دو",
       type: CourseType.basic,
       units: 3,
@@ -123,7 +124,7 @@ class ChartController extends GetxController
     );
 
     final logic = ChartCourseModel(
-      id: "13",
+      id: 13,
       name: "مدارهای منطقی",
       type: CourseType.specialized,
       units: 3,
@@ -133,7 +134,7 @@ class ChartController extends GetxController
     );
 
     final pop = ChartCourseModel(
-      id: "14",
+      id: 14,
       name: "اصول برنامه‌سازی",
       type: CourseType.specialized,
       units: 3,
@@ -145,7 +146,7 @@ class ChartController extends GetxController
 // Term 3
 
     final general = ChartCourseModel(
-      id: "15",
+      id: 15,
       name: "عمومی",
       type: CourseType.general,
       units: 2,
@@ -154,7 +155,7 @@ class ChartController extends GetxController
     );
 
     final elc = ChartCourseModel(
-      id: "16",
+      id: 16,
       name: "مدارهای الکتریکی",
       type: CourseType.specialized,
       units: 3,
@@ -164,7 +165,7 @@ class ChartController extends GetxController
     );
 
     final em = ChartCourseModel(
-      id: "17",
+      id: 17,
       name: "ریاضی مهندسی",
       type: CourseType.specialized,
       units: 3,
@@ -175,7 +176,7 @@ class ChartController extends GetxController
     );
 
     final statistics = ChartCourseModel(
-      id: "18",
+      id: 18,
       name: "آمار و احتمال مهندسی",
       type: CourseType.basic,
       units: 3,
@@ -185,7 +186,7 @@ class ChartController extends GetxController
     );
 
     final logicLab = ChartCourseModel(
-      id: "19",
+      id: 19,
       name: "آز مدارهای منطقی",
       type: CourseType.specialized,
       units: 1,
@@ -195,7 +196,7 @@ class ChartController extends GetxController
     );
 
     final assembly = ChartCourseModel(
-      id: "20",
+      id: 20,
       name: "زبان ماشین و برنامه‌سازی سیستم",
       type: CourseType.specialized,
       units: 3,
@@ -205,7 +206,7 @@ class ChartController extends GetxController
     );
 
     final ap = ChartCourseModel(
-      id: "21",
+      id: 21,
       name: "برنامه‌سازی پیشرفته",
       type: CourseType.specialized,
       units: 3,
@@ -218,7 +219,7 @@ class ChartController extends GetxController
 // Term 4
 
     final elctro = ChartCourseModel(
-      id: "22",
+      id: 22,
       name: "مدارهای الکترونیکی",
       type: CourseType.specialized,
       units: 3,
@@ -228,7 +229,7 @@ class ChartController extends GetxController
     );
 
     final nc = ChartCourseModel(
-      id: "23",
+      id: 23,
       name: "روش‌های محاسبات عددی",
       type: CourseType.specialized,
       units: 3,
@@ -238,7 +239,7 @@ class ChartController extends GetxController
     );
 
     final ca = ChartCourseModel(
-      id: "24",
+      id: 24,
       name: "معماری کامپیوتر",
       type: CourseType.specialized,
       units: 3,
@@ -249,7 +250,7 @@ class ChartController extends GetxController
     );
 
     final ds = ChartCourseModel(
-      id: "25",
+      id: 25,
       name: "ساختمان داده‌ها و الگوریتم‌ها",
       type: CourseType.specialized,
       units: 3,
@@ -259,7 +260,7 @@ class ChartController extends GetxController
     );
 
     final lanTheory = ChartCourseModel(
-      id: "26",
+      id: 26,
       name: "نظریه زبان‌ها و ماشین",
       type: CourseType.specialized,
       units: 3,
@@ -271,7 +272,7 @@ class ChartController extends GetxController
 // Term 5
 
     final pm = ChartCourseModel(
-      id: "27",
+      id: 27,
       name: "شیوه ارائه مطالب علمی و فنی",
       type: CourseType.specialized,
       units: 2,
@@ -281,7 +282,7 @@ class ChartController extends GetxController
     );
 
     final signal = ChartCourseModel(
-      id: "28",
+      id: 28,
       name: "سیگنال‌ها و سیستم‌ها",
       type: CourseType.specialized,
       units: 3,
@@ -291,7 +292,7 @@ class ChartController extends GetxController
     );
 
     final os = ChartCourseModel(
-      id: "29",
+      id: 29,
       name: "اصول طراحی سیستم‌های عامل",
       type: CourseType.specialized,
       units: 3,
@@ -301,7 +302,7 @@ class ChartController extends GetxController
     );
 
     final caLab = ChartCourseModel(
-      id: "30",
+      id: 30,
       name: "آز معماری کامپیوتر",
       type: CourseType.specialized,
       units: 1,
@@ -311,7 +312,7 @@ class ChartController extends GetxController
     );
 
     final optional = ChartCourseModel(
-      id: "31",
+      id: 31,
       name: "اختیاری",
       type: CourseType.optional,
       units: 3,
@@ -320,7 +321,7 @@ class ChartController extends GetxController
     );
 
     final algorithms = ChartCourseModel(
-      id: "32",
+      id: 32,
       name: "طراحی و تحلیل الگوریتم‌ها",
       type: CourseType.specialized,
       units: 3,
@@ -332,7 +333,7 @@ class ChartController extends GetxController
 // Term 6
 
     final dataTransfer = ChartCourseModel(
-      id: "33",
+      id: 33,
       name: "انتقال داده‌ها",
       type: CourseType.specialized,
       units: 3,
@@ -343,7 +344,7 @@ class ChartController extends GetxController
     );
 
     final osLab = ChartCourseModel(
-      id: "34",
+      id: 34,
       name: "آز سیستم‌های عامل",
       type: CourseType.specialized,
       units: 1,
@@ -353,7 +354,7 @@ class ChartController extends GetxController
     );
 
     final micro = ChartCourseModel(
-      id: "35",
+      id: 35,
       name: "ریزپردازنده",
       type: CourseType.specialized,
       units: 3,
@@ -363,7 +364,7 @@ class ChartController extends GetxController
     );
 
     final db = ChartCourseModel(
-      id: "36",
+      id: 36,
       name: "اصول طراحی پایگاه داده‌ها",
       type: CourseType.specialized,
       units: 3,
@@ -373,7 +374,7 @@ class ChartController extends GetxController
     );
 
     final ai = ChartCourseModel(
-      id: "37",
+      id: 37,
       name: "هوش مصنوعی",
       type: CourseType.specialized,
       units: 3,
@@ -385,7 +386,7 @@ class ChartController extends GetxController
 // Term 7
 
     final exercise2 = ChartCourseModel(
-      id: "38",
+      id: 38,
       name: "تربیت بدنی دو",
       type: CourseType.general,
       units: 1,
@@ -393,7 +394,7 @@ class ChartController extends GetxController
     );
 
     final network = ChartCourseModel(
-      id: "39",
+      id: 39,
       name: "شبکه‌های کامپیوتری",
       type: CourseType.specialized,
       units: 3,
@@ -404,7 +405,7 @@ class ChartController extends GetxController
     );
 
     final fpga = ChartCourseModel(
-      id: "40",
+      id: 40,
       name: "طراحی کامپیوتری سیستم‌های دیجیتال",
       type: CourseType.specialized,
       units: 3,
@@ -414,7 +415,7 @@ class ChartController extends GetxController
     );
 
     final microLab = ChartCourseModel(
-      id: "41",
+      id: 41,
       name: "آز ریزپردازنده",
       type: CourseType.specialized,
       units: 1,
@@ -424,7 +425,7 @@ class ChartController extends GetxController
     );
 
     final software = ChartCourseModel(
-      id: "42",
+      id: 42,
       name: "تحلیل و طراحی سیستم‌ها",
       type: CourseType.specialized,
       units: 3,
@@ -434,7 +435,7 @@ class ChartController extends GetxController
     );
 
     final compiler = ChartCourseModel(
-      id: "43",
+      id: 43,
       name: "اصول طراحی کامپایلرها",
       type: CourseType.specialized,
       units: 3,
@@ -446,7 +447,7 @@ class ChartController extends GetxController
 // Term 8
 
     final internship = ChartCourseModel(
-      id: "44",
+      id: 44,
       name: "کارآموزی",
       type: CourseType.specialized,
       units: 2,
@@ -456,7 +457,7 @@ class ChartController extends GetxController
     );
 
     final project = ChartCourseModel(
-      id: "45",
+      id: 45,
       name: "پروژه کارشناسی",
       type: CourseType.specialized,
       units: 3,
@@ -466,7 +467,7 @@ class ChartController extends GetxController
     );
 
     final networkLab = ChartCourseModel(
-      id: "46",
+      id: 46,
       name: "آز شبکه‌های کامپیوتری",
       type: CourseType.specialized,
       units: 1,

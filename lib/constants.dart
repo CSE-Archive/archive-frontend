@@ -4,6 +4,7 @@ const kSizeDefault = 16.0;
 const kSizeMaxWidth = 1500.0;
 
 const kColorPrimary = Color(0xFF394955);
+const kColorSecondery = Color(0xFFFFFDFA);
 const kColorChartSpecialized = Color(0xFFBED0DE);
 const kColorChartGeneral = Color(0xFFD3FBD8);
 const kColorChartBasic = Color(0xFF8A707F);

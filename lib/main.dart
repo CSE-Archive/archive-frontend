@@ -13,11 +13,12 @@ import 'package:cse_archive/views/reference_item/references_item_view.dart'
     deferred as reference_item_view_deferred;
 import 'package:cse_archive/views/teacher_item/teacher_item_view.dart'
     deferred as teacher_item_view_deferred;
+import 'package:cse_archive/views/course_item/course_item_view.dart'
+    deferred as course_item_view_deferred;
+
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-
 
 void main() {
   usePathUrlStrategy();
@@ -85,6 +86,18 @@ class CSEArchive extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 return teacher_item_view_deferred.TeacherItemView();
+              }
+              return const LoadingView();
+            },
+          ),
+        ),
+        GetPage(
+          name: '/courses/:id/:slug',
+          page: () => FutureBuilder(
+            future: course_item_view_deferred.loadLibrary(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return course_item_view_deferred.CourseItemView();
               }
               return const LoadingView();
             },

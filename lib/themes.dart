@@ -9,13 +9,13 @@ class CustomThemes {
     colorScheme: const ColorScheme(
       brightness: Brightness.dark,
       primary: kColorPrimary,
-      secondary: Colors.white,
-      background: Colors.white,
+      secondary: kColorSecondery,
+      background: kColorSecondery,
       error: Colors.red,
-      surface: Colors.white,
+      surface: kColorSecondery,
       onPrimary: kColorPrimary,
-      onSecondary: Colors.white,
-      onBackground: Colors.white,
+      onSecondary: kColorSecondery,
+      onBackground: kColorSecondery,
       onError: Colors.red,
       onSurface: kColorPrimary,
     ),
@@ -23,19 +23,19 @@ class CustomThemes {
 
   static final lightTheme = ThemeData(
     textTheme: GoogleFonts.vazirmatnTextTheme(),
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: kColorSecondery,
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
-      primary: Colors.white,
+      primary: kColorSecondery,
       secondary: kColorPrimary,
       background: kColorPrimary,
       error: Colors.red,
       surface: kColorPrimary,
-      onPrimary: Colors.white,
+      onPrimary: kColorSecondery,
       onSecondary: kColorPrimary,
       onBackground: kColorPrimary,
       onError: Colors.red,
-      onSurface: Colors.white,
+      onSurface: kColorSecondery,
     ),
   );
 }

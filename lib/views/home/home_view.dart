@@ -50,7 +50,7 @@ class HomeView extends StatelessWidget {
                       ),
                       child: CustomCard(
                         onPressed: () => Get.toNamed(
-                          '/teachers/1/test',
+                          '/courses/1/test',
                         ),
                         child: Container(
                           width: double.infinity,

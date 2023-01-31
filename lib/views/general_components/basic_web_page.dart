@@ -13,6 +13,7 @@ Widget basicWebPage({
       child: SizedBox(
         width: kSizeMaxWidth,
         child: ListView(
+          primary: true,
           children: [
             appbar ?? appbarBuilder(context),
             const SizedBox(height: 2 * kSizeDefault),

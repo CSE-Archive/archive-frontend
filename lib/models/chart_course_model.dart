@@ -1,3 +1,5 @@
+import 'general.dart';
+
 class ChartCourseModel {
   ChartCourseModel({
     required this.id,
@@ -9,20 +11,9 @@ class ChartCourseModel {
   });
 
   CourseType type;
-  final String id, name;
+  final int id;
+  final String name;
   final int units;
   final Map<ChartCourseModel, RequisiteType> requisites;
   final bool doesOpenNewTab;
-}
-
-enum CourseType {
-  basic,
-  general,
-  optional,
-  specialized,
-}
-
-enum RequisiteType {
-  co,
-  pre,
 }

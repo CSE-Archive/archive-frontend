@@ -1,9 +1,10 @@
 import 'package:cse_archive/constants.dart';
 import 'package:cse_archive/controllers/chart/chart_controller.dart';
-import 'package:cse_archive/customs.dart';
 import 'package:cse_archive/models/chart_course_model.dart';
+import 'package:cse_archive/models/general.dart';
 import 'package:cse_archive/views/general_components/basic_web_page.dart';
 import 'package:cse_archive/views/general_components/custom_card.dart';
+import 'package:cse_archive/views/general_components/helpers.dart';
 import 'package:cse_archive/views/general_components/path_builder.dart';
 import 'package:cse_archive/views/general_components/title_heading.dart';
 import 'package:cse_archive/views/loading_view.dart';
@@ -14,19 +15,6 @@ class ChartView extends StatelessWidget {
   const ChartView({
     super.key,
   });
-
-  String courseTypeToString(CourseType type) {
-    switch (type) {
-      case CourseType.basic:
-        return 'chartBasic'.tr;
-      case CourseType.general:
-        return 'chartGeneral'.tr;
-      case CourseType.optional:
-        return 'chartOptional'.tr;
-      case CourseType.specialized:
-        return 'chartSpecialized'.tr;
-    }
-  }
 
   String getTooltip(
     Map<ChartCourseModel, RequisiteType> requisites,
