@@ -51,7 +51,7 @@ Widget referenceCardsBuilder(List<ReferenceModel> references) {
                                   : TextDirection.ltr,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText1!
+                                  .bodyLarge!
                                   .copyWith(
                                     color:
                                         Theme.of(context).colorScheme.secondary,

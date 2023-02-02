@@ -74,7 +74,7 @@ class HomeView extends StatelessWidget {
                                               : TextDirection.ltr,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .bodyText1!
+                                          .bodyLarge!
                                           .copyWith(
                                               color: Theme.of(context)
                                                   .colorScheme

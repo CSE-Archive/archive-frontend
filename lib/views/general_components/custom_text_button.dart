@@ -31,7 +31,7 @@ class CustomTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hoverController = CardHoverController();
-    final defaultStyle = Theme.of(context).textTheme.bodyText1!.copyWith(
+    final defaultStyle = Theme.of(context).textTheme.bodyLarge!.copyWith(
           color: Theme.of(context).colorScheme.secondary,
           fontWeight: FontWeight.bold,
         );

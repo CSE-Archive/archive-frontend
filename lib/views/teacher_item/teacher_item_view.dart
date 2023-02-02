@@ -312,7 +312,7 @@ class TeacherItemView extends StatelessWidget {
                                           overflow: TextOverflow.ellipsis,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .bodyText1!
+                                              .bodyLarge!
                                               .copyWith(
                                                 color: Theme.of(context)
                                                     .colorScheme
