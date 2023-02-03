@@ -1,4 +1,4 @@
-import 'package:cse_archive/views/general_components/basic_web_page.dart';
+import 'package:cse_archive/views/general/basic_web_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

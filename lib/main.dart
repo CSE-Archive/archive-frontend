@@ -1,14 +1,17 @@
 import 'package:cse_archive/bindings/chart_binding.dart';
+import 'package:cse_archive/bindings/courses_binding.dart';
 import 'package:cse_archive/bindings/initial_binding.dart';
 import 'package:cse_archive/bindings/home_binding.dart';
-import 'package:cse_archive/controllers/appbar_controller.dart';
-import 'package:cse_archive/customs.dart';
+import 'package:cse_archive/controllers/general/appbar_controller.dart';
+import 'package:cse_archive/scroll_behavior.dart';
 import 'package:cse_archive/themes.dart';
 import 'package:cse_archive/translations.dart';
 import 'package:cse_archive/views/home/home_view.dart';
 import 'package:cse_archive/views/loading_view.dart';
 import 'package:cse_archive/views/chart/chart_view.dart'
     deferred as chart_view_deferred;
+import 'package:cse_archive/views/courses/courses_view.dart'
+    deferred as courses_view_deferred;
 import 'package:cse_archive/views/reference_item/references_item_view.dart'
     deferred as reference_item_view_deferred;
 import 'package:cse_archive/views/teacher_item/teacher_item_view.dart'
@@ -32,7 +35,7 @@ class CSEArchive extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      scrollBehavior: MyCustomScrollBehavior(),
+      scrollBehavior: MyScrollBehavior(),
       translations: MyTranslations(),
       title: 'CSE Archive',
       theme: CustomThemes.lightTheme,
@@ -90,6 +93,21 @@ class CSEArchive extends StatelessWidget {
               return const LoadingView();
             },
           ),
+        ),
+        GetPage(
+          name: '/courses',
+          page: () => FutureBuilder(
+            future: courses_view_deferred.loadLibrary(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                Get.find<AppbarController>().activeButton.value =
+                    AppbarButtons.courses;
+                return courses_view_deferred.CoursesView();
+              }
+              return const LoadingView();
+            },
+          ),
+          binding: CoursesBinding(),
         ),
         GetPage(
           name: '/courses/:id/:slug',

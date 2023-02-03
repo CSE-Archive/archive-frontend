@@ -1,5 +1,5 @@
 import 'package:cse_archive/constants.dart';
-import 'package:cse_archive/views/general_components/custom_text_button.dart';
+import 'package:cse_archive/views/general/custom_text_button.dart';
 import 'package:flutter/material.dart';
 
 Widget pathBuilder(

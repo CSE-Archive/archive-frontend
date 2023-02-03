@@ -1,12 +1,13 @@
 import 'package:cse_archive/constants.dart';
-import 'package:cse_archive/controllers/appbar_controller.dart';
-import 'package:cse_archive/views/general_components/custom_text_button.dart';
+import 'package:cse_archive/controllers/general/appbar_controller.dart';
+import 'package:cse_archive/views/general/custom_text_button.dart';
+import 'package:cse_archive/views/general/searchbar_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 Widget appbarBuilder(BuildContext context) {
-  var appbarController = Get.find<AppbarController>();
+  var controller = Get.find<AppbarController>();
 
   return Container(
     height: 3.5 * kSizeDefault,
@@ -50,39 +51,11 @@ Widget appbarBuilder(BuildContext context) {
             const SizedBox(width: kSizeDefault / 2),
             Expanded(
               flex: 10,
-              child: Obx(
-                () => TextField(
-                  maxLines: 1,
-                  onChanged: (text) =>
-                      appbarController.detectTextDirection(text),
-                  textDirection: appbarController.searchBarTextDirection.value,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge!
-                      .copyWith(color: Theme.of(context).colorScheme.secondary),
-                  cursorColor: Theme.of(context).colorScheme.secondary,
-                  controller: appbarController.searchBarController,
-                  decoration: InputDecoration(
-                    isDense: true,
-                    contentPadding: const EdgeInsets.symmetric(
-                      vertical: kSizeDefault / 1.2,
-                      horizontal: kSizeDefault,
-                    ),
-                    border: InputBorder.none,
-                    filled: true,
-                    fillColor: Theme.of(context)
-                        .colorScheme
-                        .secondary
-                        .withOpacity(0.1),
-                    hintText: 'appbarSearch'.tr,
-                    hintStyle: TextStyle(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .secondary
-                          .withOpacity(0.8),
-                    ),
-                  ),
-                ),
+              child: searchBarBuilder(
+                context: context,
+                searchBarController: controller.searchBarController,
+                primaryColor: Theme.of(context).colorScheme.secondary,
+                secondaryColor: Theme.of(context).colorScheme.primary,
               ),
             ),
             const Spacer(flex: 4),
@@ -93,26 +66,27 @@ Widget appbarBuilder(BuildContext context) {
                 CustomTextButton(
                   label: 'appbarChart'.tr,
                   onPressed: () => Get.toNamed('/chart'),
-                  staticUnderline: appbarController.activeButton.value ==
-                      AppbarButtons.chart,
+                  staticUnderline:
+                      controller.activeButton.value == AppbarButtons.chart,
                 ),
                 const SizedBox(width: kSizeDefault),
                 CustomTextButton(
                   label: 'appbarCourses'.tr,
-                  staticUnderline: appbarController.activeButton.value ==
-                      AppbarButtons.courses,
+                  onPressed: () => Get.toNamed('/courses'),
+                  staticUnderline:
+                      controller.activeButton.value == AppbarButtons.courses,
                 ),
                 const SizedBox(width: kSizeDefault),
                 CustomTextButton(
                   label: 'appbarReferences'.tr,
-                  staticUnderline: appbarController.activeButton.value ==
-                      AppbarButtons.references,
+                  staticUnderline:
+                      controller.activeButton.value == AppbarButtons.references,
                 ),
                 const SizedBox(width: kSizeDefault),
                 CustomTextButton(
                   label: 'appbarTeachers'.tr,
-                  staticUnderline: appbarController.activeButton.value ==
-                      AppbarButtons.teachers,
+                  staticUnderline:
+                      controller.activeButton.value == AppbarButtons.teachers,
                 ),
               ],
             ),

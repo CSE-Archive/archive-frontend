@@ -1,10 +1,10 @@
 import 'package:cse_archive/constants.dart';
 import 'package:cse_archive/controllers/reference_item/reference_item_controller.dart';
-import 'package:cse_archive/views/general_components/basic_web_page.dart';
-import 'package:cse_archive/views/general_components/custom_card.dart';
-import 'package:cse_archive/views/general_components/path_builder.dart';
-import 'package:cse_archive/views/general_components/reference_cards_builder.dart';
-import 'package:cse_archive/views/general_components/title_heading.dart';
+import 'package:cse_archive/views/general/basic_web_page.dart';
+import 'package:cse_archive/views/general/course_cards_builder.dart';
+import 'package:cse_archive/views/general/path_builder.dart';
+import 'package:cse_archive/views/general/reference_cards_builder.dart';
+import 'package:cse_archive/views/general/title_heading.dart';
 import 'package:cse_archive/views/loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -184,97 +184,12 @@ class ReferenceItemView extends StatelessWidget {
             if (data.courses.isNotEmpty)
               TitleHeading(title: 'referenceItemRelatedCourses'.tr),
             if (data.courses.isNotEmpty)
-              SizedBox(
-                height: 9 * kSizeDefault,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: data.courses.length,
-                  itemBuilder: (context, index) {
-                    var course = data.courses[index];
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        if (index == 0) const SizedBox(width: kSizeDefault),
-                        Container(
-                          width: 19 * kSizeDefault,
-                          margin: const EdgeInsets.only(
-                            left: kSizeDefault,
-                            top: kSizeDefault,
-                            bottom: kSizeDefault,
-                          ),
-                          child: CustomCard(
-                            onPressed: () {},
-                            child: Container(
-                              width: double.infinity,
-                              color: Theme.of(context).colorScheme.primary,
-                              padding: const EdgeInsets.all(kSizeDefault),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Text(
-                                          course['title'],
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyLarge!
-                                              .copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .secondary,
-                                              ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const Spacer(),
-                                  Text(
-                                    '${course['unit']} ${'courseUnit'.tr}',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary
-                                              .withOpacity(0.7),
-                                        ),
-                                  ),
-                                  Text(
-                                    course['type'],
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodySmall!
-                                        .copyWith(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .secondary
-                                              .withOpacity(0.7),
-                                        ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        if (index == data.courses.length - 1)
-                          const SizedBox(width: kSizeDefault),
-                      ],
-                    );
-                  },
-                ),
-              ),
+              courseCardsBuilder(context: context, courses: data.courses),
             const SizedBox(height: 2 * kSizeDefault),
             if (data.references.isNotEmpty)
               TitleHeading(title: 'referenceItemRelatedReferences'.tr),
             if (data.references.isNotEmpty)
-              referenceCardsBuilder(data.references),
+              referenceCardsBuilder(references: data.references),
           ],
         ),
         onLoading: const LoadingView(),

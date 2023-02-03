@@ -1,14 +1,12 @@
 import 'package:cse_archive/constants.dart';
 import 'package:cse_archive/controllers/home/reference_cards_controller.dart';
 import 'package:cse_archive/controllers/home/resource_cards_controller.dart';
-import 'package:cse_archive/views/general_components/basic_web_page.dart';
-import 'package:cse_archive/views/general_components/reference_cards_builder.dart';
+import 'package:cse_archive/views/general/basic_web_page.dart';
+import 'package:cse_archive/views/general/reference_cards_builder.dart';
+import 'package:cse_archive/views/general/resource_cards_builder.dart';
+import 'package:cse_archive/views/general/title_heading.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart' as intl;
-
-import '../general_components/custom_card.dart';
-import '../general_components/title_heading.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({super.key});
@@ -28,104 +26,15 @@ class HomeView extends StatelessWidget {
             title: 'newResources'.tr,
             seeAllOnPressed: (() {}),
           ),
-          SizedBox(
-            height: 9 * kSizeDefault,
-            child: ListView.builder(
-              shrinkWrap: true,
-              scrollDirection: Axis.horizontal,
-              itemCount: resourceCardsController.resources.length,
-              itemBuilder: (context, index) {
-                var resource = resourceCardsController.resources[index];
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    if (index == 0) const SizedBox(width: kSizeDefault),
-                    Container(
-                      width: 19 * kSizeDefault,
-                      margin: const EdgeInsets.only(
-                        left: kSizeDefault,
-                        top: kSizeDefault,
-                        bottom: kSizeDefault,
-                      ),
-                      child: CustomCard(
-                        onPressed: () => Get.toNamed(
-                          '/courses/1/test',
-                        ),
-                        child: Container(
-                          width: double.infinity,
-                          color: Theme.of(context).colorScheme.primary,
-                          padding: const EdgeInsets.all(kSizeDefault),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Text(
-                                      resource.title,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      textDirection:
-                                          intl.Bidi.detectRtlDirectionality(
-                                                  resource.title)
-                                              ? TextDirection.rtl
-                                              : TextDirection.ltr,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyLarge!
-                                          .copyWith(
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .secondary),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              const Spacer(),
-                              Text(
-                                resource.semester,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary
-                                          .withOpacity(0.7),
-                                    ),
-                              ),
-                              Text(
-                                resource.teacher,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodySmall!
-                                    .copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .secondary
-                                          .withOpacity(0.7),
-                                    ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    if (index == resourceCardsController.resources.length - 1)
-                      const SizedBox(width: kSizeDefault),
-                  ],
-                );
-              },
-            ),
-          ),
+          resourceCardsBuilder(resources: resourceCardsController.resources),
           const SizedBox(height: 2 * kSizeDefault),
           TitleHeading(
             title: 'newReferences'.tr,
             seeAllOnPressed: () {},
           ),
-          referenceCardsBuilder(referenceCardsController.references),
+          referenceCardsBuilder(
+            references: referenceCardsController.references,
+          ),
         ],
       ),
     );

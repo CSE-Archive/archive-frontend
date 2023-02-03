@@ -4,7 +4,7 @@ class MyTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'fa_IR': {
-          'appbarSearch': 'جستجو ...',
+          'search': ' جستجو ...',
           'appbarChart': 'چارت مهندسی کامپیوتر',
           'appbarCourses': 'دروس',
           'appbarReferences': 'رفرنس‌ها',
@@ -26,6 +26,14 @@ class MyTranslations extends Translations {
           'teacherItemRelatedLinks': 'لینک‌های مرتبط',
           'teacherItemDepartment': 'بخش',
           'courses': 'دروس',
+          'coursesTitle': 'عنوان',
+          'coursesAll': 'همه',
+          'coursesType': 'نوع درس',
+          'coursesTypeSpecialized': 'تخصصی',
+          'coursesTypeOptional': 'اختیاری',
+          'coursesTypeBasic': 'پایه',
+          'coursesTypeGeneral': 'عمومی',
+          'coursesUnits': 'تعداد واحد',
           'courseItemUnits': 'تعداد واحد',
           'courseItemType': 'نوع درس',
           'courseItemRequisitesAll': 'همه',
@@ -52,6 +60,7 @@ class MyTranslations extends Translations {
           'chartCo': 'هم‌نیاز:',
           'chartPre': 'پیش‌نیاز:',
           'chartSeeCourses': 'برای دیدن دروس کلیک کنید',
+          'filters': 'فیلترها',
         },
       };
 }

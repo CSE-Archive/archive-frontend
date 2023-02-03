@@ -1,13 +1,13 @@
 import 'package:cse_archive/constants.dart';
 import 'package:cse_archive/controllers/course_item/course_item_controller.dart';
 import 'package:cse_archive/models/general.dart';
-import 'package:cse_archive/views/general_components/basic_web_page.dart';
-import 'package:cse_archive/views/general_components/course_cards_builder.dart';
-import 'package:cse_archive/views/general_components/expansiontile_builder.dart';
-import 'package:cse_archive/views/general_components/helpers.dart';
-import 'package:cse_archive/views/general_components/path_builder.dart';
-import 'package:cse_archive/views/general_components/reference_cards_builder.dart';
-import 'package:cse_archive/views/general_components/title_heading.dart';
+import 'package:cse_archive/views/general/basic_web_page.dart';
+import 'package:cse_archive/views/general/course_cards_builder.dart';
+import 'package:cse_archive/views/general/expansiontile_builder.dart';
+import 'package:cse_archive/views/general/helpers.dart';
+import 'package:cse_archive/views/general/path_builder.dart';
+import 'package:cse_archive/views/general/reference_cards_builder.dart';
+import 'package:cse_archive/views/general/title_heading.dart';
 import 'package:cse_archive/views/loading_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -35,7 +35,7 @@ class CourseItemView extends StatelessWidget {
               context,
               roots: {
                 'home'.tr: () => Get.toNamed('/'),
-                'courses'.tr: () {},
+                'courses'.tr: () => Get.toNamed('/courses'),
                 data!.name: () =>
                     Get.toNamed('/courses/${data.id}/${data.slug}'),
               },
@@ -270,13 +270,14 @@ class CourseItemView extends StatelessWidget {
                       ],
                     ),
                     SizedBox(
-                      height: 9 * kSizeDefault,
+                      height: kSizeCourseCardHeight,
                       child: TabBarView(
                         children: [
                           if (data.requisites.entries
                               .where((pair) => pair.value == RequisiteType.pre)
                               .isNotEmpty)
                             courseCardsBuilder(
+                              context: context,
                               courses: data.requisites.entries
                                   .where(
                                       (pair) => pair.value == RequisiteType.pre)
@@ -288,6 +289,7 @@ class CourseItemView extends StatelessWidget {
                               .where((pair) => pair.value == RequisiteType.co)
                               .isNotEmpty)
                             courseCardsBuilder(
+                              context: context,
                               courses: data.requisites.entries
                                   .where(
                                       (pair) => pair.value == RequisiteType.co)
@@ -297,6 +299,7 @@ class CourseItemView extends StatelessWidget {
                             ),
                           if (data.requisiteFor.isNotEmpty)
                             courseCardsBuilder(
+                              context: context,
                               courses: data.requisiteFor,
                               // icon: Center(
                               //   child: RichText(
@@ -341,7 +344,7 @@ class CourseItemView extends StatelessWidget {
             if (data.references.isNotEmpty)
               TitleHeading(title: 'courseItemRefernces'.tr),
             if (data.references.isNotEmpty)
-              referenceCardsBuilder(data.references),
+              referenceCardsBuilder(references: data.references),
             if (data.resources.isNotEmpty)
               const SizedBox(height: 2 * kSizeDefault),
             if (data.resources.isNotEmpty)
@@ -350,8 +353,8 @@ class CourseItemView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(
                   top: kSizeDefault,
-                  left: kSizeDefault,
-                  right: kSizeDefault,
+                  left: kSizeDefault / 2,
+                  right: kSizeDefault / 2,
                 ),
                 child: Column(
                   children: data.resources.map(
@@ -376,8 +379,8 @@ class CourseItemView extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(
                   top: kSizeDefault,
-                  left: kSizeDefault,
-                  right: kSizeDefault,
+                  left: kSizeDefault / 2,
+                  right: kSizeDefault / 2,
                 ),
                 child: Column(
                   children: data.records.map(

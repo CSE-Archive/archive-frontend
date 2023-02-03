@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 const kSizeDefault = 16.0;
 const kSizeMaxWidth = 1500.0;
+const kSizeCardWidth = 19 * kSizeDefault;
+const kSizeCourseCardHeight = 8 * kSizeDefault;
+const kSizeResourceCardHeight = 8 * kSizeDefault;
+const kSizeReferenceCardHeight = 22 * kSizeDefault;
 
 const kColorPrimary = Color(0xFF394955);
 const kColorSecondery = Color(0xFFFFFDFA);
