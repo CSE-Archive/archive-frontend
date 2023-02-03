@@ -344,7 +344,10 @@ class CourseItemView extends StatelessWidget {
             if (data.references.isNotEmpty)
               TitleHeading(title: 'courseItemRefernces'.tr),
             if (data.references.isNotEmpty)
-              referenceCardsBuilder(references: data.references),
+              referenceCardsBuilder(
+                context: context,
+                references: data.references,
+              ),
             if (data.resources.isNotEmpty)
               const SizedBox(height: 2 * kSizeDefault),
             if (data.resources.isNotEmpty)

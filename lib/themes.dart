@@ -10,13 +10,13 @@ class CustomThemes {
     colorScheme: const ColorScheme(
       brightness: Brightness.dark,
       primary: kColorPrimary,
-      secondary: kColorSecondery,
-      background: kColorSecondery,
+      secondary: kColorSecondary,
+      background: kColorSecondary,
       error: Colors.red,
-      surface: kColorSecondery,
+      surface: kColorSecondary,
       onPrimary: kColorPrimary,
-      onSecondary: kColorSecondery,
-      onBackground: kColorSecondery,
+      onSecondary: kColorSecondary,
+      onBackground: kColorSecondary,
       onError: Colors.red,
       onSurface: kColorPrimary,
     ),
@@ -24,20 +24,20 @@ class CustomThemes {
 
   static final lightTheme = ThemeData(
     textTheme: GoogleFonts.vazirmatnTextTheme(),
-    scaffoldBackgroundColor: kColorSecondery,
+    scaffoldBackgroundColor: kColorSecondary,
     unselectedWidgetColor: kColorPrimary,
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
-      primary: kColorSecondery,
+      primary: kColorSecondary,
       secondary: kColorPrimary,
       background: kColorPrimary,
       error: Colors.red,
       surface: kColorPrimary,
-      onPrimary: kColorSecondery,
+      onPrimary: kColorSecondary,
       onSecondary: kColorPrimary,
       onBackground: kColorPrimary,
       onError: Colors.red,
-      onSurface: kColorSecondery,
+      onSurface: kColorSecondary,
     ),
   );
 }

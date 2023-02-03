@@ -30,9 +30,10 @@ class HomeView extends StatelessWidget {
           const SizedBox(height: 2 * kSizeDefault),
           TitleHeading(
             title: 'newReferences'.tr,
-            seeAllOnPressed: () {},
+            seeAllOnPressed: () => Get.toNamed('/references'),
           ),
           referenceCardsBuilder(
+            context: context,
             references: referenceCardsController.references,
           ),
         ],

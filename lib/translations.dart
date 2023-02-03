@@ -15,6 +15,7 @@ class MyTranslations extends Translations {
           'loading': "در حال بارگذاری ...",
           'home': 'صفحه اصلی',
           'references': 'رفرنس‌ها',
+          'referencesTitleAuthor': 'عنوان/نویسنده',
           'referenceItemTitle': 'عنوان',
           'referenceItemAuthors': 'نویسندگان',
           'referenceItemDownload': 'دانلود رفرنس',

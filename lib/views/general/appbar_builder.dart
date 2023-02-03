@@ -64,13 +64,6 @@ Widget appbarBuilder(BuildContext context) {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 CustomTextButton(
-                  label: 'appbarChart'.tr,
-                  onPressed: () => Get.toNamed('/chart'),
-                  staticUnderline:
-                      controller.activeButton.value == AppbarButtons.chart,
-                ),
-                const SizedBox(width: kSizeDefault),
-                CustomTextButton(
                   label: 'appbarCourses'.tr,
                   onPressed: () => Get.toNamed('/courses'),
                   staticUnderline:
@@ -79,6 +72,7 @@ Widget appbarBuilder(BuildContext context) {
                 const SizedBox(width: kSizeDefault),
                 CustomTextButton(
                   label: 'appbarReferences'.tr,
+                  onPressed: () => Get.toNamed('/references'),
                   staticUnderline:
                       controller.activeButton.value == AppbarButtons.references,
                 ),
@@ -87,6 +81,13 @@ Widget appbarBuilder(BuildContext context) {
                   label: 'appbarTeachers'.tr,
                   staticUnderline:
                       controller.activeButton.value == AppbarButtons.teachers,
+                ),
+                const SizedBox(width: kSizeDefault),
+                CustomTextButton(
+                  label: 'appbarChart'.tr,
+                  onPressed: () => Get.toNamed('/chart'),
+                  staticUnderline:
+                      controller.activeButton.value == AppbarButtons.chart,
                 ),
               ],
             ),

@@ -36,14 +36,14 @@ class CustomTextButton extends StatelessWidget {
           fontWeight: FontWeight.bold,
         );
 
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      onEnter: (event) => hoverController.onEnter(),
-      onExit: (event) => hoverController.onExit(),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextButton(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (event) => hoverController.onEnter(),
+          onExit: (event) => hoverController.onExit(),
+          child: TextButton(
             onPressed: onPressed,
             style: ButtonStyle(
               shadowColor: MaterialStateProperty.all(
@@ -61,20 +61,20 @@ class CustomTextButton extends StatelessWidget {
               style: labelStyle ?? defaultStyle,
             ),
           ),
-          if (showUnderline ?? true)
-            Obx(
-              () => AnimatedContainer(
-                duration: const Duration(milliseconds: 200),
-                height: 1.5,
-                width: _textSize(label, labelStyle ?? defaultStyle).width -
-                    (kSizeDefault / 2),
-                color: hoverController.hover.value || (staticUnderline ?? false)
-                    ? labelStyle?.color ?? defaultStyle.color
-                    : Colors.transparent,
-              ),
+        ),
+        if (showUnderline ?? true)
+          Obx(
+            () => AnimatedContainer(
+              duration: const Duration(milliseconds: 200),
+              height: 1.5,
+              width: _textSize(label, labelStyle ?? defaultStyle).width -
+                  (kSizeDefault / 2),
+              color: hoverController.hover.value || (staticUnderline ?? false)
+                  ? labelStyle?.color ?? defaultStyle.color
+                  : Colors.transparent,
             ),
-        ],
-      ),
+          ),
+      ],
     );
   }
 }

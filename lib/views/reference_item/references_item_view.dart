@@ -32,7 +32,7 @@ class ReferenceItemView extends StatelessWidget {
               context,
               roots: {
                 'home'.tr: () => Get.toNamed('/'),
-                'references'.tr: () {},
+                'references'.tr: () => Get.toNamed('/references'),
                 data!.title: () =>
                     Get.toNamed('/references/${data.id}/${data.slug}'),
               },
@@ -189,7 +189,10 @@ class ReferenceItemView extends StatelessWidget {
             if (data.references.isNotEmpty)
               TitleHeading(title: 'referenceItemRelatedReferences'.tr),
             if (data.references.isNotEmpty)
-              referenceCardsBuilder(references: data.references),
+              referenceCardsBuilder(
+                context: context,
+                references: data.references,
+              ),
           ],
         ),
         onLoading: const LoadingView(),
