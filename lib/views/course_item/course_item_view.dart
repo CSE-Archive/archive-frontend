@@ -7,6 +7,7 @@ import 'package:cse_archive/views/general/expansiontile_builder.dart';
 import 'package:cse_archive/views/general/helpers.dart';
 import 'package:cse_archive/views/general/path_builder.dart';
 import 'package:cse_archive/views/general/reference_cards_builder.dart';
+import 'package:cse_archive/views/general/teacher_cards_builder.dart';
 import 'package:cse_archive/views/general/title_heading.dart';
 import 'package:cse_archive/views/loading_view.dart';
 import 'package:flutter/material.dart';
@@ -301,37 +302,6 @@ class CourseItemView extends StatelessWidget {
                             courseCardsBuilder(
                               context: context,
                               courses: data.requisiteFor,
-                              // icon: Center(
-                              //   child: RichText(
-                              //     text: TextSpan(
-                              //       children: [
-                              //         TextSpan(
-                              //           text: 'A → ',
-                              //           style: Theme.of(context)
-                              //               .textTheme
-                              //               .titleMedium!
-                              //               .copyWith(
-                              //                 color: Theme.of(context)
-                              //                     .colorScheme
-                              //                     .secondary
-                              //                     .withOpacity(0.4),
-                              //               ),
-                              //         ),
-                              //         TextSpan(
-                              //           text: 'B',
-                              //           style: Theme.of(context)
-                              //               .textTheme
-                              //               .titleMedium!
-                              //               .copyWith(
-                              //                 color: Theme.of(context)
-                              //                     .colorScheme
-                              //                     .secondary,
-                              //               ),
-                              //         ),
-                              //       ],
-                              //     ),
-                              //   ),
-                              // ),
                             ),
                         ],
                       ),
@@ -342,11 +312,20 @@ class CourseItemView extends StatelessWidget {
             if (data.references.isNotEmpty)
               const SizedBox(height: 2 * kSizeDefault),
             if (data.references.isNotEmpty)
-              TitleHeading(title: 'courseItemRefernces'.tr),
+              TitleHeading(title: 'courseItemReferences'.tr),
             if (data.references.isNotEmpty)
               referenceCardsBuilder(
                 context: context,
                 references: data.references,
+              ),
+            if (data.teachers.isNotEmpty)
+              const SizedBox(height: 2 * kSizeDefault),
+            if (data.teachers.isNotEmpty)
+              TitleHeading(title: 'courseItemTeachers'.tr),
+            if (data.teachers.isNotEmpty)
+              teacherCardsBuilder(
+                context: context,
+                teachers: data.teachers,
               ),
             if (data.resources.isNotEmpty)
               const SizedBox(height: 2 * kSizeDefault),

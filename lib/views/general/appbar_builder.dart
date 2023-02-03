@@ -79,6 +79,7 @@ Widget appbarBuilder(BuildContext context) {
                 const SizedBox(width: kSizeDefault),
                 CustomTextButton(
                   label: 'appbarTeachers'.tr,
+                  onPressed: () => Get.toNamed('/teachers'),
                   staticUnderline:
                       controller.activeButton.value == AppbarButtons.teachers,
                 ),

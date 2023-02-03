@@ -25,7 +25,7 @@ class CustomThemes {
   static final lightTheme = ThemeData(
     textTheme: GoogleFonts.vazirmatnTextTheme(),
     scaffoldBackgroundColor: kColorSecondary,
-    unselectedWidgetColor: kColorPrimary,
+    unselectedWidgetColor: kColorSecondary,
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
       primary: kColorSecondary,

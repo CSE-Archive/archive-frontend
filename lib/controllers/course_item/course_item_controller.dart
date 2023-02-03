@@ -1,6 +1,7 @@
 import 'package:cse_archive/models/course_item_model.dart';
 import 'package:cse_archive/models/general.dart';
 import 'package:cse_archive/models/reference_model.dart';
+import 'package:cse_archive/models/teacher_model.dart';
 import 'package:get/get.dart';
 
 class CourseItemController extends GetxController
@@ -39,6 +40,26 @@ class CourseItemController extends GetxController
           ],
           image: 'assets/images/clrs.jpeg',
           slug: 'introduction-to-algorithms-4rd-edition',
+        ),
+      ],
+      teachers: [
+        TeacherModel(
+          id: 1,
+          image: 'assets/images/clrs.jpeg',
+          slug: 'introduction-to-algorithms-4rd-edition',
+          department: 'مهندسی کامپیوتر',
+          honorific: 'دکتر',
+          firstName: 'کوروش',
+          lastName: 'زیارتی',
+        ),
+        TeacherModel(
+          id: 1,
+          image: 'assets/images/clrs.jpeg',
+          slug: 'introduction-to-algorithms-4rd-edition',
+          department: 'مهندسی کامپیوتر',
+          honorific: 'دکتر',
+          firstName: 'کوروش',
+          lastName: 'زیارتی',
         ),
       ],
       requisiteFor: [

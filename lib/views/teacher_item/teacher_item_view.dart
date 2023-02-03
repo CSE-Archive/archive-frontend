@@ -33,7 +33,7 @@ class TeacherItemView extends StatelessWidget {
               context,
               roots: {
                 'home'.tr: () => Get.toNamed('/'),
-                'teachers'.tr: () {},
+                'teachers'.tr: () => Get.toNamed('/teachers'),
                 data!.fullName: () =>
                     Get.toNamed('/teachers/${data.id}/${data.slug}'),
               },

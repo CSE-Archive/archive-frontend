@@ -1,4 +1,5 @@
 import 'package:cse_archive/models/reference_model.dart';
+import 'package:cse_archive/models/teacher_model.dart';
 
 import 'general.dart';
 
@@ -9,6 +10,7 @@ class CourseItemModel {
     required this.description,
     required this.requisites,
     required this.references,
+    required this.teachers,
     required this.resources,
     required this.records,
     required this.id,
@@ -28,6 +30,7 @@ class CourseItemModel {
   final Map<Map, RequisiteType> requisites;
   final List<Map> requisiteFor;
   final List<ReferenceModel> references;
+  final List<TeacherModel> teachers;
   final List<Map> resources;
   final List<Map> records;
 }
