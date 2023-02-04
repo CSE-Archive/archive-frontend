@@ -12,6 +12,8 @@ import 'package:cse_archive/views/home/home_view.dart';
 import 'package:cse_archive/views/loading_view.dart';
 import 'package:cse_archive/views/chart/chart_view.dart'
     deferred as chart_view_deferred;
+import 'package:cse_archive/views/search/search_view.dart'
+    deferred as search_view_deferred;
 import 'package:cse_archive/views/references/references_view.dart'
     deferred as references_view_deferred;
 import 'package:cse_archive/views/teachers/teachers_view.dart'
@@ -75,6 +77,20 @@ class CSEArchive extends StatelessWidget {
             },
           ),
           binding: ChartBinding(),
+        ),
+        GetPage(
+          name: '/search',
+          page: () => FutureBuilder(
+            future: search_view_deferred.loadLibrary(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                Get.find<AppbarController>().activeButton.value =
+                    AppbarButtons.search;
+                return search_view_deferred.SearchView();
+              }
+              return const LoadingView();
+            },
+          ),
         ),
         GetPage(
           name: '/references',

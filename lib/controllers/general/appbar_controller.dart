@@ -7,6 +7,7 @@ enum AppbarButtons {
   courses,
   references,
   teachers,
+  search,
 }
 
 class AppbarController extends GetxController {

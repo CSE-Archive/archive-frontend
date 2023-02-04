@@ -52,10 +52,22 @@ Widget appbarBuilder(BuildContext context) {
             Expanded(
               flex: 10,
               child: searchBarBuilder(
+                onInit: () {
+                  if (controller.activeButton.value != AppbarButtons.search) {
+                    controller.searchBarController.textController.clear();
+                    controller.searchBarController.showClearButton(false);
+                  }
+                },
                 context: context,
                 searchBarController: controller.searchBarController,
                 primaryColor: Theme.of(context).colorScheme.secondary,
                 secondaryColor: Theme.of(context).colorScheme.primary,
+                onSubmitted: (query) => Get.toNamed(
+                  Uri(
+                    path: '/search',
+                    queryParameters: {'q': query},
+                  ).toString(),
+                ),
               ),
             ),
             const Spacer(flex: 4),

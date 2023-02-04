@@ -22,6 +22,7 @@ class HomeView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          const SizedBox(height: 1.5 * kSizeDefault),
           TitleHeading(
             title: 'newResources'.tr,
             seeAllOnPressed: (() {}),

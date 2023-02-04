@@ -11,17 +11,15 @@ Widget searchBarBuilder({
   required Color primaryColor,
   required Color secondaryColor,
   String? hintText,
+  void Function()? onInit,
   void Function()? onClear,
   void Function(String)? onSubmitted,
 }) {
+  if (onInit != null) onInit();
   return Obx(
     () => TextField(
       maxLines: 1,
-      onChanged: (text) {
-        // searchBarController.textDirection.value = textDirectionDetector(text);
-        searchBarController.showClearButton(text.isNotEmpty);
-      },
-      // textDirection: searchBarController.textDirection.value,
+      onChanged: (text) => searchBarController.showClearButton(text.isNotEmpty),
       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
             color: primaryColor,
           ),
