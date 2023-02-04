@@ -48,59 +48,65 @@ class CoursesView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(kSizeDefault),
                     ),
                     padding: const EdgeInsets.all(kSizeDefault),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'filters'.tr,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        const SizedBox(height: 2 * kSizeDefault),
-                        expansionSearchBuilder(
-                          key: 1,
-                          context: context,
-                          title: 'coursesTitle'.tr,
-                          selectedExpansionTile:
-                              controller.selectedExpansionTile,
-                          parameter: 'q',
-                          oldParameters: Get.parameters as Map<String, String>,
-                          onSelectMainRoute: '/courses',
-                          searchBarController: controller.searchBarController,
-                        ),
-                        dividerBuilder(context),
-                        expansionRadioButtonBuilder(
-                          key: 2,
-                          context: context,
-                          title: 'coursesType'.tr,
-                          options: controller.typeOptions,
-                          selectedOption: controller.selectedType,
-                          onSelectMainRoute: '/courses',
-                          oldParameters: Get.parameters as Map<String, String>,
-                          parameter: 'type',
-                          selectedExpansionTile:
-                              controller.selectedExpansionTile,
-                        ),
-                        dividerBuilder(context),
-                        expansionRadioButtonBuilder(
-                          key: 3,
-                          context: context,
-                          title: 'coursesUnits'.tr,
-                          options: controller.unitsOptions,
-                          selectedOption: controller.selectedUnits,
-                          onSelectMainRoute: '/courses',
-                          oldParameters: Get.parameters as Map<String, String>,
-                          parameter: 'units',
-                          selectedExpansionTile:
-                              controller.selectedExpansionTile,
-                        ),
-                        dividerBuilder(context),
-                      ],
+                    child: Obx(
+                      () => Column(
+                        key: ValueKey(controller.selectedExpansionTile.value),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'filters'.tr,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          const SizedBox(height: 2 * kSizeDefault),
+                          expansionSearchBuilder(
+                            key: 1,
+                            context: context,
+                            title: 'coursesTitle'.tr,
+                            selectedExpansionTile:
+                                controller.selectedExpansionTile,
+                            parameter: 'q',
+                            oldParameters:
+                                Get.parameters as Map<String, String>,
+                            onSelectMainRoute: '/courses',
+                            searchBarController: controller.searchBarController,
+                          ),
+                          dividerBuilder(context),
+                          expansionRadioButtonBuilder(
+                            key: 2,
+                            context: context,
+                            title: 'coursesType'.tr,
+                            options: controller.typeOptions,
+                            selectedOption: controller.selectedType,
+                            onSelectMainRoute: '/courses',
+                            oldParameters:
+                                Get.parameters as Map<String, String>,
+                            parameter: 'type',
+                            selectedExpansionTile:
+                                controller.selectedExpansionTile,
+                          ),
+                          dividerBuilder(context),
+                          expansionRadioButtonBuilder(
+                            key: 3,
+                            context: context,
+                            title: 'coursesUnits'.tr,
+                            options: controller.unitsOptions,
+                            selectedOption: controller.selectedUnits,
+                            onSelectMainRoute: '/courses',
+                            oldParameters:
+                                Get.parameters as Map<String, String>,
+                            parameter: 'units',
+                            selectedExpansionTile:
+                                controller.selectedExpansionTile,
+                          ),
+                          dividerBuilder(context),
+                        ],
+                      ),
                     ),
                   ),
                 ),

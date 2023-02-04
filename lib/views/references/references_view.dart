@@ -47,33 +47,37 @@ class ReferencesView extends StatelessWidget {
                       borderRadius: BorderRadius.circular(kSizeDefault),
                     ),
                     padding: const EdgeInsets.all(kSizeDefault),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'filters'.tr,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge!
-                              .copyWith(
-                                color: Theme.of(context).colorScheme.primary,
-                                fontWeight: FontWeight.bold,
-                              ),
-                        ),
-                        const SizedBox(height: 2 * kSizeDefault),
-                        expansionSearchBuilder(
-                          key: 1,
-                          context: context,
-                          title: 'referencesTitleAuthor'.tr,
-                          selectedExpansionTile:
-                              controller.selectedExpansionTile,
-                          parameter: 'q',
-                          oldParameters: Get.parameters as Map<String, String>,
-                          onSelectMainRoute: '/references',
-                          searchBarController: controller.searchBarController,
-                        ),
-                        dividerBuilder(context),
-                      ],
+                    child: Obx(
+                      () => Column(
+                        key: ValueKey(controller.selectedExpansionTile.value),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'filters'.tr,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          const SizedBox(height: 2 * kSizeDefault),
+                          expansionSearchBuilder(
+                            key: 1,
+                            context: context,
+                            title: 'referencesTitleAuthor'.tr,
+                            selectedExpansionTile:
+                                controller.selectedExpansionTile,
+                            parameter: 'q',
+                            oldParameters:
+                                Get.parameters as Map<String, String>,
+                            onSelectMainRoute: '/references',
+                            searchBarController: controller.searchBarController,
+                          ),
+                          dividerBuilder(context),
+                        ],
+                      ),
                     ),
                   ),
                 ),
