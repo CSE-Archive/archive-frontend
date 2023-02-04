@@ -3,6 +3,7 @@ import 'package:cse_archive/bindings/courses_binding.dart';
 import 'package:cse_archive/bindings/initial_binding.dart';
 import 'package:cse_archive/bindings/home_binding.dart';
 import 'package:cse_archive/bindings/references_binding.dart';
+import 'package:cse_archive/bindings/resources_binding.dart';
 import 'package:cse_archive/bindings/teachers_binding.dart';
 import 'package:cse_archive/controllers/general/appbar_controller.dart';
 import 'package:cse_archive/scroll_behavior.dart';
@@ -14,6 +15,8 @@ import 'package:cse_archive/views/chart/chart_view.dart'
     deferred as chart_view_deferred;
 import 'package:cse_archive/views/search/search_view.dart'
     deferred as search_view_deferred;
+import 'package:cse_archive/views/resources/resources_view.dart'
+    deferred as resources_view_deferred;
 import 'package:cse_archive/views/references/references_view.dart'
     deferred as references_view_deferred;
 import 'package:cse_archive/views/teachers/teachers_view.dart'
@@ -91,6 +94,21 @@ class CSEArchive extends StatelessWidget {
               return const LoadingView();
             },
           ),
+        ),
+        GetPage(
+          name: '/resources',
+          page: () => FutureBuilder(
+            future: resources_view_deferred.loadLibrary(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                Get.find<AppbarController>().activeButton.value =
+                    AppbarButtons.none;
+                return resources_view_deferred.ResourcesView();
+              }
+              return const LoadingView();
+            },
+          ),
+          binding: ResourcesBinding(),
         ),
         GetPage(
           name: '/references',
