@@ -4,6 +4,7 @@ class MyTranslations extends Translations {
   @override
   Map<String, Map<String, String>> get keys => {
         'fa_IR': {
+          '404': 'چیزی پیدا نشد!',
           'search': ' جستجو ...',
           'appbarChart': 'چارت مهندسی کامپیوتر',
           'appbarCourses': 'دروس',
