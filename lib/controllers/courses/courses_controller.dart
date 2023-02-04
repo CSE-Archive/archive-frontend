@@ -1,7 +1,10 @@
 import 'package:cse_archive/controllers/general/searchbar_controller.dart';
+import 'package:cse_archive/models/course_model.dart';
+import 'package:cse_archive/models/general.dart';
 import 'package:get/get.dart';
 
-class CoursesController extends GetxController with StateMixin<List<Map>> {
+class CoursesController extends GetxController
+    with StateMixin<List<CourseModel>> {
   var searchBarController = Get.put(
     SearchBarController(),
     tag: 'coursesSearchBar',
@@ -50,76 +53,76 @@ class CoursesController extends GetxController with StateMixin<List<Map>> {
 
   Future<void> fetchData() async {
     final result = [
-      {
-        'title': 'طراحی الگوریتم 2',
-        'unit': 3,
-        'type': 'تخصصی',
-      },
-      {
-        'title': 'طراحی الگوریتم 3',
-        'unit': 3,
-        'type': 'تخصصی',
-      },
-      {
-        'title': 'طراحی الگوریتم 2',
-        'unit': 3,
-        'type': 'تخصصی',
-      },
-      {
-        'title': 'طراحی الگوریتم 3',
-        'unit': 3,
-        'type': 'تخصصی',
-      },
-      {
-        'title': 'طراحی الگوریتم 2',
-        'unit': 3,
-        'type': 'تخصصی',
-      },
-      {
-        'title': 'طراحی الگوریتم 3',
-        'unit': 3,
-        'type': 'تخصصی',
-      },
-      {
-        'title': 'طراحی الگوریتم 2',
-        'unit': 3,
-        'type': 'تخصصی',
-      },
-      {
-        'title': 'طراحی الگوریتم 3',
-        'unit': 3,
-        'type': 'تخصصی',
-      },
-      {
-        'title': 'طراحی الگوریتم 2',
-        'unit': 3,
-        'type': 'تخصصی',
-      },
-      {
-        'title': 'طراحی الگوریتم 3',
-        'unit': 3,
-        'type': 'تخصصی',
-      },
-      {
-        'title': 'طراحی الگوریتم 2',
-        'unit': 3,
-        'type': 'تخصصی',
-      },
-      {
-        'title': 'طراحی الگوریتم 3',
-        'unit': 3,
-        'type': 'تخصصی',
-      },
-      {
-        'title': 'طراحی الگوریتم 2',
-        'unit': 3,
-        'type': 'تخصصی',
-      },
-      {
-        'title': 'طراحی الگوریتم 3',
-        'unit': 3,
-        'type': 'تخصصی',
-      },
+      CourseModel(
+        id: 1,
+        slug: 'Design-&-Implementation-of-Programming-Languages',
+        name: 'طراحی الگوریتم',
+        type: CourseType.specialized,
+        units: 3,
+      ),
+      CourseModel(
+        id: 1,
+        slug: 'Design-&-Implementation-of-Programming-Languages',
+        name: 'طراحی الگوریتم',
+        type: CourseType.specialized,
+        units: 3,
+      ),
+      CourseModel(
+        id: 1,
+        slug: 'Design-&-Implementation-of-Programming-Languages',
+        name: 'طراحی الگوریتم',
+        type: CourseType.specialized,
+        units: 3,
+      ),
+      CourseModel(
+        id: 1,
+        slug: 'Design-&-Implementation-of-Programming-Languages',
+        name: 'طراحی الگوریتم',
+        type: CourseType.specialized,
+        units: 3,
+      ),
+      CourseModel(
+        id: 1,
+        slug: 'Design-&-Implementation-of-Programming-Languages',
+        name: 'طراحی الگوریتم',
+        type: CourseType.specialized,
+        units: 3,
+      ),
+      CourseModel(
+        id: 1,
+        slug: 'Design-&-Implementation-of-Programming-Languages',
+        name: 'طراحی الگوریتم',
+        type: CourseType.specialized,
+        units: 3,
+      ),
+      CourseModel(
+        id: 1,
+        slug: 'Design-&-Implementation-of-Programming-Languages',
+        name: 'طراحی الگوریتم',
+        type: CourseType.specialized,
+        units: 3,
+      ),
+      CourseModel(
+        id: 1,
+        slug: 'Design-&-Implementation-of-Programming-Languages',
+        name: 'طراحی الگوریتم',
+        type: CourseType.specialized,
+        units: 3,
+      ),
+      CourseModel(
+        id: 1,
+        slug: 'Design-&-Implementation-of-Programming-Languages',
+        name: 'طراحی الگوریتم',
+        type: CourseType.specialized,
+        units: 3,
+      ),
+      CourseModel(
+        id: 1,
+        slug: 'Design-&-Implementation-of-Programming-Languages',
+        name: 'طراحی الگوریتم',
+        type: CourseType.specialized,
+        units: 3,
+      ),
     ];
 
     change(result, status: RxStatus.success());

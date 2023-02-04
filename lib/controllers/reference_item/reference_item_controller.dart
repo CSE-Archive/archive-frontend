@@ -1,3 +1,5 @@
+import 'package:cse_archive/models/course_model.dart';
+import 'package:cse_archive/models/general.dart';
 import 'package:cse_archive/models/reference_item_model.dart';
 import 'package:cse_archive/models/reference_model.dart';
 import 'package:get/get.dart';
@@ -31,26 +33,41 @@ class ReferenceItemController extends GetxController
       slug: 'introduction-to-algorithms-4rd-edition',
       url: '',
       courses: [
-        {
-          'title': 'طراحی الگوریتم',
-          'unit': 3,
-          'type': 'تخصصی',
-        },
-        {
-          'title': 'طراحی الگوریتم',
-          'unit': 3,
-          'type': 'تخصصی',
-        },
-        {
-          'title': 'طراحی الگوریتم',
-          'unit': 3,
-          'type': 'تخصصی',
-        },
-        {
-          'title': 'طراحی الگوریتم',
-          'unit': 3,
-          'type': 'تخصصی',
-        },
+        CourseModel(
+          id: 1,
+          name: 'طراحی الگوریتم',
+          type: CourseType.specialized,
+          units: 3,
+          slug: 'temp',
+        ),
+        CourseModel(
+          id: 1,
+          name: 'طراحی الگوریتم',
+          type: CourseType.specialized,
+          units: 3,
+          slug: 'temp',
+        ),
+        CourseModel(
+          id: 1,
+          name: 'طراحی الگوریتم',
+          type: CourseType.specialized,
+          units: 3,
+          slug: 'temp',
+        ),
+        CourseModel(
+          id: 1,
+          name: 'طراحی الگوریتم',
+          type: CourseType.specialized,
+          units: 3,
+          slug: 'temp',
+        ),
+        CourseModel(
+          id: 1,
+          name: 'طراحی الگوریتم',
+          type: CourseType.specialized,
+          units: 3,
+          slug: 'temp',
+        ),
       ],
       references: [
         ReferenceModel(

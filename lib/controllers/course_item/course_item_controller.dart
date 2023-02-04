@@ -1,4 +1,5 @@
 import 'package:cse_archive/models/course_item_model.dart';
+import 'package:cse_archive/models/course_model.dart';
 import 'package:cse_archive/models/general.dart';
 import 'package:cse_archive/models/reference_model.dart';
 import 'package:cse_archive/models/teacher_model.dart';
@@ -20,7 +21,7 @@ class CourseItemController extends GetxController
 
   Future<void> fetchData() async {
     var result = CourseItemModel(
-      id: courseId,
+      id: 1,
       slug: 'Design-&-Implementation-of-Programming-Languages',
       name: 'طراحی و پياده‌سازی زبان‌های برنامه‌سازی',
       nameEn: 'Design & Implementation of Programming Languages',
@@ -63,23 +64,29 @@ class CourseItemController extends GetxController
         ),
       ],
       requisiteFor: [
-        {
-          'title': 'طراحی الگوریتم',
-          'unit': 3,
-          'type': 'تخصصی',
-        },
+        CourseModel(
+          id: 1,
+          name: 'طراحی الگوریتم',
+          type: CourseType.specialized,
+          units: 3,
+          slug: 'temp',
+        ),
       ],
       requisites: {
-        {
-          'title': 'طراحی الگوریتم 2',
-          'unit': 3,
-          'type': 'تخصصی',
-        }: RequisiteType.co,
-        {
-          'title': 'طراحی الگوریتم 3',
-          'unit': 3,
-          'type': 'تخصصی',
-        }: RequisiteType.pre,
+        CourseModel(
+          id: 1,
+          name: 'طراحی الگوریتم 2',
+          type: CourseType.specialized,
+          units: 3,
+          slug: 'temp',
+        ): RequisiteType.co,
+        CourseModel(
+          id: 1,
+          name: 'طراحی الگوریتم 3',
+          type: CourseType.specialized,
+          units: 3,
+          slug: 'temp',
+        ): RequisiteType.pre,
       },
       records: [
         {

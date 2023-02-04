@@ -27,7 +27,10 @@ class HomeView extends StatelessWidget {
             title: 'newResources'.tr,
             seeAllOnPressed: (() {}),
           ),
-          resourceCardsBuilder(resources: resourceCardsController.resources),
+          resourceCardsBuilder(
+            context: context,
+            resources: resourceCardsController.resources,
+          ),
           const SizedBox(height: 2 * kSizeDefault),
           TitleHeading(
             title: 'newReferences'.tr,

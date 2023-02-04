@@ -1,5 +1,6 @@
 import 'package:cse_archive/constants.dart';
 import 'package:cse_archive/controllers/search/search_controller.dart';
+import 'package:cse_archive/models/course_model.dart';
 import 'package:cse_archive/models/reference_model.dart';
 import 'package:cse_archive/models/resource_model.dart';
 import 'package:cse_archive/models/teacher_model.dart';
@@ -59,7 +60,7 @@ class SearchView extends StatelessWidget {
             if (results['courses']!.isNotEmpty)
               courseCardsBuilder(
                 context: context,
-                courses: results['courses'] as List<Map<dynamic, dynamic>>,
+                courses: results['courses'] as List<CourseModel>,
               ),
             if (results['courses']!.isNotEmpty)
               const SizedBox(height: 2 * kSizeDefault),

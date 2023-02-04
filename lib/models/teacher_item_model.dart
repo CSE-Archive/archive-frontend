@@ -1,3 +1,5 @@
+import 'package:cse_archive/models/course_model.dart';
+
 class TeacherItemModel {
   TeacherItemModel({
     required this.id,
@@ -23,7 +25,7 @@ class TeacherItemModel {
   final String slug;
   final List<String> emails;
   final List<String> relatedLinks;
-  final List<Map> courses;
+  final List<CourseModel> courses;
 
   String get fullName {
     return '$firstName $lastName';

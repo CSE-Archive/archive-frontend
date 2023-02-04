@@ -1,3 +1,4 @@
+import 'package:cse_archive/models/course_model.dart';
 import 'package:cse_archive/models/reference_model.dart';
 import 'package:cse_archive/models/teacher_model.dart';
 
@@ -27,8 +28,8 @@ class CourseItemModel {
   final String slug;
   final String description;
   final CourseType type;
-  final Map<Map, RequisiteType> requisites;
-  final List<Map> requisiteFor;
+  final Map<CourseModel, RequisiteType> requisites;
+  final List<CourseModel> requisiteFor;
   final List<ReferenceModel> references;
   final List<TeacherModel> teachers;
   final List<Map> resources;

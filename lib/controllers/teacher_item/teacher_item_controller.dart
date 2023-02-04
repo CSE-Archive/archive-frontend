@@ -1,3 +1,5 @@
+import 'package:cse_archive/models/course_model.dart';
+import 'package:cse_archive/models/general.dart';
 import 'package:cse_archive/models/teacher_item_model.dart';
 import 'package:get/get.dart';
 
@@ -24,11 +26,13 @@ class TeacherItemController extends GetxController
       image: 'assets/images/clrs.jpeg',
       slug: 'introduction-to-algorithms-4rd-edition',
       courses: [
-        {
-          'title': 'طراحی الگوریتم',
-          'unit': 3,
-          'type': 'تخصصی',
-        },
+        CourseModel(
+          id: 1,
+          name: 'طراحی الگوریتم',
+          type: CourseType.specialized,
+          units: 3,
+          slug: 'temp',
+        ),
       ],
       department: 'مهندسی کامپیوتر',
       description:

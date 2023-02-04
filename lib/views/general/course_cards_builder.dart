@@ -1,18 +1,24 @@
 import 'package:cse_archive/constants.dart';
+import 'package:cse_archive/models/course_model.dart';
 import 'package:cse_archive/views/general/custom_card.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'helpers.dart';
+
 Widget courseCardsBuilder({
   required BuildContext context,
-  required List<Map> courses,
+  required List<CourseModel> courses,
   bool wrap = false,
 }) {
   if (wrap) {
     return Wrap(
       children: courses
           .map(
-            (course) => singleCourseCardBuilder(context, course),
+            (course) => singleCourseCardBuilder(
+              context: context,
+              course: course,
+            ),
           )
           .toList(),
     );
@@ -24,22 +30,25 @@ Widget courseCardsBuilder({
       scrollDirection: Axis.horizontal,
       itemCount: courses.length,
       itemBuilder: (context, index) {
-        return singleCourseCardBuilder(context, courses[index]);
+        return singleCourseCardBuilder(
+          context: context,
+          course: courses[index],
+        );
       },
     ),
   );
 }
 
-Container singleCourseCardBuilder(
-  BuildContext context,
-  Map<dynamic, dynamic> course,
-) {
+Container singleCourseCardBuilder({
+  required BuildContext context,
+  required CourseModel course,
+}) {
   return Container(
     width: kSizeCardWidth,
     height: kSizeCourseCardHeight,
     margin: const EdgeInsets.all(kSizeDefault / 2),
     child: CustomCard(
-      onPressed: () {},
+      onPressed: () => Get.toNamed('/courses/${course.id}/${course.slug}'),
       child: Container(
         width: double.infinity,
         height: kSizeCourseCardHeight,
@@ -50,7 +59,7 @@ Container singleCourseCardBuilder(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              course['title'],
+              course.name,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -59,7 +68,7 @@ Container singleCourseCardBuilder(
             ),
             const Spacer(),
             Text(
-              '${course['unit']} ${'courseUnit'.tr}',
+              replaceEnWithFaDigits('${course.units} ${'courseUnit'.tr}'),
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context)
                         .colorScheme
@@ -68,7 +77,7 @@ Container singleCourseCardBuilder(
                   ),
             ),
             Text(
-              course['type'],
+              courseTypeToString(course.type),
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context)
                         .colorScheme

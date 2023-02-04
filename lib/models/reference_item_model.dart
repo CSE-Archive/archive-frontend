@@ -1,3 +1,4 @@
+import 'package:cse_archive/models/course_model.dart';
 import 'package:cse_archive/models/reference_model.dart';
 
 class ReferenceItemModel {
@@ -18,6 +19,6 @@ class ReferenceItemModel {
   final String image;
   final String slug;
   final String url;
-  final List<Map> courses;
+  final List<CourseModel> courses;
   final List<ReferenceModel> references;
 }

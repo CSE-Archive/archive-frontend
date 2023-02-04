@@ -113,6 +113,8 @@ class CSEArchive extends StatelessWidget {
             future: reference_item_view_deferred.loadLibrary(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
+                Get.find<AppbarController>().activeButton.value =
+                    AppbarButtons.none;
                 return reference_item_view_deferred.ReferenceItemView();
               }
               return const LoadingView();
@@ -140,6 +142,8 @@ class CSEArchive extends StatelessWidget {
             future: teacher_item_view_deferred.loadLibrary(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
+                Get.find<AppbarController>().activeButton.value =
+                    AppbarButtons.none;
                 return teacher_item_view_deferred.TeacherItemView();
               }
               return const LoadingView();
@@ -167,6 +171,8 @@ class CSEArchive extends StatelessWidget {
             future: course_item_view_deferred.loadLibrary(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
+                Get.find<AppbarController>().activeButton.value =
+                    AppbarButtons.none;
                 return course_item_view_deferred.CourseItemView();
               }
               return const LoadingView();
