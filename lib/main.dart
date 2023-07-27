@@ -1,41 +1,36 @@
-import 'package:cse_archive/bindings/chart_binding.dart';
-import 'package:cse_archive/bindings/courses_binding.dart';
-import 'package:cse_archive/bindings/initial_binding.dart';
-import 'package:cse_archive/bindings/home_binding.dart';
-import 'package:cse_archive/bindings/references_binding.dart';
-import 'package:cse_archive/bindings/resources_binding.dart';
-import 'package:cse_archive/bindings/teachers_binding.dart';
-import 'package:cse_archive/controllers/general/appbar_controller.dart';
-import 'package:cse_archive/scroll_behavior.dart';
-import 'package:cse_archive/themes.dart';
-import 'package:cse_archive/translations.dart';
-import 'package:cse_archive/views/home/home_view.dart';
-import 'package:cse_archive/views/loading_view.dart';
-import 'package:cse_archive/views/chart/chart_view.dart'
-    deferred as chart_view_deferred;
-import 'package:cse_archive/views/search/search_view.dart'
-    deferred as search_view_deferred;
-import 'package:cse_archive/views/resources/resources_view.dart'
-    deferred as resources_view_deferred;
-import 'package:cse_archive/views/references/references_view.dart'
-    deferred as references_view_deferred;
-import 'package:cse_archive/views/teachers/teachers_view.dart'
-    deferred as teachers_view_deferred;
-import 'package:cse_archive/views/courses/courses_view.dart'
-    deferred as courses_view_deferred;
-import 'package:cse_archive/views/reference_item/references_item_view.dart'
-    deferred as reference_item_view_deferred;
-import 'package:cse_archive/views/teacher_item/teacher_item_view.dart'
-    deferred as teacher_item_view_deferred;
-import 'package:cse_archive/views/course_item/course_item_view.dart'
-    deferred as course_item_view_deferred;
+import 'package:cse_archive/app/bindings/services.dart';
+import 'package:flutter/gestures.dart';
+
+import 'app/bindings/chart_binding.dart';
+import 'app/bindings/courses_binding.dart';
+import 'app/bindings/home_binding.dart';
+import 'app/bindings/references_binding.dart';
+import 'app/bindings/resources_binding.dart';
+import 'app/bindings/teachers_binding.dart';
+import 'app/services/pages_tracker.dart';
+import 'app/themes.dart';
+import 'app/translations.dart';
+import 'app/views/home.dart';
+import 'app/views/loading.dart';
+import 'app/views/chart.dart' deferred as chart_view_deferred;
+import 'app/views/search.dart' deferred as search_view_deferred;
+import 'app/views/resources.dart' deferred as resources_view_deferred;
+import 'app/views/references_.dart' deferred as references_view_deferred;
+import 'app/views/teachers.dart' deferred as teachers_view_deferred;
+import 'app/views/courses.dart' deferred as courses_view_deferred;
+import 'app/views/reference.dart' deferred as reference_item_view_deferred;
+import 'app/views/teacher.dart' deferred as teacher_item_view_deferred;
+import 'app/views/course.dart' deferred as course_item_view_deferred;
 
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-void main() {
+void main() async {
+  await ArchiveServicesBinding().dependencies();
+
   usePathUrlStrategy();
+
   runApp(const CSEArchive());
 }
 
@@ -46,22 +41,25 @@ class CSEArchive extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      scrollBehavior: MyScrollBehavior(),
       translations: MyTranslations(),
       title: 'CSE Archive',
-      theme: CustomThemes.lightTheme,
-      darkTheme: CustomThemes.darkTheme,
+      theme: ArchiveThemes.lightTheme,
+      darkTheme: ArchiveThemes.darkTheme,
       locale: const Locale('fa', 'IR'),
       fallbackLocale: const Locale('fa', 'IR'),
       initialRoute: '/',
-      initialBinding: InitialBinding(),
       defaultTransition: Transition.noTransition,
+      scrollBehavior: const MaterialScrollBehavior().copyWith(
+        dragDevices: {
+          PointerDeviceKind.touch,
+          PointerDeviceKind.mouse,
+        },
+      ),
       getPages: [
         GetPage(
           name: '/',
           page: () {
-            Get.find<AppbarController>().activeButton.value =
-                AppbarButtons.none;
+            PageTrackerService.to.activePage = ArchivePages.home;
             return const HomeView();
           },
           binding: HomeBinding(),
@@ -72,8 +70,7 @@ class CSEArchive extends StatelessWidget {
             future: chart_view_deferred.loadLibrary(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                Get.find<AppbarController>().activeButton.value =
-                    AppbarButtons.chart;
+                PageTrackerService.to.activePage = ArchivePages.chart;
                 return chart_view_deferred.ChartView();
               }
               return const LoadingView();
@@ -87,8 +84,7 @@ class CSEArchive extends StatelessWidget {
             future: search_view_deferred.loadLibrary(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                Get.find<AppbarController>().activeButton.value =
-                    AppbarButtons.search;
+                PageTrackerService.to.activePage = ArchivePages.search;
                 return search_view_deferred.SearchView();
               }
               return const LoadingView();
@@ -101,8 +97,7 @@ class CSEArchive extends StatelessWidget {
             future: resources_view_deferred.loadLibrary(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                Get.find<AppbarController>().activeButton.value =
-                    AppbarButtons.none;
+                PageTrackerService.to.activePage = ArchivePages.chart;
                 return resources_view_deferred.ResourcesView();
               }
               return const LoadingView();
@@ -116,8 +111,7 @@ class CSEArchive extends StatelessWidget {
             future: references_view_deferred.loadLibrary(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                Get.find<AppbarController>().activeButton.value =
-                    AppbarButtons.references;
+                PageTrackerService.to.activePage = ArchivePages.references;
                 return references_view_deferred.ReferencesView();
               }
               return const LoadingView();
@@ -131,9 +125,7 @@ class CSEArchive extends StatelessWidget {
             future: reference_item_view_deferred.loadLibrary(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                Get.find<AppbarController>().activeButton.value =
-                    AppbarButtons.none;
-                return reference_item_view_deferred.ReferenceItemView();
+                return reference_item_view_deferred.ReferenceView();
               }
               return const LoadingView();
             },
@@ -145,8 +137,7 @@ class CSEArchive extends StatelessWidget {
             future: teachers_view_deferred.loadLibrary(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                Get.find<AppbarController>().activeButton.value =
-                    AppbarButtons.teachers;
+                PageTrackerService.to.activePage = ArchivePages.teachers;
                 return teachers_view_deferred.TeachersView();
               }
               return const LoadingView();
@@ -160,9 +151,7 @@ class CSEArchive extends StatelessWidget {
             future: teacher_item_view_deferred.loadLibrary(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                Get.find<AppbarController>().activeButton.value =
-                    AppbarButtons.none;
-                return teacher_item_view_deferred.TeacherItemView();
+                return teacher_item_view_deferred.TeacherView();
               }
               return const LoadingView();
             },
@@ -174,8 +163,7 @@ class CSEArchive extends StatelessWidget {
             future: courses_view_deferred.loadLibrary(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                Get.find<AppbarController>().activeButton.value =
-                    AppbarButtons.courses;
+                PageTrackerService.to.activePage = ArchivePages.courses;
                 return courses_view_deferred.CoursesView();
               }
               return const LoadingView();
@@ -189,9 +177,7 @@ class CSEArchive extends StatelessWidget {
             future: course_item_view_deferred.loadLibrary(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                Get.find<AppbarController>().activeButton.value =
-                    AppbarButtons.none;
-                return course_item_view_deferred.CourseItemView();
+                return course_item_view_deferred.CourseView();
               }
               return const LoadingView();
             },
