@@ -1,131 +1,126 @@
-import 'package:cse_archive/app/constants.dart';
+import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/courses.dart';
+import 'package:cse_archive/app/extensions/responsive.dart';
+import 'package:cse_archive/app/routes/routes.dart';
+import 'package:cse_archive/app/themes.dart';
+import 'package:cse_archive/app/utils/course_cards_builder.dart';
+import 'package:cse_archive/app/utils/expansion_tile_radio_button.dart';
+import 'package:cse_archive/app/utils/expansion_tile_search_bar.dart';
+import 'package:cse_archive/app/widgets/dialog.dart';
+import 'package:cse_archive/app/widgets/gap.dart';
+import 'package:cse_archive/app/widgets/path.dart';
+import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'general/basic_web_page.dart';
-import 'general/course_cards_builder.dart';
-import 'general/divider_builder.dart';
-import 'general/expansion_radio_button_builder.dart';
-import 'general/expansion_search_builder.dart';
-import 'general/path_builder.dart';
 import 'loading.dart';
 
 class CoursesView extends StatelessWidget {
-  const CoursesView({super.key});
+  final Map<String, String> parameters;
+
+  const CoursesView({
+    super.key,
+    required this.parameters,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<CoursesController>();
-    controller.setParameters(Get.parameters as Map<String, String>);
+    // TODO: Change
 
-    return basicWebPage(
-      context: context,
+    final controller = Get.find<CoursesController>();
+    controller.setParameters(parameters);
+
+    Widget getFiltersDialog(BuildContext context) {
+      return ArchiveDialog(
+        title: ArchiveStrings.filters,
+        children: [
+          expansionTileSearchBar(
+            context: context,
+            title: ArchiveStrings.coursesTitle,
+            parameter: 'q',
+            oldParameters: parameters,
+            onSelectMainRoute: '/courses',
+            searchBarController: controller.searchBarController,
+          ),
+          expansionTileRadioButton(
+            context: context,
+            title: ArchiveStrings.coursesType,
+            options: controller.typeOptions,
+            selectedOption: controller.selectedType,
+            onSelectMainRoute: '/courses',
+            oldParameters: parameters,
+            parameter: 'type',
+          ),
+          expansionTileRadioButton(
+            context: context,
+            title: ArchiveStrings.coursesUnits,
+            options: controller.unitsOptions,
+            selectedOption: controller.selectedUnits,
+            onSelectMainRoute: '/courses',
+            oldParameters: parameters,
+            parameter: 'units',
+          ),
+        ],
+      );
+    }
+
+    return ArchiveWebPage(
       body: controller.obx(
         (courses) => Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            pathBuilder(
-              context,
-              roots: {
-                'home'.tr: () => Get.toNamed('/'),
-                'courses'.tr: () => Get.toNamed('/courses'),
-              },
-            ),
-            const SizedBox(height: kSizeDefault),
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minWidth: 18 * kSizeDefault,
-                    maxWidth: 18 * kSizeDefault,
-                    minHeight:
-                        MediaQuery.of(context).size.height - 9.5 * kSizeDefault,
-                  ),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).colorScheme.secondary,
-                      borderRadius: BorderRadius.circular(kSizeDefault),
-                    ),
-                    padding: const EdgeInsets.all(kSizeDefault),
-                    child: Obx(
-                      () => Column(
-                        key: ValueKey(controller.selectedExpansionTile.value),
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'filters'.tr,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                          ),
-                          const SizedBox(height: 2 * kSizeDefault),
-                          expansionSearchBuilder(
-                            key: 1,
-                            context: context,
-                            title: 'coursesTitle'.tr,
-                            selectedExpansionTile:
-                                controller.selectedExpansionTile,
-                            parameter: 'q',
-                            oldParameters:
-                                Get.parameters as Map<String, String>,
-                            onSelectMainRoute: '/courses',
-                            searchBarController: controller.searchBarController,
-                          ),
-                          dividerBuilder(context),
-                          expansionRadioButtonBuilder(
-                            key: 2,
-                            context: context,
-                            title: 'coursesType'.tr,
-                            options: controller.typeOptions,
-                            selectedOption: controller.selectedType,
-                            onSelectMainRoute: '/courses',
-                            oldParameters:
-                                Get.parameters as Map<String, String>,
-                            parameter: 'type',
-                            selectedExpansionTile:
-                                controller.selectedExpansionTile,
-                          ),
-                          dividerBuilder(context),
-                          expansionRadioButtonBuilder(
-                            key: 3,
-                            context: context,
-                            title: 'coursesUnits'.tr,
-                            options: controller.unitsOptions,
-                            selectedOption: controller.selectedUnits,
-                            onSelectMainRoute: '/courses',
-                            oldParameters:
-                                Get.parameters as Map<String, String>,
-                            parameter: 'units',
-                            selectedExpansionTile:
-                                controller.selectedExpansionTile,
-                          ),
-                          dividerBuilder(context),
-                        ],
-                      ),
-                    ),
-                  ),
+                ArchivePath(
+                  labels: const [
+                    ArchiveStrings.home,
+                    ArchiveStrings.courses,
+                  ],
+                  routes: const [
+                    ArchiveRoutes.home,
+                    ArchiveRoutes.courses,
+                  ],
                 ),
-                const SizedBox(width: 2 * kSizeDefault),
-                Expanded(
-                  child: SizedBox(
-                    height:
-                        MediaQuery.of(context).size.height - 9.5 * kSizeDefault,
-                    child: SingleChildScrollView(
-                      child: courseCardsBuilder(
-                        context: context,
-                        courses: courses!,
-                        wrap: true,
+                const Spacer(),
+                TextButton(
+                  onPressed: () => showDialog(
+                    context: context,
+                    builder: getFiltersDialog,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        ArchiveStrings.filters,
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
                       ),
-                    ),
+                      const Gap.horizontal(kSizeDefault / 2),
+                      Icon(
+                        Icons.filter_alt_rounded,
+                        color: Theme.of(context).colorScheme.secondary,
+                        size: kSizeDefault,
+                      ),
+                    ],
                   ),
                 ),
               ],
+            ),
+            const Gap.vertical(1.5 * kSizeDefault),
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: context.maxHeight -
+                    (ArchiveThemes.appbarHeight + 7 * kSizeDefault),
+              ),
+              child: courseCardsBuilder(
+                context: context,
+                courses: courses!,
+                infiniteWidth: false,
+              ),
             ),
           ],
         ),

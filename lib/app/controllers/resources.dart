@@ -14,52 +14,52 @@ class ResourcesController extends GetxController
       ResourceModel(
         title: 'میانترم اول محاسبات عددی',
         semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
+        professor: 'دکتر کشتکاران',
       ),
       ResourceModel(
         title: 'میانترم اول محاسبات عددی',
         semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
+        professor: 'دکتر کشتکاران',
       ),
       ResourceModel(
         title: 'میانترم اول محاسبات عددی',
         semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
+        professor: 'دکتر کشتکاران',
       ),
       ResourceModel(
         title: 'میانترم اول محاسبات عددی',
         semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
+        professor: 'دکتر کشتکاران',
       ),
       ResourceModel(
         title: 'میانترم اول محاسبات عددی',
         semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
+        professor: 'دکتر کشتکاران',
       ),
       ResourceModel(
         title: 'میانترم اول محاسبات عددی',
         semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
+        professor: 'دکتر کشتکاران',
       ),
       ResourceModel(
         title: 'میانترم اول محاسبات عددی',
         semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
+        professor: 'دکتر کشتکاران',
       ),
       ResourceModel(
         title: 'میانترم اول محاسبات عددی',
         semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
+        professor: 'دکتر کشتکاران',
       ),
       ResourceModel(
         title: 'میانترم اول محاسبات عددی',
         semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
+        professor: 'دکتر کشتکاران',
       ),
       ResourceModel(
         title: 'میانترم اول محاسبات عددی',
         semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
+        professor: 'دکتر کشتکاران',
       ),
     ];
 

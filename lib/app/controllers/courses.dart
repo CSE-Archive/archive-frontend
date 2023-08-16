@@ -1,3 +1,4 @@
+import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/models/course.dart';
 import 'package:get/get.dart';
 
@@ -13,15 +14,15 @@ class CoursesController extends GetxController
   final searchBarController = SearchTextFieldController();
 
   final typeOptions = {
-    'all': 'coursesAll'.tr,
-    'specialized': 'coursesTypeSpecialized'.tr,
-    'optional': 'coursesTypeOptional'.tr,
-    'basic': 'coursesTypeBasic'.tr,
-    'general': 'coursesTypeGeneral'.tr,
+    'all': ArchiveStrings.coursesAll,
+    'specialized': ArchiveStrings.coursesTypeSpecialized,
+    'optional': ArchiveStrings.coursesTypeOptional,
+    'basic': ArchiveStrings.coursesTypeBasic,
+    'general': ArchiveStrings.coursesTypeGeneral,
   };
 
   final unitsOptions = {
-    'all': 'coursesAll'.tr,
+    'all': ArchiveStrings.coursesAll,
     '1': '۱',
     '2': '۲',
     '3': '۳',

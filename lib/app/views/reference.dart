@@ -1,52 +1,72 @@
-import 'package:cse_archive/app/constants.dart';
+import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/reference.dart';
+import 'package:cse_archive/app/extensions/responsive.dart';
+import 'package:cse_archive/app/routes/routes.dart';
+import 'package:cse_archive/app/utils/course_cards_builder.dart';
+import 'package:cse_archive/app/utils/reference_cards_builder.dart';
+import 'package:cse_archive/app/widgets/gap.dart';
+import 'package:cse_archive/app/widgets/card.dart';
+import 'package:cse_archive/app/widgets/path.dart';
+import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import 'general/basic_web_page.dart';
-import 'general/course_cards_builder.dart';
-import 'general/path_builder.dart';
-import 'general/reference_cards_builder.dart';
-import 'general/title_heading.dart';
+import '../widgets/header.dart';
 import 'loading.dart';
 
 class ReferenceView extends StatelessWidget {
-  const ReferenceView({super.key});
+  final String id;
+
+  const ReferenceView({
+    super.key,
+    required this.id,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final id = Get.parameters["id"];
+    // TODO: Change
+
     final controller = Get.put(
-      ReferenceController(referenceId: int.parse(id!)),
+      ReferenceController(referenceId: int.parse(id)),
       tag: id,
     );
 
-    return basicWebPage(
-      context: context,
+    return ArchiveWebPage(
+      applyPlatformConstraints: false,
       body: controller.obx(
         (data) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            pathBuilder(
-              context,
-              roots: {
-                'home'.tr: () => Get.toNamed('/'),
-                'references'.tr: () => Get.toNamed('/references'),
-                data!.title: () =>
-                    Get.toNamed('/references/${data.id}/${data.slug}'),
-              },
-            ),
-            const SizedBox(height: kSizeDefault),
-            ConstrainedBox(
-              constraints: const BoxConstraints(
-                minHeight: 22 * kSizeDefault,
+            Container(
+              alignment: Alignment.centerRight,
+              constraints: BoxConstraints(maxWidth: context.platform.maxWidth),
+              padding:
+                  EdgeInsets.symmetric(horizontal: context.platform.margin),
+              child: ArchivePath(
+                labels: [
+                  ArchiveStrings.home,
+                  ArchiveStrings.references,
+                  data!.title
+                ],
+                routes: [
+                  ArchiveRoutes.home,
+                  ArchiveRoutes.references,
+                  '${ArchiveRoutes.references}/${data.id}'
+                ],
               ),
+            ),
+            const Gap.vertical(1.5 * kSizeDefault),
+            Container(
+              constraints: BoxConstraints(maxWidth: context.platform.maxWidth),
+              padding:
+                  EdgeInsets.symmetric(horizontal: context.platform.margin),
               child: Container(
+                padding: const EdgeInsets.all(kSizeDefault),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.secondary,
                   borderRadius: BorderRadius.circular(kSizeDefault),
                 ),
-                padding: const EdgeInsets.all(kSizeDefault),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -54,19 +74,18 @@ class ReferenceView extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            'referenceItemTitle'.tr,
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleMedium!
-                                .copyWith(
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .primary
-                                      .withOpacity(0.8),
-                                ),
-                          ),
-                          Text(
+                          // TODO: Decide this
+                          // SelectableText(
+                          //   ArchiveStrings.referenceTitle,
+                          //   style: Theme.of(context)
+                          //       .textTheme
+                          //       .titleMedium!
+                          //       .copyWith(
+                          //         color: Theme.of(context).colorScheme.primary,
+                          //         fontWeight: FontWeight.bold,
+                          //       ),
+                          // ),
+                          SelectableText(
                             data.title,
                             style: Theme.of(context)
                                 .textTheme
@@ -76,9 +95,19 @@ class ReferenceView extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                 ),
                           ),
-                          const SizedBox(height: kSizeDefault),
-                          Text(
-                            'referenceItemAuthors'.tr,
+                          const Gap.vertical(2 * kSizeDefault),
+                          SelectableText(
+                            ArchiveStrings.referenceAuthors,
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                          ),
+                          SelectableText(
+                            data.authors.join('\n'),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
@@ -89,30 +118,20 @@ class ReferenceView extends StatelessWidget {
                                       .withOpacity(0.8),
                                 ),
                           ),
-                          Text(
-                            data.authors.join('\n'),
-                            style: Theme.of(context)
-                                .textTheme
-                                .titleLarge!
-                                .copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                          ),
+                          // TODO: Add download buttons
                         ],
                       ),
                     ),
-                    const SizedBox(width: kSizeDefault),
-                    Container(
+                    const Gap.horizontal(kSizeDefault),
+                    ArchiveCard(
+                      onPressed: null,
                       width: 17 * kSizeDefault,
                       height: 22 * kSizeDefault,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(data.image),
-                          fit: BoxFit.cover,
-                        ),
+                      child: ClipRRect(
                         borderRadius: BorderRadius.circular(kSizeDefault / 2),
-                        border: Border.all(
-                          color: Theme.of(context).colorScheme.primary,
+                        child: Image.asset(
+                          data.image,
+                          fit: BoxFit.cover,
                         ),
                       ),
                     ),
@@ -120,78 +139,40 @@ class ReferenceView extends StatelessWidget {
                 ),
               ),
             ),
-            Row(
-              children: [
-                const SizedBox(width: 4 * kSizeDefault),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.resolveWith(
-                      (states) => states.contains(MaterialState.hovered)
-                          ? Theme.of(context).colorScheme.secondary
-                          : Theme.of(context)
-                              .colorScheme
-                              .secondary
-                              .withOpacity(0.8),
-                    ),
-                    shadowColor: MaterialStateProperty.all(
-                      Colors.transparent,
-                    ),
-                    overlayColor: MaterialStateProperty.all(
-                      Colors.transparent,
-                    ),
-                    shape: MaterialStateProperty.resolveWith(
-                      (states) {
-                        if (states.contains(MaterialState.hovered)) {
-                          return const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero,
-                          );
-                        }
-                        return const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(kSizeDefault),
-                            bottomRight: Radius.circular(kSizeDefault),
-                          ),
-                        );
-                      },
-                    ),
-                    padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(
-                        horizontal: 4 * kSizeDefault,
-                        vertical: kSizeDefault,
-                      ),
-                    ),
-                  ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.download_rounded),
-                      const SizedBox(width: kSizeDefault / 2),
-                      Text(
-                        'referenceItemDownload'.tr,
-                        style:
-                            Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  color: Theme.of(context).colorScheme.primary,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                      ),
-                    ],
-                  ),
+            if (data.courses.isNotEmpty) ...[
+              const Gap.vertical(2 * kSizeDefault),
+              Container(
+                constraints:
+                    BoxConstraints(maxWidth: context.platform.maxWidth),
+                padding:
+                    EdgeInsets.symmetric(horizontal: context.platform.margin),
+                child: const ArchiveHeader(
+                  title: ArchiveStrings.referenceRelatedCourses,
                 ),
-              ],
-            ),
-            const SizedBox(height: 2 * kSizeDefault),
-            if (data.courses.isNotEmpty)
-              TitleHeading(title: 'referenceItemRelatedCourses'.tr),
-            if (data.courses.isNotEmpty)
-              courseCardsBuilder(context: context, courses: data.courses),
-            const SizedBox(height: 2 * kSizeDefault),
-            if (data.references.isNotEmpty)
-              TitleHeading(title: 'referenceItemRelatedReferences'.tr),
-            if (data.references.isNotEmpty)
+              ),
+              courseCardsBuilder(
+                context: context,
+                courses: data.courses,
+                infiniteWidth: true,
+              ),
+            ],
+            if (data.references.isNotEmpty) ...[
+              const Gap.vertical(2 * kSizeDefault),
+              Container(
+                constraints:
+                    BoxConstraints(maxWidth: context.platform.maxWidth),
+                padding:
+                    EdgeInsets.symmetric(horizontal: context.platform.margin),
+                child: const ArchiveHeader(
+                  title: ArchiveStrings.referenceRelatedReferences,
+                ),
+              ),
               referenceCardsBuilder(
                 context: context,
                 references: data.references,
+                infiniteWidth: true,
               ),
+            ],
           ],
         ),
         onLoading: const LoadingView(),

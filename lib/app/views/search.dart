@@ -1,17 +1,21 @@
-import 'package:cse_archive/app/constants.dart';
+import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/search.dart';
 import 'package:cse_archive/app/models/course.dart';
 import 'package:cse_archive/app/models/reference.dart';
-import 'package:cse_archive/app/models/teacher.dart';
+import 'package:cse_archive/app/models/professor.dart';
+import 'package:cse_archive/app/routes/routes.dart';
+import 'package:cse_archive/app/utils/not_found_svg.dart';
+import 'package:cse_archive/app/utils/course_cards_builder.dart';
+import 'package:cse_archive/app/utils/professor_cards_builder.dart';
+import 'package:cse_archive/app/utils/reference_cards_builder.dart';
+import 'package:cse_archive/app/widgets/gap.dart';
+import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
-import 'general/basic_web_page.dart';
-import 'general/course_cards_builder.dart';
-import 'general/helpers.dart';
-import 'general/reference_cards_builder.dart';
-import 'general/teacher_cards_builder.dart';
-import 'general/title_heading.dart';
+import '../widgets/header.dart';
 import 'loading.dart';
 
 class SearchView extends StatelessWidget {
@@ -19,24 +23,24 @@ class SearchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //TODO: Change
+
     final query = Get.parameters['q'] ?? '';
 
     final controller = Get.put(SearchVController(query));
     controller.setParameters({'q': query});
 
-    return basicWebPage(
-      context: context,
+    return ArchiveWebPage(
       body: controller.obx(
         (results) => (results!['courses']!.isEmpty &&
                 results['references']!.isEmpty &&
-                results['teachers']!.isEmpty)
+                results['professors']!.isEmpty)
             ? Column(
                 children: [
-                  notFoundSVGBuilder(context),
+                  notFoundSVG(context),
                   Text(
-                    '404'.tr,
+                    ArchiveStrings.notFound,
                     style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.secondary,
                           fontWeight: FontWeight.bold,
                         ),
                   ),
@@ -45,74 +49,58 @@ class SearchView extends StatelessWidget {
             : Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const SizedBox(height: 1.5 * kSizeDefault),
-                  // if (results!['resources']!.isNotEmpty)
-                  //   TitleHeading(
-                  //     title: 'resources'.tr,
-                  //     seeAllOnPressed: () => Get.toNamed(
-                  //       Uri(
-                  //         path: '/resources',
-                  //         queryParameters: {'q': query},
-                  //       ).toString(),
-                  //     ),
-                  //   ),
-                  // if (results['resources']!.isNotEmpty)
-                  //   resourceCardsBuilder(
-                  //     resources: results['resources'] as List<ResourceModel>,
-                  //   ),
-                  // if (results['resources']!.isNotEmpty)
-                  //   const SizedBox(height: 2 * kSizeDefault),
-                  if (results['courses']!.isNotEmpty)
-                    TitleHeading(
-                      title: 'courses'.tr,
-                      seeAllOnPressed: () => Get.toNamed(
+                  const Gap.vertical(1.5 * kSizeDefault),
+                  if (results['courses']!.isNotEmpty) ...[
+                    ArchiveHeader(
+                      title: ArchiveStrings.courses,
+                      seeAllOnPressed: () => context.go(
                         Uri(
-                          path: '/courses',
+                          path: ArchiveRoutes.courses,
                           queryParameters: {'q': query},
                         ).toString(),
                       ),
                     ),
-                  if (results['courses']!.isNotEmpty)
                     courseCardsBuilder(
                       context: context,
                       courses: results['courses'] as List<CourseModel>,
+                      infiniteWidth: false,
                     ),
-                  if (results['courses']!.isNotEmpty)
-                    const SizedBox(height: 2 * kSizeDefault),
-                  if (results['references']!.isNotEmpty)
-                    TitleHeading(
-                      title: 'references'.tr,
-                      seeAllOnPressed: () => Get.toNamed(
+                    const Gap.vertical(2 * kSizeDefault),
+                  ],
+                  if (results['references']!.isNotEmpty) ...[
+                    ArchiveHeader(
+                      title: ArchiveStrings.references,
+                      seeAllOnPressed: () => context.go(
                         Uri(
-                          path: '/references',
+                          path: ArchiveRoutes.references,
                           queryParameters: {'q': query},
                         ).toString(),
                       ),
                     ),
-                  if (results['references']!.isNotEmpty)
                     referenceCardsBuilder(
                       context: context,
                       references: results['references'] as List<ReferenceModel>,
+                      infiniteWidth: false,
                     ),
-                  if (results['references']!.isNotEmpty)
-                    const SizedBox(height: 2 * kSizeDefault),
-                  if (results['teachers']!.isNotEmpty)
-                    TitleHeading(
-                      title: 'teachers'.tr,
-                      seeAllOnPressed: () => Get.toNamed(
+                    const Gap.vertical(2 * kSizeDefault),
+                  ],
+                  if (results['professors']!.isNotEmpty) ...[
+                    ArchiveHeader(
+                      title: ArchiveStrings.professors,
+                      seeAllOnPressed: () => context.go(
                         Uri(
-                          path: '/teachers',
+                          path: ArchiveRoutes.professors,
                           queryParameters: {'q': query},
                         ).toString(),
                       ),
                     ),
-                  if (results['teachers']!.isNotEmpty)
-                    teacherCardsBuilder(
+                    professorCardsBuilder(
                       context: context,
-                      teachers: results['teachers'] as List<TeacherModel>,
+                      professors: results['professors'] as List<ProfessorModel>,
+                      infiniteWidth: false,
                     ),
-                  if (results['teachers']!.isNotEmpty)
-                    const SizedBox(height: 2 * kSizeDefault),
+                    const Gap.vertical(2 * kSizeDefault),
+                  ],
                 ],
               ),
         onLoading: const LoadingView(),

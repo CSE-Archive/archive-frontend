@@ -1,11 +1,21 @@
+import 'package:cse_archive/app/constants/strings.dart';
+
 import 'reference.dart';
-import 'teacher.dart';
+import 'professor.dart';
 
 enum CourseType {
   basic,
   general,
   optional,
-  specialized,
+  specialized;
+
+  @override
+  String toString() => switch (this) {
+        basic => ArchiveStrings.chartBasic,
+        general => ArchiveStrings.chartGeneral,
+        optional => ArchiveStrings.chartOptional,
+        specialized => ArchiveStrings.chartSpecialized,
+      };
 }
 
 enum RequisiteType { co, pre }
@@ -21,7 +31,7 @@ class CourseModel {
     this.description,
     this.requisites = const {},
     this.references = const [],
-    this.teachers = const [],
+    this.professors = const [],
     this.resources = const [],
     this.records = const [],
     this.requisiteFor = const [],
@@ -37,7 +47,7 @@ class CourseModel {
   final Map<CourseModel, RequisiteType> requisites;
   final List<CourseModel> requisiteFor;
   final List<ReferenceModel> references;
-  final List<TeacherModel> teachers;
+  final List<ProfessorModel> professors;
   final List<Map> resources;
   final List<Map> records;
 }

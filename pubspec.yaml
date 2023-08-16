@@ -10,13 +10,18 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_localizations:
+    sdk: flutter
+
   flutter_web_plugins:
     sdk: flutter
 
   flutter_svg: ^2.0.7
   get: ^4.6.5
-  google_fonts: ^5.1.0
-  intl: ^0.18.1
+  go_router: ^10.0.0
+  intl: ^0.18.0
+  rive: ^0.11.14
+  shared_preferences: ^2.2.0
   url_launcher: ^6.1.12
 
 dev_dependencies:
@@ -29,5 +34,20 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/
-    - assets/svgs/
+    - assets/_/ # TODO: Delete later
+    - assets/riv/
+    - assets/svg/
+
+  fonts:
+    - family: peyda
+      fonts:
+        - asset: assets/font/peyda/peyda-light.ttf
+          weight: 300
+        - asset: assets/font/peyda/peyda-regular.ttf
+          weight: 400
+        - asset: assets/font/peyda/peyda-medium.ttf
+          weight: 500
+        - asset: assets/font/peyda/peyda-semiBold.ttf
+          weight: 600
+        - asset: assets/font/peyda/peyda-bold.ttf
+          weight: 700

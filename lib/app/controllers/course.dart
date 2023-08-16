@@ -1,6 +1,6 @@
 import 'package:cse_archive/app/models/course.dart';
 import 'package:cse_archive/app/models/reference.dart';
-import 'package:cse_archive/app/models/teacher.dart';
+import 'package:cse_archive/app/models/professor.dart';
 import 'package:get/get.dart';
 
 class CourseController extends GetxController with StateMixin<CourseModel> {
@@ -35,23 +35,23 @@ class CourseController extends GetxController with StateMixin<CourseModel> {
             'Ronald L. Rivest',
             'Clifford Stein',
           ],
-          image: 'assets/images/clrs.jpeg',
+          image: 'assets/_/clrs.jpeg',
           slug: 'introduction-to-algorithms-4rd-edition',
         ),
       ],
-      teachers: [
-        TeacherModel(
+      professors: [
+        ProfessorModel(
           id: 1,
-          image: 'assets/images/clrs.jpeg',
+          image: 'assets/_/clrs.jpeg',
           slug: 'introduction-to-algorithms-4rd-edition',
           department: 'مهندسی کامپیوتر',
           honorific: 'دکتر',
           firstName: 'کوروش',
           lastName: 'زیارتی',
         ),
-        TeacherModel(
+        ProfessorModel(
           id: 1,
-          image: 'assets/images/clrs.jpeg',
+          image: 'assets/_/clrs.jpeg',
           slug: 'introduction-to-algorithms-4rd-edition',
           department: 'مهندسی کامپیوتر',
           honorific: 'دکتر',
@@ -87,7 +87,7 @@ class CourseController extends GetxController with StateMixin<CourseModel> {
       records: [
         {
           'semester': 'نیم‌سال اول ۱۴۰۰',
-          'teacher': 'دکتر کشت‌کاران',
+          'professor': 'دکتر کشت‌کاران',
           'files': [
             'جلسه ۱',
             'جلسه ۲',
@@ -98,7 +98,7 @@ class CourseController extends GetxController with StateMixin<CourseModel> {
       resources: [
         {
           'semester': 'نیم‌سال اول ۱۴۰۰',
-          'teacher': 'دکتر کشت‌کاران',
+          'professor': 'دکتر کشت‌کاران',
           'tas': null,
           'files': [
             'میانترم اول',
@@ -126,7 +126,7 @@ class CourseController extends GetxController with StateMixin<CourseModel> {
         },
         {
           'semester': 'نیم‌سال دوم ۱۴۰۰',
-          'teacher': 'دکتر کشت‌کاران',
+          'professor': 'دکتر کشت‌کاران',
           'tas': [
             'رضا فرجام',
             'محمد علی کلی',

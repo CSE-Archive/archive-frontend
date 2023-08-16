@@ -1,10 +1,9 @@
+import 'package:cse_archive/app/controllers/search_text_field.dart';
 import 'package:cse_archive/app/models/course.dart';
 import 'package:cse_archive/app/models/reference.dart';
 import 'package:cse_archive/app/models/resource.dart';
-import 'package:cse_archive/app/models/teacher.dart';
+import 'package:cse_archive/app/models/professor.dart';
 import 'package:get/get.dart';
-
-import 'appbar.dart';
 
 class SearchVController extends GetxController
     with StateMixin<Map<String, List<dynamic>>> {
@@ -20,9 +19,10 @@ class SearchVController extends GetxController
 
   @override
   void onClose() {
-    var controller = Get.find<AppbarController>();
-    controller.searchBarController.textController.clear();
-    controller.searchBarController.showClearButton(false);
+    final searchBarController =
+        Get.find<SearchTextFieldController>(tag: 'appbar');
+    searchBarController.textController.clear();
+    searchBarController.showClearButton(false);
 
     super.onClose();
   }
@@ -34,8 +34,8 @@ class SearchVController extends GetxController
           query = value;
           fetchData();
 
-          var searchBarController =
-              Get.find<AppbarController>().searchBarController;
+          final searchBarController =
+              Get.find<SearchTextFieldController>(tag: 'appbar');
           searchBarController.showClearButton(true);
           searchBarController.textController.text = value;
           break;
@@ -61,7 +61,7 @@ class SearchVController extends GetxController
               ResourceModel(
                 title: 'میانترم اول محاسبات عددی',
                 semester: 'نیم سال اول ۱۳۹۹',
-                teacher: 'دکتر کشتکاران',
+                professor: 'دکتر کشتکاران',
               ),
             ],
       'references': query == '404'
@@ -76,7 +76,7 @@ class SearchVController extends GetxController
                   'Ronald L. Rivest',
                   'Clifford Stein',
                 ],
-                image: 'assets/images/clrs.jpeg',
+                image: 'assets/_/clrs.jpeg',
                 slug: 'introduction-to-algorithms-4rd-edition',
               ),
               ReferenceModel(
@@ -88,16 +88,16 @@ class SearchVController extends GetxController
                   'Ronald L. Rivest',
                   'Clifford Stein',
                 ],
-                image: 'assets/images/clrs.jpeg',
+                image: 'assets/_/clrs.jpeg',
                 slug: 'introduction-to-algorithms-4rd-edition',
               ),
             ],
-      'teachers': query == '404'
+      'professors': query == '404'
           ? []
           : [
-              TeacherModel(
+              ProfessorModel(
                 id: 1,
-                image: 'assets/images/clrs.jpeg',
+                image: 'assets/_/clrs.jpeg',
                 slug: 'introduction-to-algorithms-4rd-edition',
                 department: 'مهندسی کامپیوتر',
                 honorific: 'دکتر',

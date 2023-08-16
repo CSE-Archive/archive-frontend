@@ -2,10 +2,10 @@ class ResourceModel {
   ResourceModel({
     required this.title,
     required this.semester,
-    required this.teacher,
+    required this.professor,
   });
 
   final String title;
   final String semester;
-  final String teacher;
+  final String professor;
 }

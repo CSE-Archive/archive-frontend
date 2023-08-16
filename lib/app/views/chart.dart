@@ -1,182 +1,156 @@
-import 'package:cse_archive/app/constants.dart';
+import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/chart.dart';
-import 'package:cse_archive/app/models/course.dart';
-import 'package:cse_archive/app/views/general/basic_web_page.dart';
-import 'package:cse_archive/app/views/general/custom_card.dart';
-import 'package:cse_archive/app/views/general/helpers.dart';
-import 'package:cse_archive/app/views/general/path_builder.dart';
-import 'package:cse_archive/app/views/general/title_heading.dart';
+import 'package:cse_archive/app/extensions/responsive.dart';
+import 'package:cse_archive/app/routes/routes.dart';
+import 'package:cse_archive/app/utils/course_cards_builder.dart';
+import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
+import 'package:cse_archive/app/widgets/dialog.dart';
+import 'package:cse_archive/app/widgets/web_page/web_page.dart';
+import 'package:cse_archive/app/widgets/path.dart';
+import 'package:cse_archive/app/widgets/header.dart';
+import 'package:cse_archive/app/widgets/gap.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'loading.dart';
 
 class ChartView extends StatelessWidget {
-  const ChartView({
-    super.key,
-  });
+  const ChartView({super.key});
 
-  String getTooltip(
-    Map<CourseModel, RequisiteType> requisites,
-    bool doesOpenNewTab,
-  ) {
-    if (!doesOpenNewTab) return 'chartSeeCourses'.tr;
-
-    var coFlag = false, preFlag = false;
-    var co = 'chartCo'.tr, pre = 'chartPre'.tr;
-
-    requisites.forEach((key, value) {
-      if (value == RequisiteType.co) {
-        co += "\n• ${key.name}";
-        coFlag = true;
-      } else if (value == RequisiteType.pre) {
-        pre += "\n• ${key.name}";
-        preFlag = true;
-      }
-    });
-
-    return '${co + (coFlag ? '' : '\n-')}\n\n${pre + (preFlag ? '' : '\n-')}';
-  }
+  static final semestersTitles = [
+    ArchiveStrings.chartSemester1,
+    ArchiveStrings.chartSemester2,
+    ArchiveStrings.chartSemester3,
+    ArchiveStrings.chartSemester4,
+    ArchiveStrings.chartSemester5,
+    ArchiveStrings.chartSemester6,
+    ArchiveStrings.chartSemester7,
+    ArchiveStrings.chartSemester8,
+  ];
 
   @override
   Widget build(BuildContext context) {
     final chartController = Get.find<ChartController>();
 
-    return basicWebPage(
-      context: context,
+    Widget getHelpDialog(BuildContext context) {
+      final textStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
+            color: Theme.of(context).colorScheme.secondary.withOpacity(0.9),
+            fontWeight: FontWeight.w300,
+          );
+
+      final titleStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
+            fontWeight: FontWeight.w500,
+          );
+
+      return ArchiveDialog(
+        title: ArchiveStrings.chartHelp,
+        children: [
+          SelectableText(
+            ArchiveStrings.chartHelpPreRequisitesTitle,
+            style: titleStyle,
+          ),
+          const Gap.vertical(kSizeDefault / 2),
+          SelectableText(
+            ArchiveStrings.chartHelpPreRequisitesDescription,
+            style: textStyle,
+          ),
+          const Gap.vertical(kSizeDefault),
+          SelectableText(
+            ArchiveStrings.chartHelpCoRequisitesTitle,
+            style: titleStyle,
+          ),
+          const Gap.vertical(kSizeDefault / 2),
+          SelectableText(
+            ArchiveStrings.chartHelpCoRequisitesDescription,
+            style: textStyle,
+          ),
+        ],
+      );
+    }
+
+    return ArchiveWebPage(
+      applyPlatformConstraints: false,
       body: chartController.obx(
         (data) => Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            pathBuilder(
-              context,
-              roots: {
-                'home'.tr: () => Get.toNamed('/'),
-                'chart'.tr: () => Get.toNamed('/chart'),
-              },
+            Container(
+              alignment: Alignment.centerRight,
+              constraints: BoxConstraints(maxWidth: context.platform.maxWidth),
+              padding:
+                  EdgeInsets.symmetric(horizontal: context.platform.margin),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ArchivePath(
+                    labels: const [
+                      ArchiveStrings.home,
+                      ArchiveStrings.chart,
+                    ],
+                    routes: const [
+                      ArchiveRoutes.home,
+                      ArchiveRoutes.chart,
+                    ],
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () => showDialog(
+                      context: context,
+                      builder: getHelpDialog,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          ArchiveStrings.chartHelp,
+                          style:
+                              Theme.of(context).textTheme.bodyMedium!.copyWith(
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                        ),
+                        const Gap.horizontal(kSizeDefault / 2),
+                        Icon(
+                          Icons.help,
+                          color: Theme.of(context).colorScheme.secondary,
+                          size: kSizeDefault,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
             ),
-            const SizedBox(height: kSizeDefault),
+            const Gap.vertical(1.5 * kSizeDefault),
             ...data!.asMap().entries.map(
               (semester) {
                 final index = semester.key;
                 final courses = semester.value;
-                return Column(
-                  children: [
-                    TitleHeading(
-                      title: replaceEnWithFaDigits(
-                        '${'chartSemester${index + 1}'.tr} - ${courses.fold<int>(0, (a, b) => a + b.units)} ${'courseUnit'.tr}',
-                      ),
-                    ),
-                    SizedBox(
-                      height: 9 * kSizeDefault,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: courses.length,
-                        itemBuilder: (context, index) {
-                          final course = courses[index];
 
-                          return Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              if (index == 0)
-                                const SizedBox(width: kSizeDefault),
-                              Tooltip(
-                                padding: const EdgeInsets.all(kSizeDefault / 2),
-                                message: getTooltip(
-                                  course.requisites,
-                                  course.type != CourseType.optional &&
-                                      course.type != CourseType.general,
-                                ),
-                                textStyle: Theme.of(context)
-                                    .textTheme
-                                    .bodyMedium!
-                                    .copyWith(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
-                                child: Container(
-                                  width: 19 * kSizeDefault,
-                                  margin: const EdgeInsets.only(
-                                    left: kSizeDefault,
-                                    top: kSizeDefault,
-                                    bottom: kSizeDefault,
-                                  ),
-                                  child: CustomCard(
-                                    onPressed: () {},
-                                    child: Container(
-                                      width: double.infinity,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
-                                      padding:
-                                          const EdgeInsets.all(kSizeDefault),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Expanded(
-                                                child: Text(
-                                                  course.name,
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .bodyLarge!
-                                                      .copyWith(
-                                                        color: Theme.of(context)
-                                                            .colorScheme
-                                                            .secondary,
-                                                      ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          const Spacer(),
-                                          Text(
-                                            replaceEnWithFaDigits(
-                                              '${course.units} ${'courseUnit'.tr}',
-                                            ),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall!
-                                                .copyWith(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary
-                                                      .withOpacity(0.7),
-                                                ),
-                                          ),
-                                          Text(
-                                            courseTypeToString(course.type),
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodySmall!
-                                                .copyWith(
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .secondary
-                                                      .withOpacity(0.7),
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              if (index == courses.length - 1)
-                                const SizedBox(width: kSizeDefault),
-                            ],
-                          );
-                        },
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Container(
+                      constraints:
+                          BoxConstraints(maxWidth: context.platform.maxWidth),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.platform.margin,
+                      ),
+                      child: ArchiveHeader(
+                        title: enToFaDigits(
+                          '${semestersTitles[index]} - ${courses.fold<int>(0, (a, b) => a + b.units)} ${ArchiveStrings.courseUnit}',
+                        ),
                       ),
                     ),
+                    courseCardsBuilder(
+                      context: context,
+                      courses: courses,
+                      showTooltip: true,
+                      infiniteWidth: true,
+                    ),
+                    if (index != data.length - 1)
+                      const Gap.vertical(2 * kSizeDefault),
                   ],
                 );
               },

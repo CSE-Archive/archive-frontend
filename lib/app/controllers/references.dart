@@ -37,7 +37,7 @@ class ReferencesController extends GetxController
           'Ronald L. Rivest',
           'Clifford Stein',
         ],
-        image: 'assets/images/clrs.jpeg',
+        image: 'assets/_/clrs.jpeg',
         slug: 'introduction-to-algorithms-4rd-edition',
       ),
       ReferenceModel(
@@ -49,7 +49,7 @@ class ReferencesController extends GetxController
           'Ronald L. Rivest',
           'Clifford Stein',
         ],
-        image: 'assets/images/clrs.jpeg',
+        image: 'assets/_/clrs.jpeg',
         slug: 'introduction-to-algorithms-4rd-edition',
       ),
       ReferenceModel(
@@ -61,7 +61,7 @@ class ReferencesController extends GetxController
           'Ronald L. Rivest',
           'Clifford Stein',
         ],
-        image: 'assets/images/clrs.jpeg',
+        image: 'assets/_/clrs.jpeg',
         slug: 'introduction-to-algorithms-4rd-edition',
       ),
       ReferenceModel(
@@ -73,7 +73,7 @@ class ReferencesController extends GetxController
           'Ronald L. Rivest',
           'Clifford Stein',
         ],
-        image: 'assets/images/clrs.jpeg',
+        image: 'assets/_/clrs.jpeg',
         slug: 'introduction-to-algorithms-4rd-edition',
       ),
       ReferenceModel(
@@ -85,7 +85,7 @@ class ReferencesController extends GetxController
           'Ronald L. Rivest',
           'Clifford Stein',
         ],
-        image: 'assets/images/clrs.jpeg',
+        image: 'assets/_/clrs.jpeg',
         slug: 'introduction-to-algorithms-4rd-edition',
       ),
       ReferenceModel(
@@ -97,7 +97,7 @@ class ReferencesController extends GetxController
           'Ronald L. Rivest',
           'Clifford Stein',
         ],
-        image: 'assets/images/clrs.jpeg',
+        image: 'assets/_/clrs.jpeg',
         slug: 'introduction-to-algorithms-4rd-edition',
       ),
     ];

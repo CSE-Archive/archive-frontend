@@ -1,20 +1,24 @@
-import 'package:cse_archive/app/views/general/basic_web_page.dart';
+import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/themes.dart';
+import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 
 class LoadingView extends StatelessWidget {
   const LoadingView({super.key});
 
   @override
-  Widget build(BuildContext context) => basicWebPage(
-        context: context,
-        body: Center(
+  Widget build(BuildContext context) {
+    return ArchiveWebPage(
+      bodyPadding: 0,
+      body: SizedBox(
+        height: MediaQuery.sizeOf(context).height - ArchiveThemes.appbarHeight,
+        child: Center(
           child: Text(
-            'loading'.tr,
-            style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                  color: Theme.of(context).colorScheme.secondary,
-                ),
+            ArchiveStrings.loading,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
-      );
+      ),
+    );
+  }
 }

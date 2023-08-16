@@ -11,57 +11,59 @@ class ResourceCardsController extends GetxController {
   }
 
   void loadResources() {
-    resources.addAll([
-      ResourceModel(
-        title: 'میانترم اول محاسبات عددی',
-        semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
-      ),
-      ResourceModel(
-        title: 'میانترم اول محاسبات عددی',
-        semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
-      ),
-      ResourceModel(
-        title: 'میانترم اول محاسبات عددی',
-        semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
-      ),
-      ResourceModel(
-        title: 'میانترم اول محاسبات عددی',
-        semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
-      ),
-      ResourceModel(
-        title: 'میانترم اول محاسبات عددی',
-        semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
-      ),
-      ResourceModel(
-        title: 'میانترم اول محاسبات عددی',
-        semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
-      ),
-      ResourceModel(
-        title: 'میانترم اول محاسبات عددی',
-        semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
-      ),
-      ResourceModel(
-        title: 'میانترم اول محاسبات عددی',
-        semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
-      ),
-      ResourceModel(
-        title: 'میانترم اول محاسبات عددی',
-        semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
-      ),
-      ResourceModel(
-        title: 'میانترم اول محاسبات عددی',
-        semester: 'نیم سال اول ۱۳۹۹',
-        teacher: 'دکتر کشتکاران',
-      ),
-    ]);
+    resources.addAll(
+      [
+        ResourceModel(
+          title: 'میانترم اول محاسبات عددی',
+          semester: 'نیم سال اول ۱۳۹۹',
+          professor: 'دکتر کشتکاران',
+        ),
+        ResourceModel(
+          title: 'میانترم اول محاسبات عددی',
+          semester: 'نیم سال اول ۱۳۹۹',
+          professor: 'دکتر کشتکاران',
+        ),
+        ResourceModel(
+          title: 'میانترم اول محاسبات عددی',
+          semester: 'نیم سال اول ۱۳۹۹',
+          professor: 'دکتر کشتکاران',
+        ),
+        ResourceModel(
+          title: 'میانترم اول محاسبات عددی',
+          semester: 'نیم سال اول ۱۳۹۹',
+          professor: 'دکتر کشتکاران',
+        ),
+        ResourceModel(
+          title: 'میانترم اول محاسبات عددی',
+          semester: 'نیم سال اول ۱۳۹۹',
+          professor: 'دکتر کشتکاران',
+        ),
+        ResourceModel(
+          title: 'میانترم اول محاسبات عددی',
+          semester: 'نیم سال اول ۱۳۹۹',
+          professor: 'دکتر کشتکاران',
+        ),
+        ResourceModel(
+          title: 'میانترم اول محاسبات عددی',
+          semester: 'نیم سال اول ۱۳۹۹',
+          professor: 'دکتر کشتکاران',
+        ),
+        ResourceModel(
+          title: 'میانترم اول محاسبات عددی',
+          semester: 'نیم سال اول ۱۳۹۹',
+          professor: 'دکتر کشتکاران',
+        ),
+        ResourceModel(
+          title: 'میانترم اول محاسبات عددی',
+          semester: 'نیم سال اول ۱۳۹۹',
+          professor: 'دکتر کشتکاران',
+        ),
+        ResourceModel(
+          title: 'میانترم اول محاسبات عددی',
+          semester: 'نیم سال اول ۱۳۹۹',
+          professor: 'دکتر کشتکاران',
+        ),
+      ],
+    );
   }
 }
