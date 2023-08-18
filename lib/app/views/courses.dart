@@ -16,7 +16,7 @@ import 'package:get/get.dart';
 
 import 'loading.dart';
 
-class CoursesView extends StatelessWidget {
+class CoursesView extends GetView<CoursesController> {
   final Map<String, String> parameters;
 
   const CoursesView({
@@ -26,48 +26,11 @@ class CoursesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Change
-
-    final controller = Get.find<CoursesController>();
     controller.setParameters(parameters);
 
-    Widget getFiltersDialog(BuildContext context) {
-      return ArchiveDialog(
-        title: ArchiveStrings.filters,
-        children: [
-          expansionTileSearchBar(
-            context: context,
-            title: ArchiveStrings.coursesTitle,
-            parameter: 'q',
-            oldParameters: parameters,
-            onSelectMainRoute: '/courses',
-            searchBarController: controller.searchBarController,
-          ),
-          expansionTileRadioButton(
-            context: context,
-            title: ArchiveStrings.coursesType,
-            options: controller.typeOptions,
-            selectedOption: controller.selectedType,
-            onSelectMainRoute: '/courses',
-            oldParameters: parameters,
-            parameter: 'type',
-          ),
-          expansionTileRadioButton(
-            context: context,
-            title: ArchiveStrings.coursesUnits,
-            options: controller.unitsOptions,
-            selectedOption: controller.selectedUnits,
-            onSelectMainRoute: '/courses',
-            oldParameters: parameters,
-            parameter: 'units',
-          ),
-        ],
-      );
-    }
-
-    return ArchiveWebPage(
-      body: controller.obx(
-        (courses) => Column(
+    return controller.obx(
+      (_) => ArchiveWebPage(
+        body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -87,7 +50,11 @@ class CoursesView extends StatelessWidget {
                 TextButton(
                   onPressed: () => showDialog(
                     context: context,
-                    builder: getFiltersDialog,
+                    builder: (context) => _getFiltersDialog(
+                      context,
+                      controller: controller,
+                      parameters: parameters,
+                    ),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -118,14 +85,52 @@ class CoursesView extends StatelessWidget {
               ),
               child: courseCardsBuilder(
                 context: context,
-                courses: courses!,
+                courses: controller.courses,
                 infiniteWidth: false,
               ),
             ),
           ],
         ),
-        onLoading: const LoadingView(),
       ),
+      onLoading: const LoadingView(),
     );
   }
+}
+
+Widget _getFiltersDialog(
+  BuildContext context, {
+  required CoursesController controller,
+  required Map<String, String> parameters,
+}) {
+  return ArchiveDialog(
+    title: ArchiveStrings.filters,
+    children: [
+      expansionTileSearchBar(
+        context: context,
+        title: ArchiveStrings.coursesTitle,
+        parameter: CoursesController.searchParameter,
+        oldParameters: parameters,
+        searchBarController: controller.searchBarController,
+        onSelectMainRoute: ArchiveRoutes.courses,
+      ),
+      expansionTileRadioButton(
+        context: context,
+        title: ArchiveStrings.coursesType,
+        parameter: CoursesController.typeParameter,
+        options: controller.typeOptions,
+        selectedOption: controller.selectedType,
+        oldParameters: parameters,
+        onSelectMainRoute: ArchiveRoutes.courses,
+      ),
+      expansionTileRadioButton(
+        context: context,
+        title: ArchiveStrings.coursesUnits,
+        parameter: CoursesController.unitsParameter,
+        options: controller.unitsOptions,
+        selectedOption: controller.selectedUnits,
+        oldParameters: parameters,
+        onSelectMainRoute: ArchiveRoutes.courses,
+      ),
+    ],
+  );
 }

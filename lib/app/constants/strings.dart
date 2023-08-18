@@ -1,6 +1,15 @@
 class ArchiveStrings {
   ArchiveStrings._();
 
+  static const courseTypeBasic = 'پایه';
+  static const courseTypeGeneral = 'عمومی';
+  static const courseTypeSpecialized = 'تخصصی';
+  static const courseTypeOptional = 'اختیاری';
+
+  static const semesterTypeFirst = 'نیمسال اول';
+  static const semesterTypeSecond = 'نیمسال دوم';
+  static const semesterTypeSummer = 'ترم تابستان';
+
   static const notFound = 'چیزی پیدا نشد!';
   static const search = ' جستجو ...';
   static const loading = 'لطفا صبر کنید ...';
@@ -44,10 +53,6 @@ class ArchiveStrings {
   static const coursesTitle = 'عنوان';
   static const coursesAll = 'همه';
   static const coursesType = 'نوع درس';
-  static const coursesTypeSpecialized = 'تخصصی';
-  static const coursesTypeOptional = 'اختیاری';
-  static const coursesTypeBasic = 'پایه';
-  static const coursesTypeGeneral = 'عمومی';
   static const coursesUnits = 'تعداد واحد';
 
   static const courseUnits = 'تعداد واحد';
@@ -70,6 +75,9 @@ class ArchiveStrings {
   static const chartHelpCoRequisitesTitle = 'هم‌نیاز';
   static const chartHelpCoRequisitesDescription =
       'درس «الف» هم‌نیاز درس «ب» هست؛ یعنی، اجازه‌ی برداشتن درس «ب» رو داری، ولی قبلش یا باید درس «الف» رو گذرونده باشی، یا اینکه هم‌زمان با برداشتن درس «ب»، درس «الف» رو هم برداری. (توجه داشته باش که رابطه‌ی هم‌نیازی یه رابطه‌ی یک طرفه هست؛ یعنی، برای برداشتن درس «الف» نیازی به گذروندن یا برداشتن هم‌زمان درس «ب» نیست)';
+  static const chartCo = 'هم‌نیاز:';
+  static const chartPre = 'پیش‌نیاز:';
+  static const chartSeeCourses = 'برای دیدن دروس کلیک کنید';
   static const chartSemester1 = 'نیمسال اول';
   static const chartSemester2 = 'نیمسال دوم';
   static const chartSemester3 = 'نیمسال سوم';
@@ -78,13 +86,16 @@ class ArchiveStrings {
   static const chartSemester6 = 'نیمسال ششم';
   static const chartSemester7 = 'نیمسال هفتم';
   static const chartSemester8 = 'نیمسال هشتم';
-  static const chartBasic = 'پایه';
-  static const chartGeneral = 'عمومی';
-  static const chartSpecialized = 'تخصصی';
-  static const chartOptional = 'اختیاری';
-  static const chartCo = 'هم‌نیاز:';
-  static const chartPre = 'پیش‌نیاز:';
-  static const chartSeeCourses = 'برای دیدن دروس کلیک کنید';
+  static const chartSemesters = [
+    ArchiveStrings.chartSemester1,
+    ArchiveStrings.chartSemester2,
+    ArchiveStrings.chartSemester3,
+    ArchiveStrings.chartSemester4,
+    ArchiveStrings.chartSemester5,
+    ArchiveStrings.chartSemester6,
+    ArchiveStrings.chartSemester7,
+    ArchiveStrings.chartSemester8,
+  ];
 
   static const footerTitleMobile = 'CSE Archive';
   static const footerTitleDesktop = 'CSE\nArchive';

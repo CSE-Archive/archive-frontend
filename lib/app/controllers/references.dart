@@ -3,105 +3,39 @@ import 'package:get/get.dart';
 
 import 'search_text_field.dart';
 
-class ReferencesController extends GetxController
-    with StateMixin<List<ReferenceModel>> {
+class ReferencesController extends GetxController with StateMixin {
+  static const searchParameter = 'q';
+
+  late List<ReferenceModel> references;
+
   final searchBarController = SearchTextFieldController();
-  final selectedExpansionTile = (-1).obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
 
-    fetchData();
+    await fetchData();
   }
 
   void setParameters(Map<String, String> parameters) {
-    parameters.forEach((key, value) {
-      switch (key) {
-        case 'q':
-          searchBarController.showClearButton(true);
-          searchBarController.textController.text = value;
-          break;
-      }
-    });
+    parameters.forEach(
+      (key, value) {
+        switch (key) {
+          case ReferencesController.searchParameter:
+            searchBarController.showClearButton(true);
+            searchBarController.textController.text = value;
+            break;
+        }
+      },
+    );
   }
 
   Future<void> fetchData() async {
-    final result = [
-      ReferenceModel(
-        id: 1,
-        title: 'Introduction to Algorithms, 4rd Edition',
-        authors: [
-          'Thomas H. Cormen',
-          'Charles E. Leiserson',
-          'Ronald L. Rivest',
-          'Clifford Stein',
-        ],
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-      ),
-      ReferenceModel(
-        id: 1,
-        title: 'Introduction to Algorithms, 4rd Edition',
-        authors: [
-          'Thomas H. Cormen',
-          'Charles E. Leiserson',
-          'Ronald L. Rivest',
-          'Clifford Stein',
-        ],
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-      ),
-      ReferenceModel(
-        id: 1,
-        title: 'Introduction to Algorithms, 4rd Edition',
-        authors: [
-          'Thomas H. Cormen',
-          'Charles E. Leiserson',
-          'Ronald L. Rivest',
-          'Clifford Stein',
-        ],
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-      ),
-      ReferenceModel(
-        id: 1,
-        title: 'Introduction to Algorithms, 4rd Edition',
-        authors: [
-          'Thomas H. Cormen',
-          'Charles E. Leiserson',
-          'Ronald L. Rivest',
-          'Clifford Stein',
-        ],
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-      ),
-      ReferenceModel(
-        id: 1,
-        title: 'Introduction to Algorithms, 4rd Edition',
-        authors: [
-          'Thomas H. Cormen',
-          'Charles E. Leiserson',
-          'Ronald L. Rivest',
-          'Clifford Stein',
-        ],
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-      ),
-      ReferenceModel(
-        id: 1,
-        title: 'Introduction to Algorithms, 4rd Edition',
-        authors: [
-          'Thomas H. Cormen',
-          'Charles E. Leiserson',
-          'Ronald L. Rivest',
-          'Clifford Stein',
-        ],
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-      ),
-    ];
+    change(null, status: RxStatus.loading());
 
-    change(result, status: RxStatus.success());
+    // TODO: Load data
+    references = [];
+
+    change(null, status: RxStatus.success());
   }
 }

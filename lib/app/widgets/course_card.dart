@@ -1,5 +1,6 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/models/chart_node.dart';
 import 'package:cse_archive/app/models/course.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
@@ -11,46 +12,58 @@ import 'card.dart';
 
 class ArchiveCourseCard extends StatelessWidget {
   final CourseModel? course;
-  final bool showTooltip;
+  final ChartNodeModel? chartNode;
 
   const ArchiveCourseCard({
     super.key,
-    required this.course,
-    this.showTooltip = false,
-  });
+    this.course,
+    this.chartNode,
+  })  : assert(
+          course != null || chartNode != null,
+          'One of course or chartNode must not be null',
+        ),
+        assert(
+          course == null || chartNode == null,
+          'One of course or chartNode must be null',
+        );
 
   const ArchiveCourseCard.invisible({super.key})
-      : showTooltip = false,
-        course = null;
+      : course = null,
+        chartNode = null;
 
   @override
   Widget build(BuildContext context) {
+    final effectiveCourse = course ?? chartNode?.course;
+
     final child = ArchiveCard(
       width: kSizeCardWidth,
       color: Theme.of(context).colorScheme.primary,
       padding: const EdgeInsets.all(kSizeDefault),
-      onPressed: () => context.go('${ArchiveRoutes.courses}/${course?.id}'),
+      onPressed: () =>
+          context.go('${ArchiveRoutes.courses}/${effectiveCourse?.uuid}'),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            course?.name ?? '',
+            effectiveCourse?.title ?? '',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const Gap.vertical(kSizeDefault),
           Text(
-            enToFaDigits('${course?.units} ${ArchiveStrings.courseUnit}'),
+            enToFaDigits(
+              '${effectiveCourse?.units} ${ArchiveStrings.courseUnit}',
+            ),
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color:
                       Theme.of(context).colorScheme.secondary.withOpacity(0.8),
                 ),
           ),
           Text(
-            (course?.type ?? CourseType.basic).toString(),
+            (effectiveCourse?.type ?? CourseType.basic).toString(),
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color:
                       Theme.of(context).colorScheme.secondary.withOpacity(0.8),
@@ -60,21 +73,16 @@ class ArchiveCourseCard extends StatelessWidget {
       ),
     );
 
-    if (course == null) {
+    if (effectiveCourse == null) {
       return Opacity(
         opacity: 0,
         child: IgnorePointer(child: child),
       );
     }
 
-    // TODO: Handle on real data
-    if (showTooltip) {
+    if (chartNode != null) {
       return Tooltip(
-        message: _getTooltip(
-          course!.requisites,
-          course!.type != CourseType.optional &&
-              course!.type != CourseType.general,
-        ),
+        message: _getTooltip(chartNode!),
         child: child,
       );
     }
@@ -83,28 +91,25 @@ class ArchiveCourseCard extends StatelessWidget {
   }
 }
 
-String _getTooltip(
-  Map<CourseModel, RequisiteType> requisites,
-  bool doesOpenNewTab,
-) {
-  if (!doesOpenNewTab) return ArchiveStrings.chartSeeCourses;
+String _getTooltip(ChartNodeModel chartNode) {
+  // TODO: Handle open new tab
 
-  bool coFlag = false;
-  bool preFlag = false;
-  String co = ArchiveStrings.chartCo;
-  String pre = ArchiveStrings.chartPre;
+  if (chartNode.course == null) return ArchiveStrings.chartSeeCourses;
 
-  requisites.forEach(
-    (key, value) {
-      if (value == RequisiteType.co) {
-        co += '\n• ${key.name}';
-        coFlag = true;
-      } else if (value == RequisiteType.pre) {
-        pre += '\n• ${key.name}';
-        preFlag = true;
-      }
-    },
-  );
+  final coRequisites = chartNode.course!.coRequisites;
+  final preRequisites = chartNode.course!.preRequisites;
 
-  return '${co + (coFlag ? '' : '\n-')}\n\n${pre + (preFlag ? '' : '\n-')}';
+  String co = coRequisites.isNotEmpty
+      ? '${ArchiveStrings.chartCo}\n• ${coRequisites.map(
+            (course) => course.title,
+          ).join('\n• ')}'
+      : '${ArchiveStrings.chartCo}\n-';
+
+  String pre = preRequisites.isNotEmpty
+      ? '${ArchiveStrings.chartPre}\n• ${preRequisites.map(
+            (course) => course.title,
+          ).join('\n• ')}'
+      : '${ArchiveStrings.chartPre}\n-';
+
+  return '$co\n\n$pre';
 }

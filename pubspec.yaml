@@ -34,7 +34,6 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/_/ # TODO: Delete later
     - assets/riv/
     - assets/svg/
 

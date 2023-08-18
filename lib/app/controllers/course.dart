@@ -1,145 +1,25 @@
 import 'package:cse_archive/app/models/course.dart';
-import 'package:cse_archive/app/models/reference.dart';
-import 'package:cse_archive/app/models/professor.dart';
 import 'package:get/get.dart';
 
-class CourseController extends GetxController with StateMixin<CourseModel> {
-  CourseController({required this.courseId});
-
+class CourseController extends GetxController with StateMixin {
   final int courseId;
 
+  CourseController({required this.courseId});
+
+  late CourseModel course;
+
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
 
-    fetchData();
+    await fetchData();
   }
 
   Future<void> fetchData() async {
-    var result = CourseModel(
-      id: 1,
-      slug: 'Design-&-Implementation-of-Programming-Languages',
-      name: 'طراحی و پياده‌سازی زبان‌های برنامه‌سازی',
-      nameEn: 'Design & Implementation of Programming Languages',
-      description:
-          'لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است. چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است و برای شرایط فعلی تکنولوژی مورد نیاز و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد. کتابهای زیادی در شصت و سه درصد گذشته، حال و آینده شناخت فراوان جامعه و متخصصان را می طلبد تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی و فرهنگ پیشرو در زبان فارسی ایجاد کرد. در این صورت می توان امید داشت که تمام و دشواری موجود در ارائه راهکارها و شرایط سخت تایپ به پایان رسد و زمان مورد نیاز شامل حروفچینی دستاوردهای اصلی و جوابگوی سوالات پیوسته اهل دنیای موجود طراحی اساسا مورد استفاده قرار گیرد.',
-      type: CourseType.optional,
-      units: 3,
-      references: [
-        ReferenceModel(
-          id: 1,
-          title: 'Introduction to Algorithms, 4rd Edition',
-          authors: [
-            'Thomas H. Cormen',
-            'Charles E. Leiserson',
-            'Ronald L. Rivest',
-            'Clifford Stein',
-          ],
-          image: 'assets/_/clrs.jpeg',
-          slug: 'introduction-to-algorithms-4rd-edition',
-        ),
-      ],
-      professors: [
-        ProfessorModel(
-          id: 1,
-          image: 'assets/_/clrs.jpeg',
-          slug: 'introduction-to-algorithms-4rd-edition',
-          department: 'مهندسی کامپیوتر',
-          honorific: 'دکتر',
-          firstName: 'کوروش',
-          lastName: 'زیارتی',
-        ),
-        ProfessorModel(
-          id: 1,
-          image: 'assets/_/clrs.jpeg',
-          slug: 'introduction-to-algorithms-4rd-edition',
-          department: 'مهندسی کامپیوتر',
-          honorific: 'دکتر',
-          firstName: 'کوروش',
-          lastName: 'زیارتی',
-        ),
-      ],
-      requisiteFor: [
-        CourseModel(
-          id: 1,
-          name: 'طراحی الگوریتم',
-          type: CourseType.specialized,
-          units: 3,
-          slug: 'temp',
-        ),
-      ],
-      requisites: {
-        CourseModel(
-          id: 1,
-          name: 'طراحی الگوریتم 2',
-          type: CourseType.specialized,
-          units: 3,
-          slug: 'temp',
-        ): RequisiteType.co,
-        CourseModel(
-          id: 1,
-          name: 'طراحی الگوریتم 3',
-          type: CourseType.specialized,
-          units: 3,
-          slug: 'temp',
-        ): RequisiteType.pre,
-      },
-      records: [
-        {
-          'semester': 'نیم‌سال اول ۱۴۰۰',
-          'professor': 'دکتر کشت‌کاران',
-          'files': [
-            'جلسه ۱',
-            'جلسه ۲',
-            'جلسه ۳',
-          ]
-        },
-      ],
-      resources: [
-        {
-          'semester': 'نیم‌سال اول ۱۴۰۰',
-          'professor': 'دکتر کشت‌کاران',
-          'tas': null,
-          'files': [
-            'میانترم اول',
-            'میانترم دوم',
-            'پایانترم',
-            'میانترم اول',
-            'میانترم دوم',
-            'پایانترم',
-            'میانترم اول',
-            'میانترم دوم',
-            'پایانترم',
-            'میانترم اول',
-            'میانترم دوم',
-            'پایانترم',
-            'میانترم اول',
-            'میانترم دوم',
-            'پایانترم',
-            'میانترم اول',
-            'میانترم دوم',
-            'پایانترم',
-            'میانترم اول',
-            'میانترم دوم',
-            'پایانترم',
-          ]
-        },
-        {
-          'semester': 'نیم‌سال دوم ۱۴۰۰',
-          'professor': 'دکتر کشت‌کاران',
-          'tas': [
-            'رضا فرجام',
-            'محمد علی کلی',
-          ],
-          'files': [
-            'میانترم اول',
-            'میانترم دوم',
-            'پایانترم',
-          ],
-        },
-      ],
-    );
+    change(null, status: RxStatus.loading());
 
-    change(result, status: RxStatus.success());
+    // TODO: Load data
+
+    change(null, status: RxStatus.success());
   }
 }

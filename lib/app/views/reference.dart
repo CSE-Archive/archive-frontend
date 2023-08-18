@@ -35,7 +35,7 @@ class ReferenceView extends StatelessWidget {
     return ArchiveWebPage(
       applyPlatformConstraints: false,
       body: controller.obx(
-        (data) => Column(
+        (_) => Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
@@ -47,12 +47,12 @@ class ReferenceView extends StatelessWidget {
                 labels: [
                   ArchiveStrings.home,
                   ArchiveStrings.references,
-                  data!.title
+                  controller.reference.title
                 ],
                 routes: [
                   ArchiveRoutes.home,
                   ArchiveRoutes.references,
-                  '${ArchiveRoutes.references}/${data.id}'
+                  '${ArchiveRoutes.references}/${controller.reference.uuid}'
                 ],
               ),
             ),
@@ -86,7 +86,7 @@ class ReferenceView extends StatelessWidget {
                           //       ),
                           // ),
                           SelectableText(
-                            data.title,
+                            controller.reference.title,
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
@@ -107,7 +107,7 @@ class ReferenceView extends StatelessWidget {
                                 ),
                           ),
                           SelectableText(
-                            data.authors.join('\n'),
+                            controller.reference.authors.join('\n'),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
@@ -129,17 +129,21 @@ class ReferenceView extends StatelessWidget {
                       height: 22 * kSizeDefault,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(kSizeDefault / 2),
-                        child: Image.asset(
-                          data.image,
-                          fit: BoxFit.cover,
-                        ),
+                        child: (controller.reference.image != null)
+                            ? Image.network(
+                                controller.reference.image.toString(),
+                                fit: BoxFit.cover,
+                              )
+                            : Placeholder(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-            if (data.courses.isNotEmpty) ...[
+            if (controller.reference.courses.isNotEmpty) ...[
               const Gap.vertical(2 * kSizeDefault),
               Container(
                 constraints:
@@ -152,11 +156,11 @@ class ReferenceView extends StatelessWidget {
               ),
               courseCardsBuilder(
                 context: context,
-                courses: data.courses,
+                courses: controller.reference.courses,
                 infiniteWidth: true,
               ),
             ],
-            if (data.references.isNotEmpty) ...[
+            if (controller.reference.relatedReferences.isNotEmpty) ...[
               const Gap.vertical(2 * kSizeDefault),
               Container(
                 constraints:
@@ -169,7 +173,7 @@ class ReferenceView extends StatelessWidget {
               ),
               referenceCardsBuilder(
                 context: context,
-                references: data.references,
+                references: controller.reference.relatedReferences,
                 infiniteWidth: true,
               ),
             ],

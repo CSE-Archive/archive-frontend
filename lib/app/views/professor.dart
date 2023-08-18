@@ -36,7 +36,7 @@ class ProfessorView extends StatelessWidget {
     return ArchiveWebPage(
       applyPlatformConstraints: false,
       body: controller.obx(
-        (data) => Column(
+        (_) => Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
@@ -48,12 +48,12 @@ class ProfessorView extends StatelessWidget {
                 labels: [
                   ArchiveStrings.home,
                   ArchiveStrings.professors,
-                  data!.fullName,
+                  controller.professor.fullName,
                 ],
                 routes: [
                   ArchiveRoutes.home,
                   ArchiveRoutes.professors,
-                  '${ArchiveRoutes.professors}/${data.id}',
+                  '${ArchiveRoutes.professors}/${controller.professor.uuid}',
                 ],
               ),
             ),
@@ -86,19 +86,21 @@ class ProfessorView extends StatelessWidget {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
+                                        if (controller.professor.honorific !=
+                                            null)
+                                          Text(
+                                            controller.professor.honorific!,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .titleMedium!
+                                                .copyWith(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                ),
+                                          ),
                                         Text(
-                                          data.honorific,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .copyWith(
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary,
-                                              ),
-                                        ),
-                                        Text(
-                                          data.fullName,
+                                          controller.professor.fullName,
                                           style: Theme.of(context)
                                               .textTheme
                                               .titleLarge!
@@ -116,14 +118,14 @@ class ProfessorView extends StatelessWidget {
                               ),
                               ArchiveLabel(
                                 title: ArchiveStrings.professorDepartment,
-                                value: data.department,
+                                value: controller.professor.department,
                               ),
                             ],
                           ),
-                          if (data.description?.isNotEmpty ?? false) ...[
+                          if (controller.professor.about != null) ...[
                             const Gap.vertical(kSizeDefault / 2),
                             SelectableText(
-                              data.description!,
+                              controller.professor.about!,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyMedium!
@@ -135,7 +137,7 @@ class ProfessorView extends StatelessWidget {
                                   ),
                             ),
                           ],
-                          if (data.emails.isNotEmpty) ...[
+                          if (controller.professor.emails.isNotEmpty) ...[
                             const Gap.vertical(2 * kSizeDefault),
                             SelectableText(
                               ArchiveStrings.professorEmails,
@@ -150,7 +152,7 @@ class ProfessorView extends StatelessWidget {
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: data.emails
+                              children: controller.professor.emails
                                   .map(
                                     (email) => Link(
                                       uri: Uri(
@@ -183,7 +185,7 @@ class ProfessorView extends StatelessWidget {
                                   .toList(),
                             ),
                           ],
-                          if (data.relatedLinks.isNotEmpty) ...[
+                          if (controller.professor.links.isNotEmpty) ...[
                             const Gap.vertical(2 * kSizeDefault),
                             SelectableText(
                               ArchiveStrings.professorRelatedLinks,
@@ -198,15 +200,15 @@ class ProfessorView extends StatelessWidget {
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: data.relatedLinks
+                              children: controller.professor.links
                                   .map(
-                                    (relatedLink) => Link(
-                                      uri: Uri.parse(relatedLink),
+                                    (link) => Link(
+                                      uri: link.uri,
                                       target: LinkTarget.blank,
                                       builder: (_, followLink) => TextButton(
                                         onPressed: followLink,
                                         child: Text(
-                                          relatedLink,
+                                          link.title,
                                           style: Theme.of(context)
                                               .textTheme
                                               .titleMedium!
@@ -239,17 +241,21 @@ class ProfessorView extends StatelessWidget {
                       onPressed: null,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(kSizeDefault / 2),
-                        child: Image.asset(
-                          data.image,
-                          fit: BoxFit.cover,
-                        ),
+                        child: (controller.professor.image != null)
+                            ? Image.network(
+                                controller.professor.image.toString(),
+                                fit: BoxFit.cover,
+                              )
+                            : Placeholder(
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-            if (data.courses.isNotEmpty) ...[
+            if (controller.professor.courses.isNotEmpty) ...[
               const Gap.vertical(2 * kSizeDefault),
               Container(
                 constraints:
@@ -262,7 +268,7 @@ class ProfessorView extends StatelessWidget {
               ),
               courseCardsBuilder(
                 context: context,
-                courses: data.courses,
+                courses: controller.professor.courses,
                 infiniteWidth: true,
               ),
             ],

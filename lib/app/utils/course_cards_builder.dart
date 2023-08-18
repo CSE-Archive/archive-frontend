@@ -1,15 +1,26 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
+import 'package:cse_archive/app/models/chart_node.dart';
 import 'package:cse_archive/app/models/course.dart';
 import 'package:cse_archive/app/widgets/course_card.dart';
 import 'package:flutter/material.dart';
 
 Widget courseCardsBuilder({
   required BuildContext context,
-  required List<CourseModel> courses,
   required bool infiniteWidth,
+  List<CourseModel>? courses,
+  List<ChartNodeModel>? chartNodes,
   bool showTooltip = false,
 }) {
+  assert(
+    courses != null || chartNodes != null,
+    'One of courses or chartNodes must not be null',
+  );
+  assert(
+    courses == null || chartNodes == null,
+    'One of courses or chartNodes must be null',
+  );
+
   if (infiniteWidth) {
     return Align(
       alignment: Alignment.centerRight,
@@ -24,14 +35,17 @@ Widget courseCardsBuilder({
           spacing: kSizeDefault,
           clipBehavior: Clip.none,
           crossAxisAlignment: WrapCrossAlignment.center,
-          children: courses
-              .map(
-                (course) => ArchiveCourseCard(
-                  course: course,
-                  showTooltip: showTooltip,
-                ),
-              )
-              .toList(),
+          children: courses != null
+              ? courses
+                  .map(
+                    (course) => ArchiveCourseCard(course: course),
+                  )
+                  .toList()
+              : chartNodes!
+                  .map(
+                    (chartNode) => ArchiveCourseCard(chartNode: chartNode),
+                  )
+                  .toList(),
         ),
       ),
     );
@@ -45,14 +59,17 @@ Widget courseCardsBuilder({
       clipBehavior: Clip.none,
       alignment: WrapAlignment.spaceBetween,
       children: [
-        ...courses
-            .map(
-              (course) => ArchiveCourseCard(
-                course: course,
-                showTooltip: showTooltip,
-              ),
-            )
-            .toList(),
+        ...(courses != null
+            ? courses
+                .map(
+                  (course) => ArchiveCourseCard(course: course),
+                )
+                .toList()
+            : chartNodes!
+                .map(
+                  (chartNode) => ArchiveCourseCard(chartNode: chartNode),
+                )
+                .toList()),
 
         /// TODO: Wrap force children to be as far as possible
         /// because of spaceBetween, change it later for all builders.

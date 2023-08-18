@@ -16,7 +16,7 @@ import 'package:get/get.dart';
 
 import 'loading.dart';
 
-class ProfessorsView extends StatelessWidget {
+class ProfessorsView extends GetView<ProfessorsController> {
   final Map<String, String> parameters;
 
   const ProfessorsView({
@@ -28,37 +28,11 @@ class ProfessorsView extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: Change
 
-    final controller = Get.find<ProfessorsController>();
     controller.setParameters(parameters);
-
-    Widget getFiltersDialog(BuildContext context) {
-      return ArchiveDialog(
-        title: ArchiveStrings.filters,
-        children: [
-          expansionTileSearchBar(
-            context: context,
-            title: ArchiveStrings.professorsName,
-            parameter: 'q',
-            oldParameters: parameters,
-            onSelectMainRoute: '/professors',
-            searchBarController: controller.searchBarController,
-          ),
-          expansionTileRadioButton(
-            context: context,
-            title: ArchiveStrings.professorsDepartment,
-            options: controller.departmentOptions,
-            selectedOption: controller.selectedDepartment,
-            onSelectMainRoute: '/professors',
-            oldParameters: parameters,
-            parameter: 'department',
-          ),
-        ],
-      );
-    }
 
     return ArchiveWebPage(
       body: controller.obx(
-        (professors) => Column(
+        (_) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -78,7 +52,11 @@ class ProfessorsView extends StatelessWidget {
                 TextButton(
                   onPressed: () => showDialog(
                     context: context,
-                    builder: getFiltersDialog,
+                    builder: (context) => _getFiltersDialog(
+                      context,
+                      controller: controller,
+                      parameters: parameters,
+                    ),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -109,7 +87,7 @@ class ProfessorsView extends StatelessWidget {
               ),
               child: professorCardsBuilder(
                 context: context,
-                professors: professors!,
+                professors: controller.professors,
                 infiniteWidth: false,
               ),
             ),
@@ -119,4 +97,33 @@ class ProfessorsView extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _getFiltersDialog(
+  BuildContext context, {
+  required ProfessorsController controller,
+  required Map<String, String> parameters,
+}) {
+  return ArchiveDialog(
+    title: ArchiveStrings.filters,
+    children: [
+      expansionTileSearchBar(
+        context: context,
+        title: ArchiveStrings.professorsName,
+        oldParameters: parameters,
+        searchBarController: controller.searchBarController,
+        onSelectMainRoute: ArchiveRoutes.professors,
+        parameter: ProfessorsController.searchParameter,
+      ),
+      expansionTileRadioButton(
+        context: context,
+        title: ArchiveStrings.professorsDepartment,
+        options: controller.departmentOptions,
+        selectedOption: controller.selectedDepartment,
+        oldParameters: parameters,
+        onSelectMainRoute: ArchiveRoutes.professors,
+        parameter: ProfessorsController.departmentParameter,
+      ),
+    ],
+  );
 }

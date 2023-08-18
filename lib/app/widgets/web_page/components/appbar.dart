@@ -19,7 +19,7 @@ import 'package:url_launcher/link.dart';
 
 import 'appbar_text_button.dart';
 
-SliverAppBar appbar({required BuildContext context}) {
+SliverAppBar sliverAppbar({required BuildContext context}) {
   const logoWidth = 2 * kSizeDefault;
 
   final searchBarController = Get.put(

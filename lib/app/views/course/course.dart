@@ -2,7 +2,6 @@ import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/course.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
-import 'package:cse_archive/app/models/course.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/course_cards_builder.dart';
 import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
@@ -40,24 +39,14 @@ class CourseView extends StatelessWidget {
     return ArchiveWebPage(
       applyPlatformConstraints: false,
       body: controller.obx(
-        (data) {
+        (course) {
           const preRequisiteValue = 1;
           const coRequisiteValue = 2;
           const requisiteForValue = 3;
 
-          final hasPreRequisite = data!.requisites.entries
-              .where((pair) => pair.value == RequisiteType.pre)
-              .isNotEmpty;
-
-          final hasCoRequisite = data.requisites.entries
-              .where((pair) => pair.value == RequisiteType.co)
-              .isNotEmpty;
-
-          final hasRequisiteFor = data.requisiteFor.isNotEmpty;
-
-          final activeRequisite = (hasPreRequisite
+          final activeRequisite = (course!.preRequisites.isNotEmpty
                   ? preRequisiteValue
-                  : hasCoRequisite
+                  : course.coRequisites.isNotEmpty
                       ? coRequisiteValue
                       : requisiteForValue)
               .obs;
@@ -75,12 +64,12 @@ class CourseView extends StatelessWidget {
                   labels: [
                     ArchiveStrings.home,
                     ArchiveStrings.courses,
-                    data.name,
+                    course.title,
                   ],
                   routes: [
                     ArchiveRoutes.home,
                     ArchiveRoutes.courses,
-                    '${ArchiveRoutes.courses}/${data.id}',
+                    '${ArchiveRoutes.courses}/${course.uuid}',
                   ],
                 ),
               ),
@@ -107,7 +96,7 @@ class CourseView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SelectableText(
-                                  data.name,
+                                  course.title,
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge!
@@ -119,7 +108,7 @@ class CourseView extends StatelessWidget {
                                       ),
                                 ),
                                 SelectableText(
-                                  data.nameEn!,
+                                  course.titleEn!,
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleMedium!
@@ -134,19 +123,19 @@ class CourseView extends StatelessWidget {
                           ),
                           ArchiveLabel(
                             title: ArchiveStrings.courseUnits,
-                            value: enToFaDigits(data.units.toString()),
+                            value: enToFaDigits(course.units.toString()),
                           ),
                           const Gap.horizontal(kSizeDefault),
                           ArchiveLabel(
                             title: ArchiveStrings.courseType,
-                            value: data.type.toString(),
+                            value: course.type.toString(),
                           ),
                         ],
                       ),
-                      if (data.description?.isNotEmpty ?? false) ...[
+                      if (course.description?.isNotEmpty ?? false) ...[
                         const Gap.vertical(kSizeDefault),
                         SelectableText(
-                          data.description!,
+                          course.description!,
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     color: Theme.of(context)
@@ -160,7 +149,9 @@ class CourseView extends StatelessWidget {
                   ),
                 ),
               ),
-              if (hasPreRequisite || hasCoRequisite || hasRequisiteFor) ...[
+              if (course.preRequisites.isNotEmpty ||
+                  course.coRequisites.isNotEmpty ||
+                  course.requisiteFor.isNotEmpty) ...[
                 const Gap.vertical(2 * kSizeDefault),
                 Container(
                   constraints:
@@ -174,7 +165,7 @@ class CourseView extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            if (hasPreRequisite) ...[
+                            if (course.preRequisites.isNotEmpty) ...[
                               TextButton(
                                 onPressed: () =>
                                     activeRequisite.value = preRequisiteValue,
@@ -203,7 +194,7 @@ class CourseView extends StatelessWidget {
                               ),
                               const Gap.horizontal(kSizeDefault),
                             ],
-                            if (hasCoRequisite) ...[
+                            if (course.coRequisites.isNotEmpty) ...[
                               TextButton(
                                 onPressed: () =>
                                     activeRequisite.value = coRequisiteValue,
@@ -232,7 +223,7 @@ class CourseView extends StatelessWidget {
                               ),
                               const Gap.horizontal(kSizeDefault),
                             ],
-                            if (hasRequisiteFor) ...[
+                            if (course.requisiteFor.isNotEmpty) ...[
                               TextButton(
                                 onPressed: () =>
                                     activeRequisite.value = requisiteForValue,
@@ -277,32 +268,23 @@ class CourseView extends StatelessWidget {
                   () => activeRequisite.value == preRequisiteValue
                       ? courseCardsBuilder(
                           context: context,
+                          courses: course.preRequisites,
                           infiniteWidth: true,
-                          courses: data.requisites.entries
-                              .where((pair) => pair.value == RequisiteType.pre)
-                              .toList()
-                              .map((pair) => pair.key)
-                              .toList(),
                         )
                       : activeRequisite.value == coRequisiteValue
                           ? courseCardsBuilder(
                               context: context,
+                              courses: course.coRequisites,
                               infiniteWidth: true,
-                              courses: data.requisites.entries
-                                  .where(
-                                      (pair) => pair.value == RequisiteType.co)
-                                  .toList()
-                                  .map((pair) => pair.key)
-                                  .toList(),
                             )
                           : courseCardsBuilder(
                               context: context,
-                              courses: data.requisiteFor,
+                              courses: course.requisiteFor,
                               infiniteWidth: true,
                             ),
                 ),
               ],
-              if (data.references.isNotEmpty) ...[
+              if (course.references.isNotEmpty) ...[
                 const Gap.vertical(2 * kSizeDefault),
                 Container(
                   constraints:
@@ -315,11 +297,11 @@ class CourseView extends StatelessWidget {
                 ),
                 referenceCardsBuilder(
                   context: context,
-                  references: data.references,
+                  references: course.references,
                   infiniteWidth: true,
                 ),
               ],
-              if (data.professors.isNotEmpty) ...[
+              if (course.professors.isNotEmpty) ...[
                 const Gap.vertical(2 * kSizeDefault),
                 Container(
                   constraints:
@@ -332,11 +314,14 @@ class CourseView extends StatelessWidget {
                 ),
                 professorCardsBuilder(
                   context: context,
-                  professors: data.professors,
+                  professors: course.professors,
                   infiniteWidth: true,
                 ),
               ],
-              if (data.resources.isNotEmpty) ...[
+              if (course.classrooms.isNotEmpty &&
+                  course.classrooms.any(
+                    (classroom) => classroom.resources.isNotEmpty,
+                  )) ...[
                 const Gap.vertical(2 * kSizeDefault),
                 Container(
                   constraints:
@@ -353,22 +338,26 @@ class CourseView extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
                   child: Column(
-                    children: data.resources.map(
-                      (e) {
-                        List<String> files = e['files'];
-
-                        return CourseExpansionTile(
-                          title: e['semester'],
-                          subtitle: e['professor'],
-                          downloadables: files,
-                          tas: e['tas'],
-                        );
-                      },
-                    ).toList(),
+                    children: course.classrooms
+                        .map(
+                          (classroom) => classroom.resources.isEmpty
+                              ? Gap.zero
+                              : CourseExpansionTile(
+                                  resources: classroom.resources,
+                                  year: classroom.year,
+                                  semester: classroom.semester,
+                                  professors: classroom.professors,
+                                  tas: classroom.tas,
+                                ),
+                        )
+                        .toList(),
                   ),
                 ),
               ],
-              if (data.records.isNotEmpty) ...[
+              if (course.classrooms.isNotEmpty &&
+                  course.classrooms.any(
+                    (classroom) => classroom.recordings != null,
+                  )) ...[
                 const Gap.vertical(2 * kSizeDefault),
                 Container(
                   constraints:
@@ -384,17 +373,18 @@ class CourseView extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
                   child: Column(
-                    children: data.records.map(
-                      (e) {
-                        List<String> files = e['files'];
-
-                        return CourseExpansionTile(
-                          title: e['semester'],
-                          subtitle: e['professor'],
-                          downloadables: files,
-                        );
-                      },
-                    ).toList(),
+                    children: course.classrooms
+                        .map(
+                          (classroom) => classroom.recordings == null
+                              ? Gap.zero
+                              : CourseExpansionTile(
+                                  recordings: classroom.recordings,
+                                  year: classroom.year,
+                                  semester: classroom.semester,
+                                  professors: classroom.professors,
+                                ),
+                        )
+                        .toList(),
                   ),
                 ),
               ],

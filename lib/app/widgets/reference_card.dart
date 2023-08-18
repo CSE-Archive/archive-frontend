@@ -24,7 +24,7 @@ class ArchiveReferenceCard extends StatelessWidget {
       color: Theme.of(context).colorScheme.primary,
       padding: const EdgeInsets.all(kSizeDefault),
       onPressed: () =>
-          context.go('${ArchiveRoutes.references}/${reference?.id}'),
+          context.go('${ArchiveRoutes.references}/${reference?.uuid}'),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -63,13 +63,20 @@ class ArchiveReferenceCard extends StatelessWidget {
             width: double.infinity,
             height: kSizeCardWidth / 2,
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(reference?.image ?? ''),
-                fit: BoxFit.cover,
-              ),
+              image: (reference != null && reference?.image != null)
+                  ? DecorationImage(
+                      image: AssetImage(reference!.image.toString()),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
               border:
                   Border.all(color: Theme.of(context).colorScheme.secondary),
             ),
+            child: (reference != null && reference?.image != null)
+                ? null
+                : Placeholder(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
           ),
         ],
       ),

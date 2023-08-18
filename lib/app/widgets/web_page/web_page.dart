@@ -24,7 +24,7 @@ class ArchiveWebPage extends StatelessWidget {
       body: CustomScrollView(
         primary: true,
         slivers: [
-          appbar(context: context),
+          sliverAppbar(context: context),
           SliverToBoxAdapter(child: Gap.vertical(bodyPadding)),
           SliverToBoxAdapter(
             child: Center(

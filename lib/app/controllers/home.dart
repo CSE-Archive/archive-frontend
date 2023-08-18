@@ -1,8 +1,12 @@
+import 'package:cse_archive/app/models/recorded_classroom.dart';
+import 'package:cse_archive/app/models/reference.dart';
 import 'package:cse_archive/app/models/resource.dart';
 import 'package:get/get.dart';
 
-class ResourcesController extends GetxController with StateMixin {
+class HomeController extends GetxController with StateMixin {
   late List<ResourceModel> resources;
+  late List<ReferenceModel> references;
+  late List<RecordedClassroomModel> recordings;
 
   @override
   void onInit() async {
@@ -15,7 +19,10 @@ class ResourcesController extends GetxController with StateMixin {
     change(null, status: RxStatus.loading());
 
     // TODO: Load data
+
     resources = [];
+    references = [];
+    recordings = [];
 
     change(null, status: RxStatus.success());
   }

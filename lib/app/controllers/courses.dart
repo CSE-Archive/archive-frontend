@@ -4,129 +4,69 @@ import 'package:get/get.dart';
 
 import 'search_text_field.dart';
 
-class CoursesController extends GetxController
-    with StateMixin<List<CourseModel>> {
+class CoursesController extends GetxController with StateMixin {
+  static const searchParameter = 'q';
+  static const typeParameter = 'type';
+  static const unitsParameter = 'units';
+
+  late List<CourseModel> courses;
+
   late RxString selectedType;
   late RxString selectedUnits;
-
-  final selectedExpansionTile = (-1).obs;
 
   final searchBarController = SearchTextFieldController();
 
   final typeOptions = {
     'all': ArchiveStrings.coursesAll,
-    'specialized': ArchiveStrings.coursesTypeSpecialized,
-    'optional': ArchiveStrings.coursesTypeOptional,
-    'basic': ArchiveStrings.coursesTypeBasic,
-    'general': ArchiveStrings.coursesTypeGeneral,
+    'specialized': CourseType.specialized.toString(),
+    'optional': CourseType.optional.toString(),
+    'basic': CourseType.basic.toString(),
+    'general': CourseType.general.toString(),
   };
 
   final unitsOptions = {
     'all': ArchiveStrings.coursesAll,
-    '1': '۱',
-    '2': '۲',
-    '3': '۳',
+    '1': UnitsType.one.toString(),
+    '2': UnitsType.two.toString(),
+    '3': UnitsType.three.toString(),
   };
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+
     selectedType = typeOptions.keys.first.obs;
     selectedUnits = unitsOptions.keys.first.obs;
-    fetchData();
+
+    await fetchData();
   }
 
   void setParameters(Map<String, String> parameters) {
-    parameters.forEach((key, value) {
-      switch (key) {
-        case 'q':
-          searchBarController.showClearButton(true);
-          searchBarController.textController.text = value;
-          break;
-        case 'type':
-          selectedType.value = value;
-          break;
-        case 'units':
-          selectedUnits.value = value;
-          break;
-      }
-    });
+    parameters.forEach(
+      (key, value) {
+        switch (key) {
+          case CoursesController.searchParameter:
+            searchBarController.showClearButton(true);
+            searchBarController.textController.text = value;
+            break;
+          case CoursesController.typeParameter:
+            selectedType.value = value;
+            break;
+          case CoursesController.unitsParameter:
+            selectedUnits.value = value;
+            break;
+        }
+      },
+    );
   }
 
   Future<void> fetchData() async {
-    final result = [
-      CourseModel(
-        id: 1,
-        slug: 'Design-&-Implementation-of-Programming-Languages',
-        name: 'طراحی الگوریتم',
-        type: CourseType.specialized,
-        units: 3,
-      ),
-      CourseModel(
-        id: 1,
-        slug: 'Design-&-Implementation-of-Programming-Languages',
-        name: 'طراحی الگوریتم',
-        type: CourseType.specialized,
-        units: 3,
-      ),
-      CourseModel(
-        id: 1,
-        slug: 'Design-&-Implementation-of-Programming-Languages',
-        name: 'طراحی الگوریتم',
-        type: CourseType.specialized,
-        units: 3,
-      ),
-      CourseModel(
-        id: 1,
-        slug: 'Design-&-Implementation-of-Programming-Languages',
-        name: 'طراحی الگوریتم',
-        type: CourseType.specialized,
-        units: 3,
-      ),
-      CourseModel(
-        id: 1,
-        slug: 'Design-&-Implementation-of-Programming-Languages',
-        name: 'طراحی الگوریتم',
-        type: CourseType.specialized,
-        units: 3,
-      ),
-      CourseModel(
-        id: 1,
-        slug: 'Design-&-Implementation-of-Programming-Languages',
-        name: 'طراحی الگوریتم',
-        type: CourseType.specialized,
-        units: 3,
-      ),
-      CourseModel(
-        id: 1,
-        slug: 'Design-&-Implementation-of-Programming-Languages',
-        name: 'طراحی الگوریتم',
-        type: CourseType.specialized,
-        units: 3,
-      ),
-      CourseModel(
-        id: 1,
-        slug: 'Design-&-Implementation-of-Programming-Languages',
-        name: 'طراحی الگوریتم',
-        type: CourseType.specialized,
-        units: 3,
-      ),
-      CourseModel(
-        id: 1,
-        slug: 'Design-&-Implementation-of-Programming-Languages',
-        name: 'طراحی الگوریتم',
-        type: CourseType.specialized,
-        units: 3,
-      ),
-      CourseModel(
-        id: 1,
-        slug: 'Design-&-Implementation-of-Programming-Languages',
-        name: 'طراحی الگوریتم',
-        type: CourseType.specialized,
-        units: 3,
-      ),
-    ];
+    change(null, status: RxStatus.loading());
 
-    change(result, status: RxStatus.success());
+    // TODO: Load data
+
+    courses = [];
+
+    change(null, status: RxStatus.success());
   }
 }

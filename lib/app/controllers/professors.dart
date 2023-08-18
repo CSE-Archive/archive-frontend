@@ -4,8 +4,12 @@ import 'package:get/get.dart';
 
 import 'search_text_field.dart';
 
-class ProfessorsController extends GetxController
-    with StateMixin<List<ProfessorModel>> {
+class ProfessorsController extends GetxController with StateMixin {
+  static const searchParameter = 'q';
+  static const departmentParameter = 'department';
+
+  late List<ProfessorModel> professors;
+
   late RxString selectedDepartment;
 
   final searchBarController = SearchTextFieldController();
@@ -17,124 +21,37 @@ class ProfessorsController extends GetxController
     'others': ArchiveStrings.professorsDepartmentOthers,
   };
 
-  final selectedExpansionTile = (-1).obs;
-
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
 
     selectedDepartment = departmentOptions.keys.first.obs;
-    fetchData();
+
+    await fetchData();
   }
 
   void setParameters(Map<String, String> parameters) {
-    parameters.forEach((key, value) {
-      switch (key) {
-        case 'q':
-          searchBarController.showClearButton(true);
-          searchBarController.textController.text = value;
-          break;
-        case 'department':
-          selectedDepartment.value = value;
-          break;
-      }
-    });
+    parameters.forEach(
+      (key, value) {
+        switch (key) {
+          case ProfessorsController.searchParameter:
+            searchBarController.showClearButton(true);
+            searchBarController.textController.text = value;
+            break;
+          case ProfessorsController.departmentParameter:
+            selectedDepartment.value = value;
+            break;
+        }
+      },
+    );
   }
 
   Future<void> fetchData() async {
-    final result = [
-      ProfessorModel(
-        id: 1,
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-        department: 'مهندسی کامپیوتر',
-        honorific: 'دکتر',
-        firstName: 'کوروش',
-        lastName: 'زیارتی',
-      ),
-      ProfessorModel(
-        id: 1,
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-        department: 'مهندسی کامپیوتر',
-        honorific: 'دکتر',
-        firstName: 'کوروش',
-        lastName: 'زیارتی',
-      ),
-      ProfessorModel(
-        id: 1,
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-        department: 'مهندسی کامپیوتر',
-        honorific: 'دکتر',
-        firstName: 'کوروش',
-        lastName: 'زیارتی',
-      ),
-      ProfessorModel(
-        id: 1,
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-        department: 'مهندسی کامپیوتر',
-        honorific: 'دکتر',
-        firstName: 'کوروش',
-        lastName: 'زیارتی',
-      ),
-      ProfessorModel(
-        id: 1,
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-        department: 'مهندسی کامپیوتر',
-        honorific: 'دکتر',
-        firstName: 'کوروش',
-        lastName: 'زیارتی',
-      ),
-      ProfessorModel(
-        id: 1,
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-        department: 'مهندسی کامپیوتر',
-        honorific: 'دکتر',
-        firstName: 'کوروش',
-        lastName: 'زیارتی',
-      ),
-      ProfessorModel(
-        id: 1,
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-        department: 'مهندسی کامپیوتر',
-        honorific: 'دکتر',
-        firstName: 'کوروش',
-        lastName: 'زیارتی',
-      ),
-      ProfessorModel(
-        id: 1,
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-        department: 'مهندسی کامپیوتر',
-        honorific: 'دکتر',
-        firstName: 'کوروش',
-        lastName: 'زیارتی',
-      ),
-      ProfessorModel(
-        id: 1,
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-        department: 'مهندسی کامپیوتر',
-        honorific: 'دکتر',
-        firstName: 'کوروش',
-        lastName: 'زیارتی',
-      ),
-      ProfessorModel(
-        id: 1,
-        image: 'assets/_/clrs.jpeg',
-        slug: 'introduction-to-algorithms-4rd-edition',
-        department: 'مهندسی کامپیوتر',
-        honorific: 'دکتر',
-        firstName: 'کوروش',
-        lastName: 'زیارتی',
-      ),
-    ];
+    change(null, status: RxStatus.loading());
 
-    change(result, status: RxStatus.success());
+    // TODO: Load data
+    professors = [];
+
+    change(null, status: RxStatus.success());
   }
 }

@@ -11,16 +11,14 @@ import 'package:get/get.dart';
 
 import 'loading.dart';
 
-class ResourcesView extends StatelessWidget {
+class ResourcesView extends GetView<ResourcesController> {
   const ResourcesView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ResourcesController>();
-
     return ArchiveWebPage(
       body: controller.obx(
-        (resources) => Column(
+        (_) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ArchivePath(
@@ -39,7 +37,7 @@ class ResourcesView extends StatelessWidget {
               child: SingleChildScrollView(
                 child: resourceCardsBuilder(
                   context: context,
-                  resources: resources!,
+                  resources: controller.resources,
                   infiniteWidth: false,
                 ),
               ),

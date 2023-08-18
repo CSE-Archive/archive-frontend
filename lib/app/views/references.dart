@@ -15,7 +15,7 @@ import 'package:get/get.dart';
 
 import 'loading.dart';
 
-class ReferencesView extends StatelessWidget {
+class ReferencesView extends GetView<ReferencesController> {
   final Map<String, String> parameters;
 
   const ReferencesView({
@@ -27,28 +27,11 @@ class ReferencesView extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: Change
 
-    final controller = Get.find<ReferencesController>();
     controller.setParameters(parameters);
-
-    Widget getFiltersDialog(BuildContext context) {
-      return ArchiveDialog(
-        title: ArchiveStrings.filters,
-        children: [
-          expansionTileSearchBar(
-            context: context,
-            title: ArchiveStrings.referencesTitleAuthor,
-            parameter: 'q',
-            oldParameters: parameters,
-            onSelectMainRoute: '/references',
-            searchBarController: controller.searchBarController,
-          ),
-        ],
-      );
-    }
 
     return ArchiveWebPage(
       body: controller.obx(
-        (references) => Column(
+        (_) => Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -68,7 +51,11 @@ class ReferencesView extends StatelessWidget {
                 TextButton(
                   onPressed: () => showDialog(
                     context: context,
-                    builder: getFiltersDialog,
+                    builder: (context) => _getFiltersDialog(
+                      context,
+                      controller: controller,
+                      parameters: parameters,
+                    ),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -99,7 +86,7 @@ class ReferencesView extends StatelessWidget {
               ),
               child: referenceCardsBuilder(
                 context: context,
-                references: references!,
+                references: controller.references,
                 infiniteWidth: false,
               ),
             ),
@@ -109,4 +96,24 @@ class ReferencesView extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _getFiltersDialog(
+  BuildContext context, {
+  required ReferencesController controller,
+  required Map<String, String> parameters,
+}) {
+  return ArchiveDialog(
+    title: ArchiveStrings.filters,
+    children: [
+      expansionTileSearchBar(
+        context: context,
+        title: ArchiveStrings.referencesTitleAuthor,
+        oldParameters: parameters,
+        searchBarController: controller.searchBarController,
+        onSelectMainRoute: ArchiveRoutes.references,
+        parameter: ReferencesController.searchParameter,
+      ),
+    ],
+  );
 }

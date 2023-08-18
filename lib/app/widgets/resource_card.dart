@@ -1,5 +1,6 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/models/resource.dart';
+import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
 import 'package:flutter/material.dart';
 
 import 'gap.dart';
@@ -21,27 +22,37 @@ class ArchiveResourceCard extends StatelessWidget {
       width: kSizeCardWidth,
       color: Theme.of(context).colorScheme.primary,
       padding: const EdgeInsets.all(kSizeDefault),
-      onPressed: () {}, // TODO
+      onPressed: () {}, // TODO: Add on press download options
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            resource?.title ?? '',
+            (resource != null && resource!.classroom != null)
+                ? '${resource!.title} ${resource!.classroom!.course.title}'
+                : '',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const Gap.vertical(kSizeDefault),
           Text(
-            resource?.semester ?? '',
+            (resource != null && resource!.classroom != null)
+                ? '${resource!.classroom!.semester} ${enToFaDigits(resource!.classroom!.year.toString())}'
+                : '',
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color:
                       Theme.of(context).colorScheme.secondary.withOpacity(0.8),
                 ),
           ),
           Text(
-            resource?.professor ?? '',
+            (resource != null && resource!.classroom != null)
+                ? resource!.classroom!.professors
+                    .map(
+                      (professor) => professor.fullNameWithHonorific,
+                    )
+                    .join(', ')
+                : '',
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color:
                       Theme.of(context).colorScheme.secondary.withOpacity(0.8),

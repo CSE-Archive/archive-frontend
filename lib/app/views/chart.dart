@@ -15,64 +15,16 @@ import 'package:get/get.dart';
 
 import 'loading.dart';
 
-class ChartView extends StatelessWidget {
+class ChartView extends GetView<ChartController> {
   const ChartView({super.key});
-
-  static final semestersTitles = [
-    ArchiveStrings.chartSemester1,
-    ArchiveStrings.chartSemester2,
-    ArchiveStrings.chartSemester3,
-    ArchiveStrings.chartSemester4,
-    ArchiveStrings.chartSemester5,
-    ArchiveStrings.chartSemester6,
-    ArchiveStrings.chartSemester7,
-    ArchiveStrings.chartSemester8,
-  ];
 
   @override
   Widget build(BuildContext context) {
-    final chartController = Get.find<ChartController>();
-
-    Widget getHelpDialog(BuildContext context) {
-      final textStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.9),
-            fontWeight: FontWeight.w300,
-          );
-
-      final titleStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
-            fontWeight: FontWeight.w500,
-          );
-
-      return ArchiveDialog(
-        title: ArchiveStrings.chartHelp,
-        children: [
-          SelectableText(
-            ArchiveStrings.chartHelpPreRequisitesTitle,
-            style: titleStyle,
-          ),
-          const Gap.vertical(kSizeDefault / 2),
-          SelectableText(
-            ArchiveStrings.chartHelpPreRequisitesDescription,
-            style: textStyle,
-          ),
-          const Gap.vertical(kSizeDefault),
-          SelectableText(
-            ArchiveStrings.chartHelpCoRequisitesTitle,
-            style: titleStyle,
-          ),
-          const Gap.vertical(kSizeDefault / 2),
-          SelectableText(
-            ArchiveStrings.chartHelpCoRequisitesDescription,
-            style: textStyle,
-          ),
-        ],
-      );
-    }
-
-    return ArchiveWebPage(
-      applyPlatformConstraints: false,
-      body: chartController.obx(
-        (data) => Column(
+    return controller.obx(
+      (_) => ArchiveWebPage(
+        applyPlatformConstraints: false,
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
@@ -97,7 +49,7 @@ class ChartView extends StatelessWidget {
                   TextButton(
                     onPressed: () => showDialog(
                       context: context,
-                      builder: getHelpDialog,
+                      builder: _getHelpDialog,
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
@@ -123,10 +75,15 @@ class ChartView extends StatelessWidget {
               ),
             ),
             const Gap.vertical(1.5 * kSizeDefault),
-            ...data!.asMap().entries.map(
-              (semester) {
-                final index = semester.key;
-                final courses = semester.value;
+            ...controller.listOfChartNodes.asMap().entries.map(
+              (entry) {
+                final index = entry.key;
+                final chartNodes = entry.value;
+
+                final semesterUnitsSum = chartNodes.fold<int>(
+                  0,
+                  (a, b) => a + (b.course?.units.encode() ?? b.courseUnits!),
+                );
 
                 return Column(
                   mainAxisSize: MainAxisSize.min,
@@ -139,17 +96,17 @@ class ChartView extends StatelessWidget {
                       ),
                       child: ArchiveHeader(
                         title: enToFaDigits(
-                          '${semestersTitles[index]} - ${courses.fold<int>(0, (a, b) => a + b.units)} ${ArchiveStrings.courseUnit}',
+                          '${ArchiveStrings.chartSemesters[index]} - $semesterUnitsSum ${ArchiveStrings.courseUnit}',
                         ),
                       ),
                     ),
                     courseCardsBuilder(
                       context: context,
-                      courses: courses,
+                      chartNodes: chartNodes,
                       showTooltip: true,
                       infiniteWidth: true,
                     ),
-                    if (index != data.length - 1)
+                    if (index != (controller.listOfChartNodes.length - 1))
                       const Gap.vertical(2 * kSizeDefault),
                   ],
                 );
@@ -157,8 +114,44 @@ class ChartView extends StatelessWidget {
             ),
           ],
         ),
-        onLoading: const LoadingView(),
       ),
+      onLoading: const LoadingView(),
     );
   }
+}
+
+Widget _getHelpDialog(BuildContext context) {
+  final textStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
+        color: Theme.of(context).colorScheme.secondary.withOpacity(0.9),
+        fontWeight: FontWeight.w300,
+      );
+
+  final titleStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
+        fontWeight: FontWeight.w500,
+      );
+
+  return ArchiveDialog(
+    title: ArchiveStrings.chartHelp,
+    children: [
+      SelectableText(
+        ArchiveStrings.chartHelpPreRequisitesTitle,
+        style: titleStyle,
+      ),
+      const Gap.vertical(kSizeDefault / 2),
+      SelectableText(
+        ArchiveStrings.chartHelpPreRequisitesDescription,
+        style: textStyle,
+      ),
+      const Gap.vertical(kSizeDefault),
+      SelectableText(
+        ArchiveStrings.chartHelpCoRequisitesTitle,
+        style: titleStyle,
+      ),
+      const Gap.vertical(kSizeDefault / 2),
+      SelectableText(
+        ArchiveStrings.chartHelpCoRequisitesDescription,
+        style: textStyle,
+      ),
+    ],
+  );
 }

@@ -25,7 +25,7 @@ class ArchiveProfessorCard extends StatelessWidget {
       color: Theme.of(context).colorScheme.primary,
       padding: const EdgeInsets.all(kSizeDefault),
       onPressed: () =>
-          context.go('${ArchiveRoutes.professors}/${professor?.id}'),
+          context.go('${ArchiveRoutes.professors}/${professor?.uuid}'),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -52,13 +52,20 @@ class ArchiveProfessorCard extends StatelessWidget {
             width: double.infinity,
             height: kSizeCardWidth / 2,
             decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(professor?.image ?? ''),
-                fit: BoxFit.cover,
-              ),
+              image: (professor != null && professor?.image != null)
+                  ? DecorationImage(
+                      image: AssetImage(professor!.image.toString()),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
               border:
                   Border.all(color: Theme.of(context).colorScheme.secondary),
             ),
+            child: (professor != null && professor?.image != null)
+                ? null
+                : Placeholder(
+                    color: Theme.of(context).colorScheme.secondary,
+                  ),
           ),
         ],
       ),
