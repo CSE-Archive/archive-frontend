@@ -33,8 +33,8 @@ class ArchiveDialog extends StatelessWidget {
                 children: [
                   SelectableText(
                     title,
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          fontWeight: FontWeight.w600,
+                    style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                          fontWeight: FontWeight.bold,
                         ),
                   ),
                   const Spacer(),

@@ -28,8 +28,11 @@ class ArchiveStrings {
 
   static const homeSeeAll = 'مشاهده‌ی همه';
   static const homeLatestResources = 'تازه‌ترین منبع‌ها';
+  static const homeLatestResourcesMobile = 'منبع‌ها';
   static const homeLatestRecordings = 'تازه‌ترین کلاس‌های ضبط شده';
+  static const homeLatestRecordingsMobile = 'کلاس‌های ضبط شده';
   static const homeLatestReferences = 'تازه‌ترین مرجع‌ها';
+  static const homeLatestReferencesMobile = 'مرجع‌ها';
 
   static const references = 'مرجع‌ها';
   static const referencesTitleAuthor = 'عنوان/نویسنده';

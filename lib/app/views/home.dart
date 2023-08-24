@@ -33,7 +33,9 @@ class HomeView extends GetView<HomeController> {
               padding:
                   EdgeInsets.symmetric(horizontal: context.platform.margin),
               child: ArchiveHeader(
-                title: ArchiveStrings.homeLatestResources,
+                title: context.isMobile
+                    ? ArchiveStrings.homeLatestResourcesMobile
+                    : ArchiveStrings.homeLatestResources,
                 seeAllOnPressed: () => context.go(ArchiveRoutes.resources),
               ),
             ),
@@ -48,7 +50,9 @@ class HomeView extends GetView<HomeController> {
               padding:
                   EdgeInsets.symmetric(horizontal: context.platform.margin),
               child: ArchiveHeader(
-                title: ArchiveStrings.homeLatestRecordings,
+                title: context.isMobile
+                    ? ArchiveStrings.homeLatestRecordingsMobile
+                    : ArchiveStrings.homeLatestRecordings,
                 seeAllOnPressed: () => context.go(ArchiveRoutes.recordings),
               ),
             ),
@@ -63,7 +67,9 @@ class HomeView extends GetView<HomeController> {
               padding:
                   EdgeInsets.symmetric(horizontal: context.platform.margin),
               child: ArchiveHeader(
-                title: ArchiveStrings.homeLatestReferences,
+                title: context.isMobile
+                    ? ArchiveStrings.homeLatestReferencesMobile
+                    : ArchiveStrings.homeLatestReferences,
                 seeAllOnPressed: () => context.go(ArchiveRoutes.references),
               ),
             ),

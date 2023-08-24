@@ -27,6 +27,7 @@ class ArchiveLabel extends StatelessWidget {
             Text(
               title,
               style: Theme.of(context).textTheme.titleSmall,
+              // TODO: titleSmall
             ),
             const Gap.horizontal(kSizeDefault / 2),
             Container(
@@ -43,6 +44,7 @@ class ArchiveLabel extends StatelessWidget {
               child: Text(
                 value,
                 style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                      // TODO: titleSmall
                       color: Theme.of(context).colorScheme.primary,
                     ),
               ),

@@ -38,7 +38,7 @@ class CourseExpansionTile extends StatelessWidget {
     return ExpansionTile(
       title: Text(
         '$semester ${enToFaDigits(year.toString())}',
-        style: Theme.of(context).textTheme.titleMedium,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
       subtitle: Text(
         professors
@@ -47,7 +47,7 @@ class CourseExpansionTile extends StatelessWidget {
             )
             .join(', '),
         softWrap: true,
-        style: Theme.of(context).textTheme.titleSmall!.copyWith(
+        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
               color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
             ),
       ),

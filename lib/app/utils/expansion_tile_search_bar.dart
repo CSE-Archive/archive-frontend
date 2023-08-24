@@ -15,15 +15,15 @@ Widget expansionTileSearchBar({
   return ExpansionTile(
     title: Text(
       title,
-      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
             color: Theme.of(context).colorScheme.secondary,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
           ),
     ),
     children: [
       searchBar(
         context: context,
-        hintText: ' ',
+        hintText: '',
         searchBarController: searchBarController,
         primaryColor: Theme.of(context).colorScheme.primary,
         secondaryColor: Theme.of(context).colorScheme.secondary,

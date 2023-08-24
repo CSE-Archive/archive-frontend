@@ -17,9 +17,9 @@ Widget expansionTileRadioButton({
     () => ExpansionTile(
       title: Text(
         title,
-        style: Theme.of(context).textTheme.titleMedium!.copyWith(
+        style: Theme.of(context).textTheme.bodyLarge!.copyWith(
               color: Theme.of(context).colorScheme.secondary,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w500,
             ),
       ),
       expandedCrossAxisAlignment: CrossAxisAlignment.start,
@@ -34,7 +34,7 @@ Widget expansionTileRadioButton({
                   const EdgeInsets.symmetric(horizontal: kSizeDefault / 2),
               title: Text(
                 pair.value,
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       color: Theme.of(context).colorScheme.secondary,
                     ),
               ),

@@ -14,8 +14,8 @@ class ArchiveHeader extends StatelessWidget {
   }) : super(key: key);
 
   static TextStyle textStyle(BuildContext context) =>
-      Theme.of(context).textTheme.titleLarge!.copyWith(
-            fontWeight: FontWeight.w600,
+      Theme.of(context).textTheme.headlineSmall!.copyWith(
+            fontWeight: FontWeight.bold,
           );
 
   static const bottomPadding = kSizeDefault;

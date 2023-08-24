@@ -40,7 +40,7 @@ Widget footer({required BuildContext context}) {
               const Gap.vertical(kSizeDefault / 2),
               Text(
                 ArchiveStrings.footerTitleMobile,
-                style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
               ),
@@ -56,7 +56,7 @@ Widget footer({required BuildContext context}) {
                 offset: const Offset(0, 4),
                 child: Text(
                   ArchiveStrings.footerTitleDesktop,
-                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                         fontWeight: FontWeight.w600,
                         height: 1,
                       ),
