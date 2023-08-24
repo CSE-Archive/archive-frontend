@@ -34,10 +34,7 @@ class AppbarTextButton extends StatelessWidget {
         );
 
     return GestureDetector(
-      onTap: () {
-        PageTrackerService.to.activePage = page;
-        context.go(route);
-      },
+      onTap: () => context.go(route),
       child: MouseRegion(
         cursor: SystemMouseCursors.click,
         onEnter: (_) => hovered(true),

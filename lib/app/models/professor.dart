@@ -38,24 +38,25 @@ class ProfessorModel {
     this.courses = const [],
   });
 
-  factory ProfessorModel.fromJson(dynamic json) => ProfessorModel(
-        uuid: json['uuid'],
-        department: json['department'],
-        honorific: json['honorific'],
-        firstName: json['first_name'],
-        lastName: json['last_name'],
-        image: json['image'],
-        about: json['about'],
-        hasDetail: json['has_detail'],
-        emails: json['emails'],
-        links: LinkModel.listFromJson(json['links']),
-        courses: CourseModel.listFromJson(json['courses']),
-      );
+  factory ProfessorModel.fromJson(dynamic json) {
+    return ProfessorModel(
+      uuid: json['uuid'],
+      department: json['department'],
+      honorific: json['honorific'],
+      firstName: json['first_name'],
+      lastName: json['last_name'],
+      image: json['image'],
+      about: json['about'],
+      hasDetail: json['has_detail'],
+      emails: json['emails'] ?? [],
+      links: LinkModel.listFromJson(json['links'] ?? []),
+      courses: CourseModel.listFromJson(json['courses'] ?? []),
+    );
+  }
 
-  static List<ProfessorModel> listFromJson(dynamic professors) =>
-      List<ProfessorModel>.from(
-        professors.map(
-          (professor) => ProfessorModel.fromJson(professor),
-        ),
-      );
+  static List<ProfessorModel> listFromJson(List professors) {
+    return professors
+        .map((professor) => ProfessorModel.fromJson(professor))
+        .toList();
+  }
 }

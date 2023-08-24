@@ -39,29 +39,28 @@ class CourseModel {
     this.requisiteFor = const [],
   });
 
-  factory CourseModel.fromJson(dynamic json) => CourseModel(
-        uuid: json['uuid'],
-        title: json['title'],
-        titleEn: json['en_title'],
-        units: UnitsType.decode(json['unit']),
-        type: CourseType.decode(json['type']),
-        description: json['description'],
-        tag: json['tag'],
-        knownAs: json['known_as'],
-        references: ReferenceModel.listFromJson(json['references']),
-        classrooms: ClassroomModel.listFromJson(json['classrooms']),
-        professors: ProfessorModel.listFromJson(json['professors']),
-        coRequisites: CourseModel.listFromJson(json['co_requisites']),
-        preRequisites: CourseModel.listFromJson(json['pre_requisites']),
-        requisiteFor: CourseModel.listFromJson(json['requisite_for']),
-      );
+  factory CourseModel.fromJson(dynamic json) {
+    return CourseModel(
+      uuid: json['uuid'],
+      title: json['title'],
+      titleEn: json['en_title'],
+      units: UnitsType.decode(json['unit']),
+      type: CourseType.decode(json['type']),
+      description: json['description'],
+      tag: json['tag'],
+      knownAs: json['known_as'],
+      references: ReferenceModel.listFromJson(json['references'] ?? []),
+      classrooms: ClassroomModel.listFromJson(json['classrooms'] ?? []),
+      professors: ProfessorModel.listFromJson(json['professors'] ?? []),
+      coRequisites: CourseModel.listFromJson(json['co_requisites'] ?? []),
+      preRequisites: CourseModel.listFromJson(json['pre_requisites'] ?? []),
+      requisiteFor: CourseModel.listFromJson(json['requisite_for'] ?? []),
+    );
+  }
 
-  static List<CourseModel> listFromJson(dynamic courses) =>
-      List<CourseModel>.from(
-        courses.map(
-          (course) => CourseModel.fromJson(course),
-        ),
-      );
+  static List<CourseModel> listFromJson(List courses) {
+    return courses.map((course) => CourseModel.fromJson(course)).toList();
+  }
 }
 
 enum CourseType {

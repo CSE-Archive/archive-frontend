@@ -5,19 +5,17 @@ enum ArchivePage {
   chart,
   course,
   courses,
-  reference,
-  references,
   professor,
   professors,
+  recordings,
+  reference,
+  references,
+  resources,
   search,
-  resources
 }
 
 class PageTrackerService extends GetxService {
   static PageTrackerService get to => Get.find();
 
-  final _activePage = ArchivePage.home.obs;
-
-  ArchivePage get activePage => _activePage.value;
-  set activePage(ArchivePage newPage) => _activePage(newPage);
+  ArchivePage activePage = ArchivePage.home;
 }

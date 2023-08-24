@@ -15,21 +15,20 @@ class ChartNodeModel {
     required this.courseUnits,
   });
 
-  factory ChartNodeModel.fromJson(dynamic json) => ChartNodeModel(
-        semester: json['semester'],
-        order: json['column'],
-        course: json['course'] == null
-            ? null
-            : CourseModel.fromJson(json['course']),
-        courseType:
-            json['type'] == null ? null : CourseType.decode(json['type']),
-        courseUnits: json['unit'],
-      );
+  factory ChartNodeModel.fromJson(dynamic json) {
+    return ChartNodeModel(
+      semester: json['semester'],
+      order: json['column'],
+      course:
+          json['course'] == null ? null : CourseModel.fromJson(json['course']),
+      courseType: json['type'] == null ? null : CourseType.decode(json['type']),
+      courseUnits: json['unit'],
+    );
+  }
 
-  static List<ChartNodeModel> listFromJson(dynamic chartNodes) =>
-      List<ChartNodeModel>.from(
-        chartNodes.map(
-          (chartNode) => ChartNodeModel.fromJson(chartNode),
-        ),
-      );
+  static List<ChartNodeModel> listFromJson(List chartNodes) {
+    return chartNodes
+        .map((chartNode) => ChartNodeModel.fromJson(chartNode))
+        .toList();
+  }
 }

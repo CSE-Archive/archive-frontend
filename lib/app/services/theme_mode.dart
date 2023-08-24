@@ -1,6 +1,7 @@
-import 'package:cse_archive/app/services/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'storage.dart';
 
 const _storageKey = 'isDark';
 

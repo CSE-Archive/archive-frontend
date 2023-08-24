@@ -22,23 +22,27 @@ class ResourceModel {
     this.links = const [],
   });
 
-  factory ResourceModel.fromJson(dynamic json) => ResourceModel(
-        uuid: json['uuid'],
-        title: json['title'],
-        type: ResourceType.decode(json['type']),
-        classroom: ClassroomModel.fromJson(json['classroom']),
-        notes: json['notes'],
-        createdTime: DateTime.parse(json['created_time']),
-        modifiedTime: DateTime.parse(json['modified_time']),
-        links: LinkModel.listFromJson(json['links']),
-      );
+  factory ResourceModel.fromJson(dynamic json) {
+    final createdTime = json['created_time'];
+    final modifiedTime = json['modified_time'];
 
-  static List<ResourceModel> listFromJson(dynamic resources) =>
-      List<ResourceModel>.from(
-        resources.map(
-          (resource) => ResourceModel.fromJson(resource),
-        ),
-      );
+    return ResourceModel(
+      uuid: json['uuid'],
+      title: json['title'],
+      type: ResourceType.decode(json['type']),
+      classroom: ClassroomModel.fromJson(json['classroom']),
+      notes: json['notes'],
+      createdTime: createdTime != null ? DateTime.parse(createdTime) : null,
+      modifiedTime: modifiedTime != null ? DateTime.parse(modifiedTime) : null,
+      links: LinkModel.listFromJson(json['links'] ?? []),
+    );
+  }
+
+  static List<ResourceModel> listFromJson(List resources) {
+    return resources
+        .map((resource) => ResourceModel.fromJson(resource))
+        .toList();
+  }
 }
 
 enum ResourceType {

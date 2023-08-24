@@ -26,24 +26,29 @@ class ReferenceModel {
     this.relatedReferences = const [],
   });
 
-  factory ReferenceModel.fromJson(dynamic json) => ReferenceModel(
-        uuid: json['uuid'],
-        title: json['title'],
-        image: json['cover_image'],
-        notes: json['notes'],
-        createdTime: DateTime.parse(json['created_time']),
-        modifiedTime: DateTime.parse(json['modified_time']),
-        authors: json['authors'],
-        links: LinkModel.listFromJson(json['links']),
-        courses: CourseModel.listFromJson(json['courses']),
-        relatedReferences:
-            ReferenceModel.listFromJson(json['related_references']),
-      );
+  factory ReferenceModel.fromJson(dynamic json) {
+    final image = json['cover_image'];
+    final createdTime = json['created_time'];
+    final modifiedTime = json['modified_time'];
 
-  static List<ReferenceModel> listFromJson(dynamic references) =>
-      List<ReferenceModel>.from(
-        references.map(
-          (reference) => ReferenceModel.fromJson(reference),
-        ),
-      );
+    return ReferenceModel(
+      uuid: json['uuid'],
+      title: json['title'],
+      image: image != null ? Uri.parse(image) : null,
+      notes: json['notes'],
+      createdTime: createdTime != null ? DateTime.parse(createdTime) : null,
+      modifiedTime: modifiedTime != null ? DateTime.parse(modifiedTime) : null,
+      authors: (json['authors'] as List).map((e) => e.toString()).toList(),
+      links: LinkModel.listFromJson(json['links'] ?? []),
+      courses: CourseModel.listFromJson(json['courses'] ?? []),
+      relatedReferences:
+          ReferenceModel.listFromJson(json['related_references'] ?? []),
+    );
+  }
+
+  static List<ReferenceModel> listFromJson(List references) {
+    return references
+        .map((reference) => ReferenceModel.fromJson(reference))
+        .toList();
+  }
 }

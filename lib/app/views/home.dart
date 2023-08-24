@@ -3,6 +3,7 @@ import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/home.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:cse_archive/app/routes/routes.dart';
+import 'package:cse_archive/app/utils/recording_cards_builder.dart';
 import 'package:cse_archive/app/utils/reference_cards_builder.dart';
 import 'package:cse_archive/app/utils/resource_cards_builder.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
@@ -32,7 +33,7 @@ class HomeView extends GetView<HomeController> {
               padding:
                   EdgeInsets.symmetric(horizontal: context.platform.margin),
               child: ArchiveHeader(
-                title: ArchiveStrings.homeNewResources,
+                title: ArchiveStrings.homeLatestResources,
                 seeAllOnPressed: () => context.go(ArchiveRoutes.resources),
               ),
             ),
@@ -47,7 +48,22 @@ class HomeView extends GetView<HomeController> {
               padding:
                   EdgeInsets.symmetric(horizontal: context.platform.margin),
               child: ArchiveHeader(
-                title: ArchiveStrings.homeNewReferences,
+                title: ArchiveStrings.homeLatestRecordings,
+                seeAllOnPressed: () => context.go(ArchiveRoutes.recordings),
+              ),
+            ),
+            recordingCardsBuilder(
+              context: context,
+              recordings: controller.recordings,
+              infiniteWidth: true,
+            ),
+            const Gap.vertical(2 * kSizeDefault),
+            Container(
+              constraints: BoxConstraints(maxWidth: context.platform.maxWidth),
+              padding:
+                  EdgeInsets.symmetric(horizontal: context.platform.margin),
+              child: ArchiveHeader(
+                title: ArchiveStrings.homeLatestReferences,
                 seeAllOnPressed: () => context.go(ArchiveRoutes.references),
               ),
             ),

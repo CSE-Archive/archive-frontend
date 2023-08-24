@@ -26,23 +26,28 @@ class ClassroomModel {
     this.tas = const [],
   });
 
-  factory ClassroomModel.fromJson(dynamic json) => ClassroomModel(
-        uuid: json['uuid'],
-        year: json['year'],
-        semester: SemesterType.decode(json['semester']),
-        course: CourseModel.fromJson(json['course']),
-        professors: ProfessorModel.listFromJson(json['professors']),
-        recordings: RecordedClassroomModel.fromJson(json['recordings']),
-        resources: ResourceModel.listFromJson(json['resources']),
-        tas: json['tas'],
-      );
+  factory ClassroomModel.fromJson(dynamic json) {
+    final recordings = json['recordings'];
 
-  static List<ClassroomModel> listFromJson(dynamic classrooms) =>
-      List<ClassroomModel>.from(
-        classrooms.map(
-          (classroom) => ClassroomModel.fromJson(classroom),
-        ),
-      );
+    return ClassroomModel(
+      uuid: json['uuid'],
+      year: json['year'],
+      semester: SemesterType.decode(json['semester']),
+      course: CourseModel.fromJson(json['course']),
+      recordings: recordings != null
+          ? RecordedClassroomModel.fromJson(recordings)
+          : null,
+      professors: ProfessorModel.listFromJson(json['professors'] ?? []),
+      resources: ResourceModel.listFromJson(json['resources'] ?? []),
+      tas: json['tas'] ?? [],
+    );
+  }
+
+  static List<ClassroomModel> listFromJson(List classrooms) {
+    return classrooms
+        .map((classroom) => ClassroomModel.fromJson(classroom))
+        .toList();
+  }
 }
 
 enum SemesterType {

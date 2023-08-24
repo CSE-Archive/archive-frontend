@@ -17,27 +17,29 @@ class ArchiveStrings {
   static const courseUnit = 'واحد';
   static const filters = 'فیلترها';
 
-  static const resources = 'منابع';
+  static const recordings = 'کلاس‌های ضبط شده';
+  static const resources = 'منبع‌ها';
 
-  static const appbarCourses = 'دروس';
-  static const appbarReferences = 'رفرنس‌ها';
-  static const appbarProfessors = 'اساتید';
+  static const appbarCourses = 'درس‌ها';
+  static const appbarReferences = 'مرجع‌ها';
+  static const appbarProfessors = 'استادها';
   static const appbarChart = 'چارت مهندسی کامپیوتر';
   static const appbarSupport = 'حمایت';
 
   static const homeSeeAll = 'مشاهده‌ی همه';
-  static const homeNewResources = 'جدیدترین منابع';
-  static const homeNewReferences = 'جدیدترین رفرنس‌ها';
+  static const homeLatestResources = 'تازه‌ترین منبع‌ها';
+  static const homeLatestRecordings = 'تازه‌ترین کلاس‌های ضبط شده';
+  static const homeLatestReferences = 'تازه‌ترین مرجع‌ها';
 
-  static const references = 'رفرنس‌ها';
+  static const references = 'مرجع‌ها';
   static const referencesTitleAuthor = 'عنوان/نویسنده';
   static const referenceTitle = '• عنوان';
-  static const referenceAuthors = '• نویسندگان';
-  static const referenceDownload = 'دانلود رفرنس';
-  static const referenceRelatedCourses = 'دروس مربوطه';
-  static const referenceRelatedReferences = 'رفرنس‌های مرتبط';
+  static const referenceAuthors = '• نویسنده‌ها';
+  static const referenceDownload = 'دانلود مرجع';
+  static const referenceRelatedCourses = 'درس‌های مرتبط';
+  static const referenceRelatedReferences = 'مرجع‌های مرتبط';
 
-  static const professors = 'اساتید';
+  static const professors = 'استادها';
   static const professorsAll = 'همه';
   static const professorsName = 'نام استاد';
   static const professorsDepartment = 'بخش';
@@ -49,7 +51,7 @@ class ArchiveStrings {
   static const professorRelatedLinks = '• لینک‌های مرتبط';
   static const professorDepartment = 'بخش';
 
-  static const courses = 'دروس';
+  static const courses = 'درس‌ها';
   static const coursesTitle = 'عنوان';
   static const coursesAll = 'همه';
   static const coursesType = 'نوع درس';
@@ -62,8 +64,8 @@ class ArchiveStrings {
   static const courseCoRequisites = 'هم‌نیازها';
   static const courseRequisiteFor = 'پیش‌نیاز چه درس‌هایی‌ست';
   static const courseReferences = 'رفرنس‌ها';
-  static const courseProfessors = 'اساتید';
-  static const courseResources = 'منابع';
+  static const courseProfessors = 'استادها';
+  static const courseResources = 'منبع‌ها';
   static const courseRecords = 'کلاس‌های ضبط شده';
   static const courseTAs = '• گریدرها:';
 
@@ -77,7 +79,7 @@ class ArchiveStrings {
       'درس «الف» هم‌نیاز درس «ب» هست؛ یعنی، اجازه‌ی برداشتن درس «ب» رو داری، ولی قبلش یا باید درس «الف» رو گذرونده باشی، یا اینکه هم‌زمان با برداشتن درس «ب»، درس «الف» رو هم برداری. (توجه داشته باش که رابطه‌ی هم‌نیازی یه رابطه‌ی یک طرفه هست؛ یعنی، برای برداشتن درس «الف» نیازی به گذروندن یا برداشتن هم‌زمان درس «ب» نیست)';
   static const chartCo = 'هم‌نیاز:';
   static const chartPre = 'پیش‌نیاز:';
-  static const chartSeeCourses = 'برای دیدن دروس کلیک کنید';
+  static const chartSeeCourses = 'برای دیدن درس‌ها کلیک کنید';
   static const chartSemester1 = 'نیمسال اول';
   static const chartSemester2 = 'نیمسال دوم';
   static const chartSemester3 = 'نیمسال سوم';
@@ -102,9 +104,9 @@ class ArchiveStrings {
   static const footerAboutUs = 'درباره ما';
   static const footerContactUs = 'ارتباط با ما';
   static const footerSupport = 'حمایت';
-  static const footerCourses = 'دروس';
-  static const footerReferences = 'رفرنس‌ها';
-  static const footerProfessors = 'اساتید';
+  static const footerCourses = 'درس‌ها';
+  static const footerReferences = 'مرجع‌ها';
+  static const footerProfessors = 'استادها';
   static const footerChart = 'چارت';
   static const footerNoteP1 = 'ساخته شده با';
   static const footerNoteP2 = 'برای استفاده‌ی عموم';

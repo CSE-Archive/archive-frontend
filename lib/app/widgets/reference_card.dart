@@ -42,13 +42,9 @@ class ArchiveReferenceCard extends StatelessWidget {
           const Gap.vertical(kSizeDefault / 2),
           SizedBox(
             width: double.infinity,
-
-            /// TODO: It is a hacky solution, keep an eye on
-            /// https://github.com/flutter/flutter/issues/31134
-            /// for possible future built-in solution
             child: Text(
-              '${reference?.authors.join(', ')}\n',
-              maxLines: 2,
+              reference?.authors.join(', ') ?? '',
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                     color: Theme.of(context)

@@ -1,20 +1,20 @@
 import 'package:cse_archive/app/constants/sizes.dart';
-import 'package:cse_archive/app/models/resource.dart';
+import 'package:cse_archive/app/models/recorded_classroom.dart';
 import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
 import 'package:flutter/material.dart';
 
 import 'gap.dart';
 import 'card.dart';
 
-class ArchiveResourceCard extends StatelessWidget {
-  final ResourceModel? resource;
+class ArchiveRecordingCard extends StatelessWidget {
+  final RecordedClassroomModel? recording;
 
-  const ArchiveResourceCard({
+  const ArchiveRecordingCard({
     super.key,
-    required this.resource,
+    required this.recording,
   });
 
-  const ArchiveResourceCard.invisible({super.key}) : resource = null;
+  const ArchiveRecordingCard.invisible({super.key}) : recording = null;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +28,8 @@ class ArchiveResourceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            (resource != null && resource!.classroom != null)
-                ? '${resource!.title} ${resource!.classroom!.course.title}'
+            (recording != null && recording!.classroom != null)
+                ? recording!.classroom!.course.title
                 : '',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -37,8 +37,8 @@ class ArchiveResourceCard extends StatelessWidget {
           ),
           const Gap.vertical(kSizeDefault),
           Text(
-            (resource != null && resource!.classroom != null)
-                ? '${resource!.classroom!.semester} ${enToFaDigits(resource!.classroom!.year.toString())}'
+            (recording != null && recording!.classroom != null)
+                ? '${recording!.classroom!.semester} ${enToFaDigits(recording!.classroom!.year.toString())}'
                 : '',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -48,8 +48,8 @@ class ArchiveResourceCard extends StatelessWidget {
                 ),
           ),
           Text(
-            (resource != null && resource!.classroom != null)
-                ? resource!.classroom!.professors
+            (recording != null && recording!.classroom != null)
+                ? recording!.classroom!.professors
                     .map(
                       (professor) => professor.fullNameWithHonorific,
                     )
@@ -66,7 +66,7 @@ class ArchiveResourceCard extends StatelessWidget {
       ),
     );
 
-    if (resource == null) {
+    if (recording == null) {
       return Opacity(
         opacity: 0,
         child: IgnorePointer(child: child),

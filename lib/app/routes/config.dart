@@ -5,6 +5,7 @@ import 'package:cse_archive/app/views/course/course.dart' deferred as course;
 import 'package:cse_archive/app/views/courses.dart' deferred as courses;
 import 'package:cse_archive/app/views/home.dart' deferred as home;
 import 'package:cse_archive/app/views/loading.dart';
+import 'package:cse_archive/app/views/recordings.dart' deferred as recordings;
 import 'package:cse_archive/app/views/reference.dart' deferred as reference;
 import 'package:cse_archive/app/views/references.dart' deferred as references;
 import 'package:cse_archive/app/views/resources.dart' deferred as resources;
@@ -82,6 +83,19 @@ final kRouterConfig = GoRouter(
             PageTrackerService.to.activePage = ArchivePage.search;
 
             return search.SearchView();
+          },
+        ),
+      ),
+    ),
+    GoRoute(
+      path: ArchiveRoutes.recordings,
+      pageBuilder: (_, state) => _noTransitionBuilder(
+        state: state,
+        child: _viewLoader(
+          future: recordings.loadLibrary(),
+          builder: () {
+            PageTrackerService.to.activePage = ArchivePage.recordings;
+            return recordings.RecordingsView();
           },
         ),
       ),

@@ -252,7 +252,9 @@ ThemeData _basicThemeData({
         shadowColor: const MaterialStatePropertyAll(Colors.transparent),
         overlayColor: const MaterialStatePropertyAll(Colors.transparent),
         minimumSize: const MaterialStatePropertyAll(Size.zero),
-        padding: const MaterialStatePropertyAll(EdgeInsets.all(kSizeDefault)),
+        padding: const MaterialStatePropertyAll(
+          EdgeInsets.all(4 / 5 * kSizeDefault),
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         shape: const MaterialStatePropertyAll(
           RoundedRectangleBorder(borderRadius: BorderRadius.zero),
@@ -276,7 +278,9 @@ ThemeData _basicThemeData({
         shadowColor: const MaterialStatePropertyAll(Colors.transparent),
         overlayColor: const MaterialStatePropertyAll(Colors.transparent),
         minimumSize: const MaterialStatePropertyAll(Size.zero),
-        padding: const MaterialStatePropertyAll(EdgeInsets.all(kSizeDefault)),
+        padding: const MaterialStatePropertyAll(
+          EdgeInsets.all(4 / 5 * kSizeDefault),
+        ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
         shape: const MaterialStatePropertyAll(
           RoundedRectangleBorder(borderRadius: BorderRadius.zero),

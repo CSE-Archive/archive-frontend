@@ -19,20 +19,24 @@ class RecordedClassroomModel {
     this.links = const [],
   });
 
-  factory RecordedClassroomModel.fromJson(dynamic json) =>
-      RecordedClassroomModel(
-        uuid: json['uuid'],
-        classroom: ClassroomModel.fromJson(json['classroom']),
-        createdTime: DateTime.parse(json['created_time']),
-        modifiedTime: DateTime.parse(json['modified_time']),
-        sessions: RecordedSessionModel.listFromJson(json['sessions']),
-        links: LinkModel.listFromJson(json['links']),
-      );
+  factory RecordedClassroomModel.fromJson(dynamic json) {
+    final classroom = json['classroom'];
+    final createdTime = json['created_time'];
+    final modifiedTime = json['modified_time'];
 
-  static List<RecordedClassroomModel> listFromJson(dynamic recordings) =>
-      List<RecordedClassroomModel>.from(
-        recordings.map(
-          (recording) => RecordedClassroomModel.fromJson(recording),
-        ),
-      );
+    return RecordedClassroomModel(
+      uuid: json['uuid'],
+      classroom: classroom != null ? ClassroomModel.fromJson(classroom) : null,
+      createdTime: createdTime != null ? DateTime.parse(createdTime) : null,
+      modifiedTime: modifiedTime != null ? DateTime.parse(modifiedTime) : null,
+      sessions: RecordedSessionModel.listFromJson(json['sessions'] ?? []),
+      links: LinkModel.listFromJson(json['links'] ?? []),
+    );
+  }
+
+  static List<RecordedClassroomModel> listFromJson(List recordings) {
+    return recordings
+        .map((recording) => RecordedClassroomModel.fromJson(recording))
+        .toList();
+  }
 }
