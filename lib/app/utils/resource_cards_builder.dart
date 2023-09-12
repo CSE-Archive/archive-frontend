@@ -46,6 +46,7 @@ Widget resourceCardsBuilder({
     clipBehavior: Clip.none,
     mainAxisSpacing: kSizeDefault,
     crossAxisSpacing: kSizeDefault,
+    physics: const NeverScrollableScrollPhysics(),
     crossAxisCount: context.platform.cardsGridViewCrossAxisCount,
     children: resources
         .map(
