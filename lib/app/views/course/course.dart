@@ -19,39 +19,71 @@ import 'package:get/get.dart';
 
 import 'components/expansion_tile.dart';
 
-class CourseView extends StatelessWidget {
+class CourseView extends GetView<CourseController> {
+  final String uuid;
+
   const CourseView({
     super.key,
-    required this.id,
+    required this.uuid,
   });
 
-  final String id;
+  @override
+  String? get tag => uuid;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Change
+    return controller.obx(
+      (_) {
+        const preRequisiteValue = 1;
+        const coRequisiteValue = 2;
+        const requisiteForValue = 3;
 
-    final controller = Get.put(
-      CourseController(courseId: int.parse(id)),
-      tag: id,
-    );
+        final activeRequisite = (controller.course!.preRequisites.isNotEmpty
+                ? preRequisiteValue
+                : controller.course!.coRequisites.isNotEmpty
+                    ? coRequisiteValue
+                    : requisiteForValue)
+            .obs;
 
-    return ArchiveWebPage(
-      applyPlatformConstraints: false,
-      body: controller.obx(
-        (course) {
-          const preRequisiteValue = 1;
-          const coRequisiteValue = 2;
-          const requisiteForValue = 3;
+        final unitsLabel = ArchiveLabel(
+          title: ArchiveStrings.courseUnits,
+          value: enToFaDigits(
+            controller.course!.units.representation,
+          ),
+        );
 
-          final activeRequisite = (course!.preRequisites.isNotEmpty
-                  ? preRequisiteValue
-                  : course.coRequisites.isNotEmpty
-                      ? coRequisiteValue
-                      : requisiteForValue)
-              .obs;
+        final typeLabel = ArchiveLabel(
+          title: ArchiveStrings.courseType,
+          value: controller.course!.type.representation,
+        );
 
-          return Column(
+        final titleColumn = Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SelectableText(
+              controller.course!.title,
+              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+            ),
+            if (controller.course!.titleEn != null) ...[
+              const Gap.vertical(kSizeDefault / 4),
+              SelectableText(
+                controller.course!.titleEn!,
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+              ),
+            ],
+          ],
+        );
+
+        return ArchiveWebPage(
+          applyPlatformConstraints: false,
+          body: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
@@ -64,17 +96,18 @@ class CourseView extends StatelessWidget {
                   labels: [
                     ArchiveStrings.home,
                     ArchiveStrings.courses,
-                    course.title,
+                    controller.course!.title,
                   ],
                   routes: [
                     ArchiveRoutes.home,
                     ArchiveRoutes.courses,
-                    '${ArchiveRoutes.courses}/${course.uuid}',
+                    '${ArchiveRoutes.courses}/${controller.course!.uuid}',
                   ],
                 ),
               ),
               const Gap.vertical(1.5 * kSizeDefault),
               Container(
+                width: double.infinity,
                 constraints:
                     BoxConstraints(maxWidth: context.platform.maxWidth),
                 padding:
@@ -86,56 +119,42 @@ class CourseView extends StatelessWidget {
                     borderRadius: BorderRadius.circular(kSizeDefault),
                   ),
                   child: Column(
+                    mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                      context.responsiveBuilder(
+                        mobile: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            titleColumn,
+                            const Gap.vertical(kSizeDefault),
+                            Wrap(
+                              alignment: WrapAlignment.start,
+                              spacing: kSizeDefault,
+                              runSpacing: kSizeDefault,
                               children: [
-                                SelectableText(
-                                  course.title,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge!
-                                      .copyWith(
-                                        fontWeight: FontWeight.bold,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                      ),
-                                ),
-                                SelectableText(
-                                  course.titleEn!,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleMedium!
-                                      .copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .primary,
-                                      ),
-                                ),
+                                unitsLabel,
+                                typeLabel,
                               ],
                             ),
-                          ),
-                          ArchiveLabel(
-                            title: ArchiveStrings.courseUnits,
-                            value: enToFaDigits(course.units.toString()),
-                          ),
-                          const Gap.horizontal(kSizeDefault),
-                          ArchiveLabel(
-                            title: ArchiveStrings.courseType,
-                            value: course.type.toString(),
-                          ),
-                        ],
+                          ],
+                        ),
+                        desktop: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(child: titleColumn),
+                            const Gap.horizontal(kSizeDefault),
+                            unitsLabel,
+                            const Gap.horizontal(kSizeDefault),
+                            typeLabel,
+                          ],
+                        ),
                       ),
-                      if (course.description?.isNotEmpty ?? false) ...[
+                      if (controller.course!.description != null) ...[
                         const Gap.vertical(kSizeDefault),
                         SelectableText(
-                          course.description!,
+                          controller.course!.description!,
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     color: Theme.of(context)
@@ -149,9 +168,9 @@ class CourseView extends StatelessWidget {
                   ),
                 ),
               ),
-              if (course.preRequisites.isNotEmpty ||
-                  course.coRequisites.isNotEmpty ||
-                  course.requisiteFor.isNotEmpty) ...[
+              if (controller.course!.preRequisites.isNotEmpty ||
+                  controller.course!.coRequisites.isNotEmpty ||
+                  controller.course!.requisiteFor.isNotEmpty) ...[
                 const Gap.vertical(2 * kSizeDefault),
                 Container(
                   constraints:
@@ -165,7 +184,8 @@ class CourseView extends StatelessWidget {
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            if (course.preRequisites.isNotEmpty) ...[
+                            if (controller
+                                .course!.preRequisites.isNotEmpty) ...[
                               TextButton(
                                 onPressed: () =>
                                     activeRequisite.value = preRequisiteValue,
@@ -194,7 +214,7 @@ class CourseView extends StatelessWidget {
                               ),
                               const Gap.horizontal(kSizeDefault),
                             ],
-                            if (course.coRequisites.isNotEmpty) ...[
+                            if (controller.course!.coRequisites.isNotEmpty) ...[
                               TextButton(
                                 onPressed: () =>
                                     activeRequisite.value = coRequisiteValue,
@@ -223,7 +243,7 @@ class CourseView extends StatelessWidget {
                               ),
                               const Gap.horizontal(kSizeDefault),
                             ],
-                            if (course.requisiteFor.isNotEmpty) ...[
+                            if (controller.course!.requisiteFor.isNotEmpty) ...[
                               TextButton(
                                 onPressed: () =>
                                     activeRequisite.value = requisiteForValue,
@@ -268,23 +288,23 @@ class CourseView extends StatelessWidget {
                   () => activeRequisite.value == preRequisiteValue
                       ? courseCardsBuilder(
                           context: context,
-                          courses: course.preRequisites,
+                          courses: controller.course!.preRequisites,
                           infiniteWidth: true,
                         )
                       : activeRequisite.value == coRequisiteValue
                           ? courseCardsBuilder(
                               context: context,
-                              courses: course.coRequisites,
+                              courses: controller.course!.coRequisites,
                               infiniteWidth: true,
                             )
                           : courseCardsBuilder(
                               context: context,
-                              courses: course.requisiteFor,
+                              courses: controller.course!.requisiteFor,
                               infiniteWidth: true,
                             ),
                 ),
               ],
-              if (course.references.isNotEmpty) ...[
+              if (controller.course!.references.isNotEmpty) ...[
                 const Gap.vertical(2 * kSizeDefault),
                 Container(
                   constraints:
@@ -297,11 +317,11 @@ class CourseView extends StatelessWidget {
                 ),
                 referenceCardsBuilder(
                   context: context,
-                  references: course.references,
+                  references: controller.course!.references,
                   infiniteWidth: true,
                 ),
               ],
-              if (course.professors.isNotEmpty) ...[
+              if (controller.course!.professors.isNotEmpty) ...[
                 const Gap.vertical(2 * kSizeDefault),
                 Container(
                   constraints:
@@ -314,12 +334,12 @@ class CourseView extends StatelessWidget {
                 ),
                 professorCardsBuilder(
                   context: context,
-                  professors: course.professors,
+                  professors: controller.course!.professors,
                   infiniteWidth: true,
                 ),
               ],
-              if (course.classrooms.isNotEmpty &&
-                  course.classrooms.any(
+              if (controller.course!.classrooms.isNotEmpty &&
+                  controller.course!.classrooms.any(
                     (classroom) => classroom.resources.isNotEmpty,
                   )) ...[
                 const Gap.vertical(2 * kSizeDefault),
@@ -338,7 +358,7 @@ class CourseView extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
                   child: Column(
-                    children: course.classrooms
+                    children: controller.course!.classrooms
                         .map(
                           (classroom) => classroom.resources.isEmpty
                               ? Gap.zero
@@ -354,8 +374,8 @@ class CourseView extends StatelessWidget {
                   ),
                 ),
               ],
-              if (course.classrooms.isNotEmpty &&
-                  course.classrooms.any(
+              if (controller.course!.classrooms.isNotEmpty &&
+                  controller.course!.classrooms.any(
                     (classroom) => classroom.recordings != null,
                   )) ...[
                 const Gap.vertical(2 * kSizeDefault),
@@ -373,7 +393,7 @@ class CourseView extends StatelessWidget {
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
                   child: Column(
-                    children: course.classrooms
+                    children: controller.course!.classrooms
                         .map(
                           (classroom) => classroom.recordings == null
                               ? Gap.zero
@@ -389,10 +409,10 @@ class CourseView extends StatelessWidget {
                 ),
               ],
             ],
-          );
-        },
-        onLoading: const LoadingView(),
-      ),
+          ),
+        );
+      },
+      onLoading: const LoadingView(),
     );
   }
 }

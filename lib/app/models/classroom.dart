@@ -8,7 +8,7 @@ import 'resource.dart';
 class ClassroomModel {
   final String uuid;
   final int year;
-  final SemesterType semester;
+  final ClassroomSemester semester;
   final CourseModel course;
   final RecordedClassroomModel? recordings;
   final List<ProfessorModel> professors;
@@ -26,51 +26,49 @@ class ClassroomModel {
     this.tas = const [],
   });
 
-  factory ClassroomModel.fromJson(dynamic json) {
-    final recordings = json['recordings'];
+  static ClassroomModel? fromJson(dynamic json) {
+    if (json == null) return null;
 
     return ClassroomModel(
       uuid: json['uuid'],
       year: json['year'],
-      semester: SemesterType.decode(json['semester']),
-      course: CourseModel.fromJson(json['course']),
-      recordings: recordings != null
-          ? RecordedClassroomModel.fromJson(recordings)
-          : null,
-      professors: ProfessorModel.listFromJson(json['professors'] ?? []),
-      resources: ResourceModel.listFromJson(json['resources'] ?? []),
-      tas: json['tas'] ?? [],
+      semester: ClassroomSemester.decode(json['semester']),
+      course: CourseModel.fromJson(json['course'])!,
+      recordings: RecordedClassroomModel.fromJson(json['recordings']),
+      professors: ProfessorModel.listFromJson(json['professors']),
+      resources: ResourceModel.listFromJson(json['resources']),
+      tas: List<String>.from(json['tas'] ??= []),
     );
   }
 
-  static List<ClassroomModel> listFromJson(List classrooms) {
+  static List<ClassroomModel> listFromJson(List? classrooms) {
+    if (classrooms == null) return [];
+
     return classrooms
-        .map((classroom) => ClassroomModel.fromJson(classroom))
+        .map((classroom) => ClassroomModel.fromJson(classroom)!)
         .toList();
   }
 }
 
-enum SemesterType {
+enum ClassroomSemester {
   first,
   second,
   summer;
 
-  static SemesterType decode(int rawType) => switch (rawType) {
-        1 => first,
-        2 => second,
-        _ => summer, // https://github.com/dart-lang/language/issues/3083
-      };
-
-  int encode() => switch (this) {
-        first => 1,
-        second => 2,
-        summer => 3,
-      };
+  static ClassroomSemester decode(int rawType) {
+    return switch (rawType) {
+      1 => first,
+      2 => second,
+      _ => summer, // https://github.com/dart-lang/language/issues/3083
+    };
+  }
 
   @override
-  String toString() => switch (this) {
-        first => ArchiveStrings.semesterTypeFirst,
-        second => ArchiveStrings.semesterTypeSecond,
-        summer => ArchiveStrings.semesterTypeSummer,
-      };
+  String toString() {
+    return switch (this) {
+      first => ArchiveStrings.classroomSemesterFirst,
+      second => ArchiveStrings.classroomSemesterSecond,
+      summer => ArchiveStrings.classroomSemesterSummer,
+    };
+  }
 }

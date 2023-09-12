@@ -4,7 +4,7 @@ import 'recorded_session.dart';
 
 class RecordedClassroomModel {
   final String uuid;
-  final ClassroomModel? classroom;
+  final ClassroomModel classroom;
   final DateTime? createdTime;
   final DateTime? modifiedTime;
   final List<RecordedSessionModel> sessions;
@@ -12,31 +12,34 @@ class RecordedClassroomModel {
 
   RecordedClassroomModel({
     required this.uuid,
-    this.classroom,
+    required this.classroom,
     this.createdTime,
     this.modifiedTime,
     this.sessions = const [],
     this.links = const [],
   });
 
-  factory RecordedClassroomModel.fromJson(dynamic json) {
-    final classroom = json['classroom'];
+  static RecordedClassroomModel? fromJson(dynamic json) {
+    if (json == null) return null;
+
     final createdTime = json['created_time'];
     final modifiedTime = json['modified_time'];
 
     return RecordedClassroomModel(
       uuid: json['uuid'],
-      classroom: classroom != null ? ClassroomModel.fromJson(classroom) : null,
-      createdTime: createdTime != null ? DateTime.parse(createdTime) : null,
-      modifiedTime: modifiedTime != null ? DateTime.parse(modifiedTime) : null,
-      sessions: RecordedSessionModel.listFromJson(json['sessions'] ?? []),
-      links: LinkModel.listFromJson(json['links'] ?? []),
+      classroom: ClassroomModel.fromJson(json['classroom'])!,
+      createdTime: createdTime == null ? null : DateTime.parse(createdTime),
+      modifiedTime: modifiedTime == null ? null : DateTime.parse(modifiedTime),
+      sessions: RecordedSessionModel.listFromJson(json['sessions']),
+      links: LinkModel.listFromJson(json['links']),
     );
   }
 
-  static List<RecordedClassroomModel> listFromJson(List recordings) {
+  static List<RecordedClassroomModel> listFromJson(List? recordings) {
+    if (recordings == null) return [];
+
     return recordings
-        .map((recording) => RecordedClassroomModel.fromJson(recording))
+        .map((recording) => RecordedClassroomModel.fromJson(recording)!)
         .toList();
   }
 }

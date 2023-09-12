@@ -205,22 +205,26 @@ Widget footer({required BuildContext context}) {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: kSizeDefault / 2),
+                      horizontal: kSizeDefault / 2,
+                    ),
                     child: coursesButton,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: kSizeDefault / 2),
+                      horizontal: kSizeDefault / 2,
+                    ),
                     child: referencesButton,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: kSizeDefault / 2),
+                      horizontal: kSizeDefault / 2,
+                    ),
                     child: professorsButton,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: kSizeDefault / 2),
+                      horizontal: kSizeDefault / 2,
+                    ),
                     child: chartButton,
                   ),
                 ],
@@ -231,17 +235,20 @@ Widget footer({required BuildContext context}) {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: kSizeDefault / 2),
+                      horizontal: kSizeDefault / 2,
+                    ),
                     child: supportButton,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: kSizeDefault / 2),
+                      horizontal: kSizeDefault / 2,
+                    ),
                     child: aboutUsButton,
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: kSizeDefault / 2),
+                      horizontal: kSizeDefault / 2,
+                    ),
                     child: contactUsButton,
                   ),
                 ],

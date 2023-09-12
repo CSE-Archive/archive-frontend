@@ -7,19 +7,19 @@ import 'gap.dart';
 import 'card.dart';
 
 class ArchiveRecordingCard extends StatelessWidget {
-  final RecordedClassroomModel? recording;
+  final RecordedClassroomModel recording;
+  final double width;
 
   const ArchiveRecordingCard({
     super.key,
     required this.recording,
+    this.width = kSizeCardWidth,
   });
-
-  const ArchiveRecordingCard.invisible({super.key}) : recording = null;
 
   @override
   Widget build(BuildContext context) {
-    final child = ArchiveCard(
-      width: kSizeCardWidth,
+    return ArchiveCard(
+      width: width,
       color: Theme.of(context).colorScheme.primary,
       padding: const EdgeInsets.all(kSizeDefault),
       onPressed: () {}, // TODO: Add on press download options
@@ -28,18 +28,16 @@ class ArchiveRecordingCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            (recording != null && recording!.classroom != null)
-                ? recording!.classroom!.course.title
-                : '',
+            recording.classroom.course.title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const Gap.vertical(kSizeDefault),
           Text(
-            (recording != null && recording!.classroom != null)
-                ? '${recording!.classroom!.semester} ${enToFaDigits(recording!.classroom!.year.toString())}'
-                : '',
+            enToFaDigits(
+              '${recording.classroom.semester} ${recording.classroom.year}',
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -48,13 +46,11 @@ class ArchiveRecordingCard extends StatelessWidget {
                 ),
           ),
           Text(
-            (recording != null && recording!.classroom != null)
-                ? recording!.classroom!.professors
-                    .map(
-                      (professor) => professor.fullNameWithHonorific,
-                    )
-                    .join(', ')
-                : '',
+            recording.classroom.professors
+                .map(
+                  (professor) => professor.fullNameWithHonorific,
+                )
+                .join(', '),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -65,14 +61,5 @@ class ArchiveRecordingCard extends StatelessWidget {
         ],
       ),
     );
-
-    if (recording == null) {
-      return Opacity(
-        opacity: 0,
-        child: IgnorePointer(child: child),
-      );
-    }
-
-    return child;
   }
 }

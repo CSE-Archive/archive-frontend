@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 
 class CourseExpansionTile extends StatelessWidget {
   final int year;
-  final SemesterType semester;
+  final ClassroomSemester semester;
   final List<ProfessorModel> professors;
   final List<ResourceModel>? resources;
   final RecordedClassroomModel? recordings;

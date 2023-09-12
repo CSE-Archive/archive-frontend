@@ -1,72 +1,107 @@
-import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/models/course.dart';
+import 'package:cse_archive/app/models/course_type.dart';
+import 'package:cse_archive/app/models/course_units.dart';
+import 'package:cse_archive/app/services/api.dart';
 import 'package:get/get.dart';
 
 import 'search_text_field.dart';
 
 class CoursesController extends GetxController with StateMixin {
-  static const searchParameter = 'q';
-  static const typeParameter = 'type';
-  static const unitsParameter = 'units';
+  static const searchQueryParameter = 'search';
+  static const typeQueryParameter = 'type';
+  static const unitsQueryParameter = 'units';
+  static const typeQueryOptions = CourseTypeModel.options;
+  static const unitsQueryOptions = CourseUnitsModel.options;
+  static const typeQueryDefault = CourseTypeModel.defaultOption;
+  static const unitsQueryDefault = CourseUnitsModel.defaultOption;
 
-  late List<CourseModel> courses;
+  final searchController = SearchTextFieldController();
+  final selectedType = typeQueryDefault.obs;
+  final selectedUnits = unitsQueryDefault.obs;
 
-  late RxString selectedType;
-  late RxString selectedUnits;
+  int paginationCounter = 1;
 
-  final searchBarController = SearchTextFieldController();
+  final courses = <CourseModel>[].obs;
+  final isThereMore = false.obs;
+  final isLoadingMore = false.obs;
 
-  final typeOptions = {
-    'all': ArchiveStrings.coursesAll,
-    'specialized': CourseType.specialized.toString(),
-    'optional': CourseType.optional.toString(),
-    'basic': CourseType.basic.toString(),
-    'general': CourseType.general.toString(),
-  };
+  void setQueryParameters(Map<String, String> queryParameters) {
+    if (queryParameters.keys.contains(searchQueryParameter)) {
+      searchController.textController.text =
+          queryParameters[searchQueryParameter]!;
+    } else {
+      searchController.textController.clear();
+    }
 
-  final unitsOptions = {
-    'all': ArchiveStrings.coursesAll,
-    '1': UnitsType.one.toString(),
-    '2': UnitsType.two.toString(),
-    '3': UnitsType.three.toString(),
-  };
+    if (queryParameters.keys.contains(typeQueryParameter)) {
+      final queryParameterValue = queryParameters[typeQueryParameter]!;
 
-  @override
-  void onInit() async {
-    super.onInit();
+      selectedType.value = typeQueryOptions.firstWhere(
+        (courseType) => courseType.queryParameterValue == queryParameterValue,
+        orElse: () => typeQueryDefault,
+      );
+    } else {
+      selectedType.value = typeQueryDefault;
+    }
 
-    selectedType = typeOptions.keys.first.obs;
-    selectedUnits = unitsOptions.keys.first.obs;
+    if (queryParameters.keys.contains(unitsQueryParameter)) {
+      final queryParameterValue = queryParameters[unitsQueryParameter]!;
 
-    await fetchData();
-  }
+      selectedUnits.value = unitsQueryOptions.firstWhere(
+        (courseUnits) => courseUnits.queryParameterValue == queryParameterValue,
+        orElse: () => unitsQueryDefault,
+      );
+    } else {
+      selectedUnits.value = unitsQueryDefault;
+    }
 
-  void setParameters(Map<String, String> parameters) {
-    parameters.forEach(
-      (key, value) {
-        switch (key) {
-          case CoursesController.searchParameter:
-            searchBarController.showClearButton(true);
-            searchBarController.textController.text = value;
-            break;
-          case CoursesController.typeParameter:
-            selectedType.value = value;
-            break;
-          case CoursesController.unitsParameter:
-            selectedUnits.value = value;
-            break;
-        }
-      },
-    );
+    fetchData();
   }
 
   Future<void> fetchData() async {
     change(null, status: RxStatus.loading());
 
-    // TODO: Load data
+    final result = await APIService.to.courses(
+      type: selectedType.value,
+      units: selectedUnits.value,
+      search: searchController.textController.text,
+    );
 
-    courses = [];
+    if (result != null) {
+      paginationCounter = 1;
 
-    change(null, status: RxStatus.success());
+      isThereMore.value = result.isThereMore;
+      courses.value = result.courses;
+      courses.refresh();
+
+      change(null, status: RxStatus.success());
+    } else {
+      // TODO: Show error view
+      change(null, status: RxStatus.error());
+    }
+  }
+
+  Future<void> loadMore() async {
+    isLoadingMore.value = true;
+
+    final result = await APIService.to.courses(
+      type: selectedType.value,
+      units: selectedUnits.value,
+      search: searchController.textController.text,
+      offset: kDataLimit * paginationCounter,
+    );
+
+    if (result != null) {
+      paginationCounter++;
+
+      isThereMore.value = result.isThereMore;
+      courses.addAll(result.courses);
+      courses.refresh();
+    } else {
+      // TODO: Show error view
+    }
+
+    isLoadingMore.value = false;
   }
 }

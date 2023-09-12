@@ -1,22 +1,77 @@
+import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/models/resource.dart';
+import 'package:cse_archive/app/models/resource_type.dart';
+import 'package:cse_archive/app/services/api.dart';
 import 'package:get/get.dart';
 
 class ResourcesController extends GetxController with StateMixin {
-  late List<ResourceModel> resources;
+  static const typeQueryParameter = 'type';
+  static const typeQueryOptions = ResourceTypeModel.options;
+  static const typeQueryDefault = ResourceTypeModel.defaultOption;
 
-  @override
-  void onInit() async {
-    super.onInit();
+  final selectedType = typeQueryDefault.obs;
 
-    await fetchData();
+  int paginationCounter = 1;
+
+  final resources = <ResourceModel>[].obs;
+  final isThereMore = false.obs;
+  final isLoadingMore = false.obs;
+
+  void setQueryParameters(Map<String, String> queryParameters) {
+    if (queryParameters.keys.contains(typeQueryParameter)) {
+      final queryParameterValue = queryParameters[typeQueryParameter]!;
+
+      selectedType.value = typeQueryOptions.firstWhere(
+        (resourceType) =>
+            resourceType.queryParameterValue == queryParameterValue,
+        orElse: () => typeQueryDefault,
+      );
+    } else {
+      selectedType.value = typeQueryDefault;
+    }
+
+    fetchData();
   }
 
   Future<void> fetchData() async {
     change(null, status: RxStatus.loading());
 
-    // TODO: Load data
-    resources = [];
+    final result = await APIService.to.resources(
+      type: selectedType.value,
+    );
 
-    change(null, status: RxStatus.success());
+    if (result != null) {
+      paginationCounter = 1;
+
+      isThereMore.value = result.isThereMore;
+      resources.value = result.resources;
+      resources.refresh();
+
+      change(null, status: RxStatus.success());
+    } else {
+      // TODO: Show error view
+      change(null, status: RxStatus.error());
+    }
+  }
+
+  Future<void> loadMore() async {
+    isLoadingMore.value = true;
+
+    final result = await APIService.to.resources(
+      type: selectedType.value,
+      offset: kDataLimit * paginationCounter,
+    );
+
+    if (result != null) {
+      paginationCounter++;
+
+      isThereMore.value = result.isThereMore;
+      resources.addAll(result.resources);
+      resources.refresh();
+    } else {
+      // TODO: Show error view
+    }
+
+    isLoadingMore.value = false;
   }
 }

@@ -1,14 +1,13 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/courses.dart';
-import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:cse_archive/app/routes/routes.dart';
-import 'package:cse_archive/app/themes.dart';
 import 'package:cse_archive/app/utils/course_cards_builder.dart';
 import 'package:cse_archive/app/utils/expansion_tile_radio_button.dart';
 import 'package:cse_archive/app/utils/expansion_tile_search_bar.dart';
 import 'package:cse_archive/app/widgets/dialog.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
+import 'package:cse_archive/app/widgets/load_more_button.dart';
 import 'package:cse_archive/app/widgets/path.dart';
 import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
@@ -17,20 +16,19 @@ import 'package:get/get.dart';
 import 'loading.dart';
 
 class CoursesView extends GetView<CoursesController> {
-  final Map<String, String> parameters;
+  final Map<String, String> queryParameters;
 
   const CoursesView({
     super.key,
-    required this.parameters,
+    required this.queryParameters,
   });
 
   @override
   Widget build(BuildContext context) {
-    controller.setParameters(parameters);
-
     return controller.obx(
       (_) => ArchiveWebPage(
         body: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -53,7 +51,7 @@ class CoursesView extends GetView<CoursesController> {
                     builder: (context) => _getFiltersDialog(
                       context,
                       controller: controller,
-                      parameters: parameters,
+                      queryParameters: queryParameters,
                     ),
                   ),
                   child: Row(
@@ -78,16 +76,29 @@ class CoursesView extends GetView<CoursesController> {
               ],
             ),
             const Gap.vertical(1.5 * kSizeDefault),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: context.maxHeight -
-                    (ArchiveThemes.appbarHeight + 7 * kSizeDefault),
-              ),
-              child: courseCardsBuilder(
-                context: context,
-                courses: controller.courses,
-                infiniteWidth: false,
-              ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Obx(
+                  () => courseCardsBuilder(
+                    context: context,
+                    courses: controller.courses,
+                    infiniteWidth: false,
+                  ),
+                ),
+                Obx(
+                  () => controller.isThereMore.isTrue
+                      ? Padding(
+                          padding:
+                              const EdgeInsets.only(top: 1.5 * kSizeDefault),
+                          child: ArchiveLoadMoreButton(
+                            isLoadingMore: controller.isLoadingMore,
+                            onPressed: controller.loadMore,
+                          ),
+                        )
+                      : Gap.zero,
+                ),
+              ],
             ),
           ],
         ),
@@ -100,36 +111,38 @@ class CoursesView extends GetView<CoursesController> {
 Widget _getFiltersDialog(
   BuildContext context, {
   required CoursesController controller,
-  required Map<String, String> parameters,
+  required Map<String, String> queryParameters,
 }) {
   return ArchiveDialog(
     title: ArchiveStrings.filters,
     children: [
       expansionTileSearchBar(
         context: context,
-        title: ArchiveStrings.coursesTitle,
-        parameter: CoursesController.searchParameter,
-        oldParameters: parameters,
-        searchBarController: controller.searchBarController,
-        onSelectMainRoute: ArchiveRoutes.courses,
+        title: ArchiveStrings.coursesTitleFilter,
+        queryParameters: queryParameters,
+        queryParameter: CoursesController.searchQueryParameter,
+        searchController: controller.searchController,
+        effectiveRoute: ArchiveRoutes.courses,
       ),
       expansionTileRadioButton(
         context: context,
-        title: ArchiveStrings.coursesType,
-        parameter: CoursesController.typeParameter,
-        options: controller.typeOptions,
+        title: ArchiveStrings.coursesTypeFilter,
+        queryParameters: queryParameters,
+        queryParameter: CoursesController.typeQueryParameter,
+        options: CoursesController.typeQueryOptions,
+        defaultOption: CoursesController.typeQueryDefault,
         selectedOption: controller.selectedType,
-        oldParameters: parameters,
-        onSelectMainRoute: ArchiveRoutes.courses,
+        effectiveRoute: ArchiveRoutes.courses,
       ),
       expansionTileRadioButton(
         context: context,
-        title: ArchiveStrings.coursesUnits,
-        parameter: CoursesController.unitsParameter,
-        options: controller.unitsOptions,
+        title: ArchiveStrings.coursesUnitsFilter,
+        queryParameters: queryParameters,
+        queryParameter: CoursesController.unitsQueryParameter,
+        options: CoursesController.unitsQueryOptions,
+        defaultOption: CoursesController.unitsQueryDefault,
         selectedOption: controller.selectedUnits,
-        oldParameters: parameters,
-        onSelectMainRoute: ArchiveRoutes.courses,
+        effectiveRoute: ArchiveRoutes.courses,
       ),
     ],
   );

@@ -19,38 +19,41 @@ Widget referenceCardsBuilder({
         padding: EdgeInsets.symmetric(
           horizontal: context.responsiveHorizontalPadding,
         ),
-        child: Wrap(
-          spacing: kSizeDefault,
-          clipBehavior: Clip.none,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: references
-              .map(
-                (reference) => ArchiveReferenceCard(reference: reference),
-              )
-              .toList(),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: references.indexed.map(
+            (indexedPair) {
+              final (index, reference) = indexedPair;
+
+              return Padding(
+                padding: EdgeInsets.only(
+                  left: index == references.length - 1 ? 0 : kSizeDefault,
+                ),
+                child: ArchiveReferenceCard(reference: reference),
+              );
+            },
+          ).toList(),
         ),
       ),
     );
   }
 
-  return SizedBox(
-    width: double.infinity,
-    child: Wrap(
-      spacing: kSizeDefault,
-      runSpacing: kSizeDefault,
-      clipBehavior: Clip.none,
-      alignment: WrapAlignment.spaceBetween,
-      children: [
-        ...references
-            .map(
-              (reference) => ArchiveReferenceCard(reference: reference),
-            )
-            .toList(),
-        // TODO
-        const ArchiveReferenceCard.invisible(),
-        const ArchiveReferenceCard.invisible(),
-        const ArchiveReferenceCard.invisible(),
-      ],
-    ),
+  return GridView.count(
+    // TODO: Card height is hard coded
+    childAspectRatio: context.responsiveCardWidth / 246,
+    shrinkWrap: true,
+    clipBehavior: Clip.none,
+    mainAxisSpacing: kSizeDefault,
+    crossAxisSpacing: kSizeDefault,
+    crossAxisCount: context.platform.cardsGridViewCrossAxisCount,
+    children: references
+        .map(
+          (reference) => ArchiveReferenceCard(
+            reference: reference,
+            width: context.responsiveCardWidth,
+          ),
+        )
+        .toList(),
   );
 }

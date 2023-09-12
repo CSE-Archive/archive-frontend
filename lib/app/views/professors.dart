@@ -1,13 +1,12 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/professors.dart';
-import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:cse_archive/app/routes/routes.dart';
-import 'package:cse_archive/app/themes.dart';
 import 'package:cse_archive/app/utils/expansion_tile_radio_button.dart';
 import 'package:cse_archive/app/utils/expansion_tile_search_bar.dart';
 import 'package:cse_archive/app/utils/professor_cards_builder.dart';
 import 'package:cse_archive/app/widgets/dialog.dart';
+import 'package:cse_archive/app/widgets/load_more_button.dart';
 import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:cse_archive/app/widgets/path.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
@@ -17,22 +16,19 @@ import 'package:get/get.dart';
 import 'loading.dart';
 
 class ProfessorsView extends GetView<ProfessorsController> {
-  final Map<String, String> parameters;
+  final Map<String, String> queryParameters;
 
   const ProfessorsView({
     super.key,
-    required this.parameters,
+    required this.queryParameters,
   });
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Change
-
-    controller.setParameters(parameters);
-
-    return ArchiveWebPage(
-      body: controller.obx(
-        (_) => Column(
+    return controller.obx(
+      (_) => ArchiveWebPage(
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -55,7 +51,7 @@ class ProfessorsView extends GetView<ProfessorsController> {
                     builder: (context) => _getFiltersDialog(
                       context,
                       controller: controller,
-                      parameters: parameters,
+                      queryParameters: queryParameters,
                     ),
                   ),
                   child: Row(
@@ -80,21 +76,34 @@ class ProfessorsView extends GetView<ProfessorsController> {
               ],
             ),
             const Gap.vertical(1.5 * kSizeDefault),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: context.maxHeight -
-                    (ArchiveThemes.appbarHeight + 7 * kSizeDefault),
-              ),
-              child: professorCardsBuilder(
-                context: context,
-                professors: controller.professors,
-                infiniteWidth: false,
-              ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Obx(
+                  () => professorCardsBuilder(
+                    context: context,
+                    professors: controller.professors,
+                    infiniteWidth: false,
+                  ),
+                ),
+                Obx(
+                  () => controller.isThereMore.isTrue
+                      ? Padding(
+                          padding:
+                              const EdgeInsets.only(top: 1.5 * kSizeDefault),
+                          child: ArchiveLoadMoreButton(
+                            isLoadingMore: controller.isLoadingMore,
+                            onPressed: controller.loadMore,
+                          ),
+                        )
+                      : Gap.zero,
+                ),
+              ],
             ),
           ],
         ),
-        onLoading: const LoadingView(),
       ),
+      onLoading: const LoadingView(),
     );
   }
 }
@@ -102,27 +111,28 @@ class ProfessorsView extends GetView<ProfessorsController> {
 Widget _getFiltersDialog(
   BuildContext context, {
   required ProfessorsController controller,
-  required Map<String, String> parameters,
+  required Map<String, String> queryParameters,
 }) {
   return ArchiveDialog(
     title: ArchiveStrings.filters,
     children: [
       expansionTileSearchBar(
         context: context,
-        title: ArchiveStrings.professorsName,
-        oldParameters: parameters,
-        searchBarController: controller.searchBarController,
-        onSelectMainRoute: ArchiveRoutes.professors,
-        parameter: ProfessorsController.searchParameter,
+        title: ArchiveStrings.professorsNameFilter,
+        queryParameters: queryParameters,
+        queryParameter: ProfessorsController.searchQueryParameter,
+        searchController: controller.searchController,
+        effectiveRoute: ArchiveRoutes.professors,
       ),
       expansionTileRadioButton(
         context: context,
-        title: ArchiveStrings.professorsDepartment,
-        options: controller.departmentOptions,
+        title: ArchiveStrings.professorsDepartmentFilter,
+        queryParameters: queryParameters,
+        queryParameter: ProfessorsController.departmentQueryParameter,
+        options: controller.departmentQueryOptions,
+        defaultOption: ProfessorsController.departmentQueryDefault,
         selectedOption: controller.selectedDepartment,
-        oldParameters: parameters,
-        onSelectMainRoute: ArchiveRoutes.professors,
-        parameter: ProfessorsController.departmentParameter,
+        effectiveRoute: ArchiveRoutes.professors,
       ),
     ],
   );

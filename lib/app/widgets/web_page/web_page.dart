@@ -8,40 +8,62 @@ import 'components/appbar.dart';
 
 class ArchiveWebPage extends StatelessWidget {
   final Widget body;
-  final double bodyPadding;
   final bool applyPlatformConstraints;
+  final bool applyPlatformVerticalPadding;
 
   const ArchiveWebPage({
     super.key,
     required this.body,
-    this.bodyPadding = 3 * kSizeDefault,
     this.applyPlatformConstraints = true,
+    this.applyPlatformVerticalPadding = true,
   });
 
   @override
   Widget build(BuildContext context) {
+    final verticalPadding =
+        context.isMobileOrTablet ? 2 * kSizeDefault : 3 * kSizeDefault;
+
+    const footerHeight = 200;
+
     return Scaffold(
       body: CustomScrollView(
         primary: true,
         slivers: [
           sliverAppbar(context: context),
-          SliverToBoxAdapter(child: Gap.vertical(bodyPadding)),
+          if (applyPlatformVerticalPadding)
+            SliverToBoxAdapter(
+              child: Gap.vertical(verticalPadding),
+            ),
           SliverToBoxAdapter(
             child: Center(
-              child: applyPlatformConstraints
-                  ? Container(
-                      constraints:
-                          BoxConstraints(maxWidth: context.platform.maxWidth),
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.platform.margin,
-                      ),
-                      child: body,
-                    )
-                  : body,
+              child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: context.responsiveVisibleHeight -
+                        (applyPlatformVerticalPadding
+                            ? 2 * verticalPadding
+                            : 0) -
+                        footerHeight,
+                  ),
+                  child: applyPlatformConstraints
+                      ? Container(
+                          constraints: BoxConstraints(
+                            maxWidth: context.platform.maxWidth,
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: context.platform.margin,
+                          ),
+                          child: body,
+                        )
+                      : body),
             ),
           ),
-          SliverToBoxAdapter(child: Gap.vertical(bodyPadding)),
-          SliverToBoxAdapter(child: footer(context: context)),
+          if (applyPlatformVerticalPadding)
+            SliverToBoxAdapter(
+              child: Gap.vertical(verticalPadding),
+            ),
+          SliverToBoxAdapter(
+            child: footer(context: context),
+          ),
         ],
       ),
     );

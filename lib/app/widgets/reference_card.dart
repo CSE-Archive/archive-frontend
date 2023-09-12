@@ -8,23 +8,23 @@ import 'gap.dart';
 import 'card.dart';
 
 class ArchiveReferenceCard extends StatelessWidget {
-  final ReferenceModel? reference;
+  final ReferenceModel reference;
+  final double width;
 
   const ArchiveReferenceCard({
     super.key,
     required this.reference,
+    this.width = kSizeCardWidth,
   });
-
-  const ArchiveReferenceCard.invisible({super.key}) : reference = null;
 
   @override
   Widget build(BuildContext context) {
-    final child = ArchiveCard(
-      width: kSizeCardWidth,
+    return ArchiveCard(
+      width: width,
       color: Theme.of(context).colorScheme.primary,
       padding: const EdgeInsets.all(kSizeDefault),
       onPressed: () =>
-          context.go('${ArchiveRoutes.references}/${reference?.uuid}'),
+          context.go('${ArchiveRoutes.references}/${reference.uuid}'),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -33,7 +33,7 @@ class ArchiveReferenceCard extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: Text(
-              reference?.title ?? '',
+              reference.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodyLarge,
@@ -43,7 +43,7 @@ class ArchiveReferenceCard extends StatelessWidget {
           SizedBox(
             width: double.infinity,
             child: Text(
-              reference?.authors.join(', ') ?? '',
+              reference.writers.join(', '),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -59,16 +59,16 @@ class ArchiveReferenceCard extends StatelessWidget {
             width: double.infinity,
             height: kSizeCardWidth / 2,
             decoration: BoxDecoration(
-              image: (reference != null && reference?.image != null)
+              image: (reference.image != null)
                   ? DecorationImage(
-                      image: AssetImage(reference!.image.toString()),
+                      image: AssetImage(reference.image.toString()),
                       fit: BoxFit.cover,
                     )
                   : null,
               border:
                   Border.all(color: Theme.of(context).colorScheme.secondary),
             ),
-            child: (reference != null && reference?.image != null)
+            child: (reference.image != null)
                 ? null
                 : Placeholder(
                     color: Theme.of(context).colorScheme.secondary,
@@ -77,14 +77,5 @@ class ArchiveReferenceCard extends StatelessWidget {
         ],
       ),
     );
-
-    if (reference == null) {
-      return Opacity(
-        opacity: 0,
-        child: IgnorePointer(child: child),
-      );
-    }
-
-    return child;
   }
 }

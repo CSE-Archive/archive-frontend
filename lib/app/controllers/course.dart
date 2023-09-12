@@ -1,25 +1,25 @@
 import 'package:cse_archive/app/models/course.dart';
+import 'package:cse_archive/app/services/api.dart';
 import 'package:get/get.dart';
 
 class CourseController extends GetxController with StateMixin {
-  final int courseId;
+  final String uuid;
 
-  CourseController({required this.courseId});
+  CourseController({required this.uuid});
 
-  late CourseModel course;
-
-  @override
-  void onInit() async {
-    super.onInit();
-
-    await fetchData();
-  }
+  CourseModel? course;
 
   Future<void> fetchData() async {
     change(null, status: RxStatus.loading());
 
-    // TODO: Load data
+    final result = await APIService.to.course(uuid: uuid);
 
-    change(null, status: RxStatus.success());
+    if (result != null) {
+      course = result;
+
+      change(null, status: RxStatus.success());
+    } else {
+      change(null, status: RxStatus.error());
+    }
   }
 }

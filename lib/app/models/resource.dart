@@ -1,11 +1,12 @@
 import 'classroom.dart';
 import 'link.dart';
+import 'resource_type.dart';
 
 class ResourceModel {
   final String uuid;
-  final String title;
-  final ResourceType type;
+  final ResourceTypeModel type;
   final ClassroomModel? classroom;
+  final String? title;
   final String? notes;
   final DateTime? createdTime;
   final DateTime? modifiedTime;
@@ -13,61 +14,39 @@ class ResourceModel {
 
   ResourceModel({
     required this.uuid,
-    required this.title,
     required this.type,
-    this.classroom,
+    required this.classroom,
+    this.title,
     this.notes,
     this.createdTime,
     this.modifiedTime,
     this.links = const [],
   });
 
-  factory ResourceModel.fromJson(dynamic json) {
+  static ResourceModel? fromJson(dynamic json) {
+    if (json == null) return null;
+
     final createdTime = json['created_time'];
     final modifiedTime = json['modified_time'];
+    final type = ResourceTypeModel.fromJson(json['type']);
 
     return ResourceModel(
       uuid: json['uuid'],
       title: json['title'],
-      type: ResourceType.decode(json['type']),
+      type: type,
       classroom: ClassroomModel.fromJson(json['classroom']),
       notes: json['notes'],
-      createdTime: createdTime != null ? DateTime.parse(createdTime) : null,
-      modifiedTime: modifiedTime != null ? DateTime.parse(modifiedTime) : null,
-      links: LinkModel.listFromJson(json['links'] ?? []),
+      createdTime: createdTime == null ? null : DateTime.parse(createdTime),
+      modifiedTime: modifiedTime == null ? null : DateTime.parse(modifiedTime),
+      links: LinkModel.listFromJson(json['links']),
     );
   }
 
-  static List<ResourceModel> listFromJson(List resources) {
+  static List<ResourceModel> listFromJson(List? resources) {
+    if (resources == null) return [];
+
     return resources
-        .map((resource) => ResourceModel.fromJson(resource))
+        .map((resource) => ResourceModel.fromJson(resource)!)
         .toList();
   }
-}
-
-enum ResourceType {
-  midtermExam,
-  finalExam,
-  project,
-  homework,
-  quiz,
-  other;
-
-  static ResourceType decode(int rawType) => switch (rawType) {
-        1 => midtermExam,
-        2 => finalExam,
-        3 => project,
-        4 => homework,
-        5 => quiz,
-        _ => other, // https://github.com/dart-lang/language/issues/3083
-      };
-
-  int encode() => switch (this) {
-        midtermExam => 1,
-        finalExam => 2,
-        project => 3,
-        homework => 4,
-        quiz => 5,
-        other => 6,
-      };
 }

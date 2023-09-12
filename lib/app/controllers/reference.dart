@@ -1,25 +1,25 @@
 import 'package:cse_archive/app/models/reference.dart';
+import 'package:cse_archive/app/services/api.dart';
 import 'package:get/get.dart';
 
 class ReferenceController extends GetxController with StateMixin {
-  final int referenceId;
+  final String uuid;
 
-  ReferenceController({required this.referenceId});
+  ReferenceController({required this.uuid});
 
-  late ReferenceModel reference;
-
-  @override
-  void onInit() async {
-    super.onInit();
-
-    await fetchData();
-  }
+  ReferenceModel? reference;
 
   Future<void> fetchData() async {
     change(null, status: RxStatus.loading());
 
-    // TODO: Load data
+    final result = await APIService.to.reference(uuid: uuid);
 
-    change(null, status: RxStatus.success());
+    if (result != null) {
+      reference = result;
+
+      change(null, status: RxStatus.success());
+    } else {
+      change(null, status: RxStatus.error());
+    }
   }
 }

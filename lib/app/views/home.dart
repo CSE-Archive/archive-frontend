@@ -11,11 +11,9 @@ import 'package:cse_archive/app/widgets/header.dart';
 import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 
 import 'loading.dart';
 
-// TODO: Add recordings cards
 class HomeView extends GetView<HomeController> {
   const HomeView({super.key});
 
@@ -25,7 +23,7 @@ class HomeView extends GetView<HomeController> {
       (_) => ArchiveWebPage(
         applyPlatformConstraints: false,
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
@@ -36,7 +34,7 @@ class HomeView extends GetView<HomeController> {
                 title: context.isMobile
                     ? ArchiveStrings.homeLatestResourcesMobile
                     : ArchiveStrings.homeLatestResources,
-                seeAllOnPressed: () => context.go(ArchiveRoutes.resources),
+                seeAllUri: Uri(path: ArchiveRoutes.resources),
               ),
             ),
             resourceCardsBuilder(
@@ -53,7 +51,7 @@ class HomeView extends GetView<HomeController> {
                 title: context.isMobile
                     ? ArchiveStrings.homeLatestRecordingsMobile
                     : ArchiveStrings.homeLatestRecordings,
-                seeAllOnPressed: () => context.go(ArchiveRoutes.recordings),
+                seeAllUri: Uri(path: ArchiveRoutes.recordings),
               ),
             ),
             recordingCardsBuilder(
@@ -70,7 +68,7 @@ class HomeView extends GetView<HomeController> {
                 title: context.isMobile
                     ? ArchiveStrings.homeLatestReferencesMobile
                     : ArchiveStrings.homeLatestReferences,
-                seeAllOnPressed: () => context.go(ArchiveRoutes.references),
+                seeAllUri: Uri(path: ArchiveRoutes.recordings),
               ),
             ),
             referenceCardsBuilder(

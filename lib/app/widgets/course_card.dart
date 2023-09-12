@@ -1,5 +1,6 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/controllers/courses.dart';
 import 'package:cse_archive/app/models/chart_node.dart';
 import 'package:cse_archive/app/models/course.dart';
 import 'package:cse_archive/app/routes/routes.dart';
@@ -13,11 +14,13 @@ import 'card.dart';
 class ArchiveCourseCard extends StatelessWidget {
   final CourseModel? course;
   final ChartNodeModel? chartNode;
+  final double width;
 
   const ArchiveCourseCard({
     super.key,
     this.course,
     this.chartNode,
+    this.width = kSizeCardWidth,
   })  : assert(
           course != null || chartNode != null,
           'One of course or chartNode must not be null',
@@ -27,27 +30,34 @@ class ArchiveCourseCard extends StatelessWidget {
           'One of course or chartNode must be null',
         );
 
-  const ArchiveCourseCard.invisible({super.key})
-      : course = null,
-        chartNode = null;
-
   @override
   Widget build(BuildContext context) {
     final effectiveCourse = course ?? chartNode?.course;
 
     final child = ArchiveCard(
-      width: kSizeCardWidth,
+      width: width,
       color: Theme.of(context).colorScheme.primary,
       padding: const EdgeInsets.all(kSizeDefault),
-      onPressed: () =>
-          context.go('${ArchiveRoutes.courses}/${effectiveCourse?.uuid}'),
+      onPressed: () => context.go(
+        chartNode != null && effectiveCourse == null
+            ? Uri(
+                path: ArchiveRoutes.courses,
+                queryParameters: {
+                  CoursesController.typeQueryParameter:
+                      chartNode!.courseType!.queryParameterValue,
+                },
+              ).toString()
+            : '${ArchiveRoutes.courses}/${effectiveCourse!.uuid}',
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            effectiveCourse?.title ?? '',
+            chartNode != null && effectiveCourse == null
+                ? chartNode!.courseType!.representation
+                : effectiveCourse!.title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyLarge,
@@ -55,7 +65,7 @@ class ArchiveCourseCard extends StatelessWidget {
           const Gap.vertical(kSizeDefault),
           Text(
             enToFaDigits(
-              '${effectiveCourse?.units} ${ArchiveStrings.courseUnit}',
+              '${chartNode != null && effectiveCourse == null ? chartNode!.courseUnits!.representation : effectiveCourse!.units.representation} ${ArchiveStrings.courseUnit}',
             ),
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color:
@@ -63,7 +73,7 @@ class ArchiveCourseCard extends StatelessWidget {
                 ),
           ),
           Text(
-            (effectiveCourse?.type ?? CourseType.basic).toString(),
+            effectiveCourse?.type.representation ?? '',
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   color:
                       Theme.of(context).colorScheme.secondary.withOpacity(0.8),
@@ -72,13 +82,6 @@ class ArchiveCourseCard extends StatelessWidget {
         ],
       ),
     );
-
-    if (effectiveCourse == null) {
-      return Opacity(
-        opacity: 0,
-        child: IgnorePointer(child: child),
-      );
-    }
 
     if (chartNode != null) {
       return Tooltip(
@@ -92,8 +95,6 @@ class ArchiveCourseCard extends StatelessWidget {
 }
 
 String _getTooltip(ChartNodeModel chartNode) {
-  // TODO: Handle open new tab
-
   if (chartNode.course == null) return ArchiveStrings.chartSeeCourses;
 
   final coRequisites = chartNode.course!.coRequisites;

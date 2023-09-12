@@ -75,14 +75,16 @@ class ChartView extends GetView<ChartController> {
               ),
             ),
             const Gap.vertical(1.5 * kSizeDefault),
-            ...controller.listOfChartNodes.asMap().entries.map(
-              (entry) {
-                final index = entry.key;
-                final chartNodes = entry.value;
+            ...controller.listOfChartNodes.indexed.map(
+              (indexedPair) {
+                final (index, chartNodes) = indexedPair;
 
                 final semesterUnitsSum = chartNodes.fold<int>(
                   0,
-                  (a, b) => a + (b.course?.units.encode() ?? b.courseUnits!),
+                  (sum, chartNode) =>
+                      sum +
+                      (chartNode.course?.units.toJson() ??
+                          chartNode.courseUnits!.toJson()!),
                 );
 
                 return Column(
@@ -103,11 +105,10 @@ class ChartView extends GetView<ChartController> {
                     courseCardsBuilder(
                       context: context,
                       chartNodes: chartNodes,
-                      showTooltip: true,
                       infiniteWidth: true,
                     ),
                     if (index != (controller.listOfChartNodes.length - 1))
-                      const Gap.vertical(2 * kSizeDefault),
+                      const Gap.vertical(kSizeDefault),
                   ],
                 );
               },

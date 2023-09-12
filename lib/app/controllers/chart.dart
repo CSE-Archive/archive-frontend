@@ -1,12 +1,11 @@
 import 'package:cse_archive/app/models/chart_node.dart';
-import 'package:cse_archive/app/models/course.dart';
+import 'package:cse_archive/app/services/api.dart';
 import 'package:get/get.dart';
 
 class ChartController extends GetxController with StateMixin {
-  static const semestersNO = 8;
+  static const _semestersNO = 8;
 
-  late List<List<ChartNodeModel>> listOfChartNodes;
-  late Map<CourseType, List<CourseModel>> extra;
+  late List<List<ChartNodeModel>> listOfChartNodes = [];
 
   @override
   void onInit() async {
@@ -18,18 +17,20 @@ class ChartController extends GetxController with StateMixin {
   Future<void> fetchData() async {
     change(null, status: RxStatus.loading());
 
-    // TODO: Load data
+    final result = await APIService.to.chart();
 
-    final result = <ChartNodeModel>[];
-    listOfChartNodes = [];
+    if (result != null) {
+      for (int semester = 1; semester <= _semestersNO; semester++) {
+        listOfChartNodes.add(
+          result.where((chartNode) => chartNode.semester == semester).toList()
+            ..sort((a, b) => a.column.compareTo(b.column)),
+        );
+      }
 
-    for (int semester = 1; semester <= semestersNO; semester++) {
-      listOfChartNodes.add(
-        result.where((chartNode) => chartNode.semester == semester).toList()
-          ..sort((a, b) => a.order.compareTo(b.order)),
-      );
+      change(null, status: RxStatus.success());
+    } else {
+      // TODO: Show error view
+      change(null, status: RxStatus.error());
     }
-
-    change(null, status: RxStatus.success());
   }
 }

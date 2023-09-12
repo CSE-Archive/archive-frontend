@@ -10,7 +10,6 @@ Widget courseCardsBuilder({
   required bool infiniteWidth,
   List<CourseModel>? courses,
   List<ChartNodeModel>? chartNodes,
-  bool showTooltip = false,
 }) {
   assert(
     courses != null || chartNodes != null,
@@ -31,53 +30,63 @@ Widget courseCardsBuilder({
         padding: EdgeInsets.symmetric(
           horizontal: context.responsiveHorizontalPadding,
         ),
-        child: Wrap(
-          spacing: kSizeDefault,
-          clipBehavior: Clip.none,
-          crossAxisAlignment: WrapCrossAlignment.center,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: courses != null
-              ? courses
-                  .map(
-                    (course) => ArchiveCourseCard(course: course),
-                  )
-                  .toList()
-              : chartNodes!
-                  .map(
-                    (chartNode) => ArchiveCourseCard(chartNode: chartNode),
-                  )
-                  .toList(),
+              ? courses.indexed.map(
+                  (indexedPair) {
+                    final (index, course) = indexedPair;
+
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        left: index == courses.length - 1 ? 0 : kSizeDefault,
+                      ),
+                      child: ArchiveCourseCard(course: course),
+                    );
+                  },
+                ).toList()
+              : chartNodes!.indexed.map(
+                  (indexedPair) {
+                    final (index, chartNode) = indexedPair;
+
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        left: index == chartNodes.length - 1 ? 0 : kSizeDefault,
+                      ),
+                      child: ArchiveCourseCard(chartNode: chartNode),
+                    );
+                  },
+                ).toList(),
         ),
       ),
     );
   }
 
-  return SizedBox(
-    width: double.infinity,
-    child: Wrap(
-      spacing: kSizeDefault,
-      runSpacing: kSizeDefault,
-      clipBehavior: Clip.none,
-      alignment: WrapAlignment.spaceBetween,
-      children: [
-        ...(courses != null
-            ? courses
-                .map(
-                  (course) => ArchiveCourseCard(course: course),
-                )
-                .toList()
-            : chartNodes!
-                .map(
-                  (chartNode) => ArchiveCourseCard(chartNode: chartNode),
-                )
-                .toList()),
-
-        /// TODO: Wrap force children to be as far as possible
-        /// because of spaceBetween, change it later for all builders.
-        /// This is a hacky solution:
-        const ArchiveCourseCard.invisible(),
-        const ArchiveCourseCard.invisible(),
-        const ArchiveCourseCard.invisible(),
-      ],
-    ),
+  return GridView.count(
+    // TODO: Card height is hard coded
+    childAspectRatio: context.responsiveCardWidth / 102,
+    shrinkWrap: true,
+    clipBehavior: Clip.none,
+    mainAxisSpacing: kSizeDefault,
+    crossAxisSpacing: kSizeDefault,
+    crossAxisCount: context.platform.cardsGridViewCrossAxisCount,
+    children: courses != null
+        ? courses
+            .map(
+              (course) => ArchiveCourseCard(
+                course: course,
+                width: context.responsiveCardWidth,
+              ),
+            )
+            .toList()
+        : chartNodes!
+            .map(
+              (chartNode) => ArchiveCourseCard(
+                chartNode: chartNode,
+                width: context.responsiveCardWidth,
+              ),
+            )
+            .toList(),
   );
 }

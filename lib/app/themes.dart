@@ -167,7 +167,7 @@ ThemeData _basicThemeData({
       prefixIconColor: secondaryColor,
       suffixIconColor: secondaryColor,
       contentPadding: const EdgeInsets.symmetric(
-        vertical: kSizeDefault / 1.3,
+        vertical: 2 / 3 * kSizeDefault,
         horizontal: kSizeDefault,
       ),
     ),

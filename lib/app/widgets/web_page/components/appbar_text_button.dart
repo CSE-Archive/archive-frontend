@@ -3,7 +3,7 @@ import 'package:cse_archive/app/services/pages_tracker.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
+import 'package:url_launcher/link.dart';
 
 class AppbarTextButton extends StatelessWidget {
   final String label;
@@ -33,31 +33,35 @@ class AppbarTextButton extends StatelessWidget {
           fontWeight: FontWeight.w500,
         );
 
-    return GestureDetector(
-      onTap: () => context.go(route),
-      child: MouseRegion(
-        cursor: SystemMouseCursors.click,
-        onEnter: (_) => hovered(true),
-        onExit: (_) => hovered(false),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              label,
-              style: textStyle,
-            ),
-            Obx(
-              () => hovered.value || (PageTrackerService.to.activePage == page)
-                  ? Container(
-                      height: 1.5,
-                      margin: const EdgeInsets.only(top: kSizeDefault / 4),
-                      width: _textSize(label, textStyle).width -
-                          (kSizeDefault / 2),
-                      color: textStyle.color,
-                    )
-                  : Gap.zero,
-            ),
-          ],
+    return Link(
+      uri: Uri(path: route),
+      builder: (_, followLink) => GestureDetector(
+        onTap: followLink,
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          onEnter: (_) => hovered(true),
+          onExit: (_) => hovered(false),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                label,
+                style: textStyle,
+              ),
+              Obx(
+                () => hovered.value ||
+                        (PageTrackerService.to.activePage == page)
+                    ? Container(
+                        height: 1.5,
+                        margin: const EdgeInsets.only(top: kSizeDefault / 4),
+                        width: _textSize(label, textStyle).width -
+                            (kSizeDefault / 2),
+                        color: textStyle.color,
+                      )
+                    : Gap.zero,
+              ),
+            ],
+          ),
         ),
       ),
     );

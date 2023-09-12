@@ -1,6 +1,10 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/controllers/courses.dart';
+import 'package:cse_archive/app/controllers/professors.dart';
+import 'package:cse_archive/app/controllers/references.dart';
 import 'package:cse_archive/app/controllers/search.dart';
+import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/not_found_svg.dart';
 import 'package:cse_archive/app/utils/course_cards_builder.dart';
@@ -11,104 +15,118 @@ import 'package:cse_archive/app/widgets/header.dart';
 import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 
 import 'loading.dart';
 
-class SearchView extends StatelessWidget {
+class SearchView extends GetView<SearchViewController> {
   const SearchView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    //TODO: Add recordings
-
-    //TODO: Change
-    final query = Get.parameters[SearchViewController.searchParameter] ?? '';
-
-    final controller = Get.put(SearchViewController(query));
-    controller.setParameters({SearchViewController.searchParameter: query});
-
-    return ArchiveWebPage(
-      body: controller.obx(
-        (_) => (controller.courses.isEmpty &&
+    return controller.obx(
+      (_) => ArchiveWebPage(
+        applyPlatformConstraints: false,
+        body: (controller.courses.isEmpty &&
                 controller.references.isEmpty &&
                 controller.professors.isEmpty)
-            ? Column(
+            ? // TODO: Empty widget
+            Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
                   notFoundSVG(context),
                   Text(
                     ArchiveStrings.notFound,
-                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                          // TODO: titleLarge
+                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                   ),
                 ],
               )
             : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Gap.vertical(1.5 * kSizeDefault),
                   if (controller.courses.isNotEmpty) ...[
-                    ArchiveHeader(
-                      title: ArchiveStrings.courses,
-                      seeAllOnPressed: () => context.go(
-                        Uri(
+                    Container(
+                      constraints:
+                          BoxConstraints(maxWidth: context.platform.maxWidth),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.platform.margin,
+                      ),
+                      child: ArchiveHeader(
+                        title: ArchiveStrings.courses,
+                        seeAllUri: Uri(
                           path: ArchiveRoutes.courses,
                           queryParameters: {
-                            SearchViewController.searchParameter: query,
+                            CoursesController.searchQueryParameter:
+                                controller.searchController.text,
                           },
-                        ).toString(),
+                        ),
                       ),
                     ),
                     courseCardsBuilder(
                       context: context,
                       courses: controller.courses,
-                      infiniteWidth: false,
+                      infiniteWidth: true,
                     ),
-                    const Gap.vertical(2 * kSizeDefault),
+                    if (controller.references.isNotEmpty ||
+                        controller.professors.isNotEmpty)
+                      const Gap.vertical(2 * kSizeDefault),
                   ],
                   if (controller.references.isNotEmpty) ...[
-                    ArchiveHeader(
-                      title: ArchiveStrings.references,
-                      seeAllOnPressed: () => context.go(
-                        Uri(
+                    Container(
+                      constraints:
+                          BoxConstraints(maxWidth: context.platform.maxWidth),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.platform.margin,
+                      ),
+                      child: ArchiveHeader(
+                        title: ArchiveStrings.references,
+                        seeAllUri: Uri(
                           path: ArchiveRoutes.references,
                           queryParameters: {
-                            SearchViewController.searchParameter: query,
+                            ReferencesController.searchQueryParameter:
+                                controller.searchController.text,
                           },
-                        ).toString(),
+                        ),
                       ),
                     ),
                     referenceCardsBuilder(
                       context: context,
                       references: controller.references,
-                      infiniteWidth: false,
+                      infiniteWidth: true,
                     ),
-                    const Gap.vertical(2 * kSizeDefault),
+                    if (controller.professors.isNotEmpty)
+                      const Gap.vertical(2 * kSizeDefault),
                   ],
                   if (controller.professors.isNotEmpty) ...[
-                    ArchiveHeader(
-                      title: ArchiveStrings.professors,
-                      seeAllOnPressed: () => context.go(
-                        Uri(
+                    Container(
+                      constraints:
+                          BoxConstraints(maxWidth: context.platform.maxWidth),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.platform.margin,
+                      ),
+                      child: ArchiveHeader(
+                        title: ArchiveStrings.professors,
+                        seeAllUri: Uri(
                           path: ArchiveRoutes.professors,
                           queryParameters: {
-                            SearchViewController.searchParameter: query,
+                            ProfessorsController.searchQueryParameter:
+                                controller.searchController.text,
                           },
-                        ).toString(),
+                        ),
                       ),
                     ),
                     professorCardsBuilder(
                       context: context,
                       professors: controller.professors,
-                      infiniteWidth: false,
+                      infiniteWidth: true,
                     ),
                   ],
                 ],
               ),
-        onLoading: const LoadingView(),
       ),
+      onLoading: const LoadingView(),
     );
   }
 }

@@ -1,34 +1,50 @@
 import 'course.dart';
+import 'course_type.dart';
+import 'course_units.dart';
 
 class ChartNodeModel {
   final int semester;
-  final int order;
+  final int column;
   final CourseModel? course;
-  final CourseType? courseType;
-  final int? courseUnits;
+  final CourseTypeModel? courseType;
+  final CourseUnitsModel? courseUnits;
 
   ChartNodeModel({
     required this.semester,
-    required this.order,
+    required this.column,
     required this.course,
     required this.courseType,
     required this.courseUnits,
   });
 
-  factory ChartNodeModel.fromJson(dynamic json) {
+  static ChartNodeModel? fromJson(dynamic json) {
+    if (json == null) return null;
+
+    final courseType = json['type'];
+    final courseUnits = json['units'];
+
     return ChartNodeModel(
       semester: json['semester'],
-      order: json['column'],
-      course:
-          json['course'] == null ? null : CourseModel.fromJson(json['course']),
-      courseType: json['type'] == null ? null : CourseType.decode(json['type']),
-      courseUnits: json['unit'],
+      column: json['column'],
+      course: CourseModel.fromJson(json['course']),
+      courseType: courseType == null
+          ? null
+          : CourseTypeModel.fromJson(
+              courseType,
+            ),
+      courseUnits: courseUnits == null
+          ? null
+          : CourseUnitsModel.fromJson(
+              courseUnits,
+            ),
     );
   }
 
-  static List<ChartNodeModel> listFromJson(List chartNodes) {
+  static List<ChartNodeModel> listFromJson(List? chartNodes) {
+    if (chartNodes == null) return [];
+
     return chartNodes
-        .map((chartNode) => ChartNodeModel.fromJson(chartNode))
+        .map((chartNode) => ChartNodeModel.fromJson(chartNode)!)
         .toList();
   }
 }

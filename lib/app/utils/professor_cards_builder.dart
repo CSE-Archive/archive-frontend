@@ -19,38 +19,41 @@ Widget professorCardsBuilder({
         padding: EdgeInsets.symmetric(
           horizontal: context.responsiveHorizontalPadding,
         ),
-        child: Wrap(
-          spacing: kSizeDefault,
-          clipBehavior: Clip.none,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: professors
-              .map(
-                (professor) => ArchiveProfessorCard(professor: professor),
-              )
-              .toList(),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: professors.indexed.map(
+            (indexedPair) {
+              final (index, professor) = indexedPair;
+
+              return Padding(
+                padding: EdgeInsets.only(
+                  left: index == professors.length - 1 ? 0 : kSizeDefault,
+                ),
+                child: ArchiveProfessorCard(professor: professor),
+              );
+            },
+          ).toList(),
         ),
       ),
     );
   }
 
-  return SizedBox(
-    width: double.infinity,
-    child: Wrap(
-      spacing: kSizeDefault,
-      runSpacing: kSizeDefault,
-      clipBehavior: Clip.none,
-      alignment: WrapAlignment.spaceBetween,
-      children: [
-        ...professors
-            .map(
-              (professor) => ArchiveProfessorCard(professor: professor),
-            )
-            .toList(),
-        // TODO
-        const ArchiveProfessorCard.invisible(),
-        const ArchiveProfessorCard.invisible(),
-        const ArchiveProfessorCard.invisible(),
-      ],
-    ),
+  return GridView.count(
+    // TODO: Card height is hard coded
+    childAspectRatio: context.responsiveCardWidth / 246,
+    shrinkWrap: true,
+    clipBehavior: Clip.none,
+    mainAxisSpacing: kSizeDefault,
+    crossAxisSpacing: kSizeDefault,
+    crossAxisCount: context.platform.cardsGridViewCrossAxisCount,
+    children: professors
+        .map(
+          (professor) => ArchiveProfessorCard(
+            professor: professor,
+            width: context.responsiveCardWidth,
+          ),
+        )
+        .toList(),
   );
 }

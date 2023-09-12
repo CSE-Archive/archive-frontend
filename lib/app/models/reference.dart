@@ -1,14 +1,16 @@
 import 'course.dart';
 import 'link.dart';
+import 'reference_type.dart';
 
 class ReferenceModel {
   final String uuid;
   final String title;
+  final ReferenceTypeModel type;
   final Uri? image;
   final String? notes;
   final DateTime? createdTime;
   final DateTime? modifiedTime;
-  final List<String> authors;
+  final List<String> writers;
   final List<LinkModel> links;
   final List<CourseModel> courses;
   final List<ReferenceModel> relatedReferences;
@@ -16,39 +18,47 @@ class ReferenceModel {
   ReferenceModel({
     required this.uuid,
     required this.title,
+    required this.type,
     this.image,
     this.notes,
     this.createdTime,
     this.modifiedTime,
-    this.authors = const [],
+    this.writers = const [],
     this.links = const [],
     this.courses = const [],
     this.relatedReferences = const [],
   });
 
-  factory ReferenceModel.fromJson(dynamic json) {
+  static ReferenceModel? fromJson(dynamic json) {
+    if (json == null) return null;
+
     final image = json['cover_image'];
     final createdTime = json['created_time'];
     final modifiedTime = json['modified_time'];
+    final type = ReferenceTypeModel.fromJson(json['type']);
+    final courses = CourseModel.listFromJson(json['courses']);
 
     return ReferenceModel(
       uuid: json['uuid'],
-      title: json['title'],
-      image: image != null ? Uri.parse(image) : null,
+      title: json['title'] ?? '${type.concatenation} ${courses.first.title}',
+      type: type,
+      image: image == null ? null : Uri.parse(image),
       notes: json['notes'],
-      createdTime: createdTime != null ? DateTime.parse(createdTime) : null,
-      modifiedTime: modifiedTime != null ? DateTime.parse(modifiedTime) : null,
-      authors: (json['authors'] as List).map((e) => e.toString()).toList(),
-      links: LinkModel.listFromJson(json['links'] ?? []),
-      courses: CourseModel.listFromJson(json['courses'] ?? []),
+      createdTime: createdTime == null ? null : DateTime.parse(createdTime),
+      modifiedTime: modifiedTime == null ? null : DateTime.parse(modifiedTime),
+      writers: List<String>.from(json['writers']),
+      links: LinkModel.listFromJson(json['links']),
+      courses: courses,
       relatedReferences:
-          ReferenceModel.listFromJson(json['related_references'] ?? []),
+          ReferenceModel.listFromJson(json['related_references']),
     );
   }
 
-  static List<ReferenceModel> listFromJson(List references) {
+  static List<ReferenceModel> listFromJson(List? references) {
+    if (references == null) return [];
+
     return references
-        .map((reference) => ReferenceModel.fromJson(reference))
+        .map((reference) => ReferenceModel.fromJson(reference)!)
         .toList();
   }
 }

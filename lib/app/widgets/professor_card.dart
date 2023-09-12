@@ -9,37 +9,37 @@ import 'gap.dart';
 import 'card.dart';
 
 class ArchiveProfessorCard extends StatelessWidget {
-  final ProfessorModel? professor;
+  final ProfessorModel professor;
+  final double width;
 
   const ArchiveProfessorCard({
     super.key,
     required this.professor,
+    this.width = kSizeCardWidth,
   });
-
-  const ArchiveProfessorCard.invisible({super.key}) : professor = null;
 
   @override
   Widget build(BuildContext context) {
-    final child = ArchiveCard(
-      width: kSizeCardWidth,
+    return ArchiveCard(
+      width: width,
       color: Theme.of(context).colorScheme.primary,
       padding: const EdgeInsets.all(kSizeDefault),
       onPressed: () =>
-          context.go('${ArchiveRoutes.professors}/${professor?.uuid}'),
+          context.go('${ArchiveRoutes.professors}/${professor.uuid}'),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${professor?.honorific} ${professor?.fullName}',
+            professor.fullNameWithHonorific,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const Gap.vertical(kSizeDefault / 2),
           Text(
-            '${ArchiveStrings.professorDepartment} ${professor?.department}',
+            '${ArchiveStrings.professorDepartment} ${professor.department.representation}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -52,16 +52,16 @@ class ArchiveProfessorCard extends StatelessWidget {
             width: double.infinity,
             height: kSizeCardWidth / 2,
             decoration: BoxDecoration(
-              image: (professor != null && professor?.image != null)
+              image: (professor.image != null)
                   ? DecorationImage(
-                      image: AssetImage(professor!.image.toString()),
+                      image: AssetImage(professor.image.toString()),
                       fit: BoxFit.cover,
                     )
                   : null,
               border:
                   Border.all(color: Theme.of(context).colorScheme.secondary),
             ),
-            child: (professor != null && professor?.image != null)
+            child: (professor.image != null)
                 ? null
                 : Placeholder(
                     color: Theme.of(context).colorScheme.secondary,
@@ -70,14 +70,5 @@ class ArchiveProfessorCard extends StatelessWidget {
         ],
       ),
     );
-
-    if (professor == null) {
-      return Opacity(
-        opacity: 0,
-        child: IgnorePointer(child: child),
-      );
-    }
-
-    return child;
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/search_text_field.dart';
@@ -7,11 +5,9 @@ import 'package:cse_archive/app/widgets/icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-
-// TODO: Change
 Widget searchBar({
   required BuildContext context,
-  required SearchTextFieldController searchBarController,
+  required SearchTextFieldController searchController,
   required Color primaryColor,
   required Color secondaryColor,
   String? hintText,
@@ -24,45 +20,30 @@ Widget searchBar({
   return Obx(
     () => TextField(
       maxLines: 1,
-      onChanged: (text) => searchBarController.showClearButton(text.isNotEmpty),
-      controller: searchBarController.textController,
+      controller: searchController.textController,
       textInputAction: TextInputAction.search,
       onSubmitted: onSubmitted,
       decoration: InputDecoration(
         hintText: hintText ?? ArchiveStrings.search,
-        prefixIconConstraints: const BoxConstraints(
-          minHeight: kSizeDefault,
-          maxHeight: kSizeDefault,
+        suffixIconConstraints: const BoxConstraints(
+          maxWidth: 2 * kSizeDefault,
+          maxHeight: 2 * kSizeDefault,
         ),
-        prefixIcon: Padding(
-          padding: const EdgeInsets.only(
-            right: kSizeDefault,
-            left: kSizeDefault / 2,
-          ),
-          child: Transform(
-            alignment: Alignment.center,
-            transform: Matrix4.rotationY(math.pi),
-            child: const Icon(
-              Icons.search,
-              size: kSizeDefault,
-            ),
-          ),
-        ),
-        suffixIcon: searchBarController.showClearButton.isTrue
-            ? Container(
+        suffixIcon: searchController.isEmpty.isTrue
+            ? null
+            : Container(
                 color: primaryColor,
+                padding: const EdgeInsets.all(kSizeDefault / 2),
                 child: ArchiveIconButton(
                   icon: Icons.clear,
                   color: secondaryColor,
                   size: kSizeDefault,
                   onPressed: () {
-                    searchBarController.textController.clear();
-                    searchBarController.showClearButton(false);
+                    searchController.textController.clear();
                     if (onClear != null) onClear();
                   },
                 ),
-              )
-            : null,
+              ),
       ),
     ),
   );

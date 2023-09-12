@@ -23,11 +23,12 @@ class ArchiveLabel extends StatelessWidget {
           borderRadius: BorderRadius.circular(kSizeDefault / 2),
         ),
         child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.titleSmall,
-              // TODO: titleSmall
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
             const Gap.horizontal(kSizeDefault / 2),
             Container(
@@ -43,8 +44,7 @@ class ArchiveLabel extends StatelessWidget {
               ),
               child: Text(
                 value,
-                style: Theme.of(context).textTheme.titleSmall!.copyWith(
-                      // TODO: titleSmall
+                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       color: Theme.of(context).colorScheme.primary,
                     ),
               ),

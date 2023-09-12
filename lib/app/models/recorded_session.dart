@@ -9,16 +9,20 @@ class RecordedSessionModel {
     this.links = const [],
   });
 
-  factory RecordedSessionModel.fromJson(dynamic json) {
+  static RecordedSessionModel? fromJson(dynamic json) {
+    if (json == null) return null;
+
     return RecordedSessionModel(
       title: json['title'],
-      links: LinkModel.listFromJson(json['links'] ?? []),
+      links: LinkModel.listFromJson(json['links']),
     );
   }
 
-  static List<RecordedSessionModel> listFromJson(List sessions) {
+  static List<RecordedSessionModel> listFromJson(List? sessions) {
+    if (sessions == null) return [];
+
     return sessions
-        .map((session) => RecordedSessionModel.fromJson(session))
+        .map((session) => RecordedSessionModel.fromJson(session)!)
         .toList();
   }
 }

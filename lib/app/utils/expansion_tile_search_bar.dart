@@ -1,16 +1,16 @@
+import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/search_text_field.dart';
 import 'package:cse_archive/app/utils/search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-// TODO: Change
 Widget expansionTileSearchBar({
   required BuildContext context,
   required String title,
-  required Map<String, String> oldParameters,
-  required String parameter,
-  required String onSelectMainRoute,
-  required SearchTextFieldController searchBarController,
+  required SearchTextFieldController searchController,
+  required Map<String, String> queryParameters,
+  required String queryParameter,
+  required String effectiveRoute,
 }) {
   return ExpansionTile(
     title: Text(
@@ -23,30 +23,35 @@ Widget expansionTileSearchBar({
     children: [
       searchBar(
         context: context,
-        hintText: '',
-        searchBarController: searchBarController,
+        hintText: ArchiveStrings.search,
+        searchController: searchController,
         primaryColor: Theme.of(context).colorScheme.primary,
         secondaryColor: Theme.of(context).colorScheme.secondary,
         onClear: () {
-          oldParameters.remove(parameter);
+          queryParameters.remove(queryParameter);
+
           context.go(
             Uri(
-              path: onSelectMainRoute,
-              queryParameters: oldParameters.isNotEmpty ? oldParameters : null,
+              path: effectiveRoute,
+              queryParameters: queryParameters,
             ).toString(),
           );
         },
         onSubmitted: (value) {
-          oldParameters.update(
-            parameter,
-            (oldValue) => value,
-            ifAbsent: () => value,
-          );
+          if (value.trim().isEmpty) {
+            queryParameters.remove(queryParameter);
+          } else {
+            queryParameters.update(
+              queryParameter,
+              (oldValue) => value,
+              ifAbsent: () => value,
+            );
+          }
 
           context.go(
             Uri(
-              path: onSelectMainRoute,
-              queryParameters: oldParameters,
+              path: effectiveRoute,
+              queryParameters: queryParameters,
             ).toString(),
           );
         },

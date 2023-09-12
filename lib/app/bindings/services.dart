@@ -1,11 +1,10 @@
+import 'package:cse_archive/app/services/api.dart';
+import 'package:cse_archive/app/services/pages_tracker.dart';
+import 'package:cse_archive/app/services/storage.dart';
+import 'package:cse_archive/app/services/theme_mode.dart';
 import 'package:get/get.dart';
 
-import 'api.dart';
-import 'pages_tracker.dart';
-import 'storage.dart';
-import 'theme_mode.dart';
-
-Future<void> servicesInitializer() async {
+Future<void> servicesBinding() async {
   await Get.putAsync<StorageService>(
     () => StorageService().init(),
     permanent: true,

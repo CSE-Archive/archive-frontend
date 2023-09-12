@@ -1,6 +1,7 @@
 import 'package:cse_archive/app/constants/assets.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/controllers/search.dart';
 import 'package:cse_archive/app/controllers/search_text_field.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:cse_archive/app/routes/routes.dart';
@@ -22,29 +23,30 @@ import 'appbar_text_button.dart';
 SliverAppBar sliverAppbar({required BuildContext context}) {
   const logoWidth = 2 * kSizeDefault;
 
-  final searchBarController = Get.put(
-    SearchTextFieldController(),
-    tag: 'appbar',
-    permanent: true,
-  );
+  final searchController = Get.find<SearchTextFieldController>(tag: 'appbar');
 
   final searchBox = searchBar(
     onInit: () {
       if (PageTrackerService.to.activePage != ArchivePage.search) {
-        searchBarController.textController.clear();
-        searchBarController.showClearButton(false);
+        searchController.textController.clear();
       }
     },
     context: context,
-    searchBarController: searchBarController,
+    searchController: searchController,
     primaryColor: Theme.of(context).colorScheme.secondary,
     secondaryColor: Theme.of(context).colorScheme.primary,
-    onSubmitted: (query) => context.go(
-      Uri(
-        path: ArchiveRoutes.search,
-        queryParameters: {'q': query},
-      ).toString(),
-    ),
+    onSubmitted: (query) {
+      if (query.trim().isEmpty) return;
+
+      context.go(
+        Uri(
+          path: ArchiveRoutes.search,
+          queryParameters: {
+            SearchViewController.searchQueryParameter: query.trim(),
+          },
+        ).toString(),
+      );
+    },
   );
 
   return SliverAppBar(

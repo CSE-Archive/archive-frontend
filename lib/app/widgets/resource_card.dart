@@ -7,19 +7,19 @@ import 'gap.dart';
 import 'card.dart';
 
 class ArchiveResourceCard extends StatelessWidget {
-  final ResourceModel? resource;
+  final ResourceModel resource;
+  final double width;
 
   const ArchiveResourceCard({
     super.key,
     required this.resource,
+    this.width = kSizeCardWidth,
   });
-
-  const ArchiveResourceCard.invisible({super.key}) : resource = null;
 
   @override
   Widget build(BuildContext context) {
-    final child = ArchiveCard(
-      width: kSizeCardWidth,
+    return ArchiveCard(
+      width: width,
       color: Theme.of(context).colorScheme.primary,
       padding: const EdgeInsets.all(kSizeDefault),
       onPressed: () {}, // TODO: Add on press download options
@@ -28,18 +28,16 @@ class ArchiveResourceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            (resource != null && resource!.classroom != null)
-                ? '${resource!.title} ${resource!.classroom!.course.title}'
-                : '',
+            '${resource.title ?? resource.type.concatenation} ${resource.classroom!.course.title}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodyLarge,
           ),
           const Gap.vertical(kSizeDefault),
           Text(
-            (resource != null && resource!.classroom != null)
-                ? '${resource!.classroom!.semester} ${enToFaDigits(resource!.classroom!.year.toString())}'
-                : '',
+            enToFaDigits(
+              '${resource.classroom!.semester} ${resource.classroom!.year}',
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -48,13 +46,11 @@ class ArchiveResourceCard extends StatelessWidget {
                 ),
           ),
           Text(
-            (resource != null && resource!.classroom != null)
-                ? resource!.classroom!.professors
-                    .map(
-                      (professor) => professor.fullNameWithHonorific,
-                    )
-                    .join(', ')
-                : '',
+            resource.classroom!.professors
+                .map(
+                  (professor) => professor.fullNameWithHonorific,
+                )
+                .join(', '),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
@@ -65,14 +61,5 @@ class ArchiveResourceCard extends StatelessWidget {
         ],
       ),
     );
-
-    if (resource == null) {
-      return Opacity(
-        opacity: 0,
-        child: IgnorePointer(child: child),
-      );
-    }
-
-    return child;
   }
 }

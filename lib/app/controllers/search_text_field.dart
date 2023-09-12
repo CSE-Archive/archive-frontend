@@ -2,14 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SearchTextFieldController extends GetxController {
-  final showClearButton = false.obs;
+  final isEmpty = false.obs;
 
   final textController = TextEditingController();
 
-  @override
-  void onClose() {
-    textController.dispose();
+  String get text => textController.text;
 
-    super.onClose();
+  @override
+  void onInit() {
+    super.onInit();
+
+    textController.addListener(
+      () {
+        isEmpty.value = textController.text.isEmpty;
+        isEmpty.refresh();
+      },
+    );
   }
 }

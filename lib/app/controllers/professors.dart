@@ -1,57 +1,111 @@
-import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/models/professor_department.dart';
 import 'package:cse_archive/app/models/professor.dart';
+import 'package:cse_archive/app/services/api.dart';
 import 'package:get/get.dart';
 
 import 'search_text_field.dart';
 
 class ProfessorsController extends GetxController with StateMixin {
-  static const searchParameter = 'q';
-  static const departmentParameter = 'department';
+  static const searchQueryParameter = 'search';
+  static const departmentQueryParameter = 'department';
+  static const departmentQueryDefault = ProfessorDepartmentModel.defaultOption;
 
-  late List<ProfessorModel> professors;
+  late List<ProfessorDepartmentModel> departmentQueryOptions = [];
 
-  late RxString selectedDepartment;
+  final searchController = SearchTextFieldController();
+  final selectedDepartment = departmentQueryDefault.obs;
 
-  final searchBarController = SearchTextFieldController();
+  int paginationCounter = 1;
 
-  final departmentOptions = {
-    'all': ArchiveStrings.professorsAll,
-    'cse': ArchiveStrings.professorsDepartmentCSE,
-    'electrical': ArchiveStrings.professorsDepartmentElectrical,
-    'others': ArchiveStrings.professorsDepartmentOthers,
-  };
+  final professors = <ProfessorModel>[].obs;
+  final isThereMore = false.obs;
+  final isLoadingMore = false.obs;
 
-  @override
-  void onInit() async {
-    super.onInit();
+  Future<void> setQueryParameters(Map<String, String> queryParameters) async {
+    await _fetchOptions();
 
-    selectedDepartment = departmentOptions.keys.first.obs;
+    if (queryParameters.keys.contains(searchQueryParameter)) {
+      searchController.textController.text =
+          queryParameters[searchQueryParameter]!;
+    } else {
+      searchController.textController.clear();
+    }
 
-    await fetchData();
+    if (queryParameters.keys.contains(departmentQueryParameter)) {
+      final queryParameterValue = queryParameters[departmentQueryParameter]!;
+
+      selectedDepartment.value = departmentQueryOptions.firstWhere(
+        (professorDepartment) =>
+            professorDepartment.queryParameterValue == queryParameterValue,
+        orElse: () => departmentQueryDefault,
+      );
+    } else {
+      selectedDepartment.value = departmentQueryDefault;
+    }
+
+    fetchData();
   }
 
-  void setParameters(Map<String, String> parameters) {
-    parameters.forEach(
-      (key, value) {
-        switch (key) {
-          case ProfessorsController.searchParameter:
-            searchBarController.showClearButton(true);
-            searchBarController.textController.text = value;
-            break;
-          case ProfessorsController.departmentParameter:
-            selectedDepartment.value = value;
-            break;
-        }
-      },
-    );
+  Future<void> _fetchOptions() async {
+    if (departmentQueryOptions.isEmpty) {
+      change(null, status: RxStatus.loading());
+
+      final options = await APIService.to.professorDepartments();
+
+      if (options != null) {
+        departmentQueryOptions = [ProfessorDepartmentModel.defaultOption];
+        departmentQueryOptions.addAll(options);
+
+        change(null, status: RxStatus.success());
+      } else {
+        // TODO: Show error view
+        change(null, status: RxStatus.error());
+      }
+    }
   }
 
   Future<void> fetchData() async {
     change(null, status: RxStatus.loading());
 
-    // TODO: Load data
-    professors = [];
+    final result = await APIService.to.professors(
+      department: selectedDepartment.value,
+      search: searchController.textController.text,
+    );
 
-    change(null, status: RxStatus.success());
+    if (result != null) {
+      paginationCounter = 1;
+
+      isThereMore.value = result.isThereMore;
+      professors.value = result.professors;
+      professors.refresh();
+
+      change(null, status: RxStatus.success());
+    } else {
+      // TODO: Show error view
+      change(null, status: RxStatus.error());
+    }
+  }
+
+  Future<void> loadMore() async {
+    isLoadingMore.value = true;
+
+    final result = await APIService.to.professors(
+      department: selectedDepartment.value,
+      search: searchController.textController.text,
+      offset: kDataLimit * paginationCounter,
+    );
+
+    if (result != null) {
+      paginationCounter++;
+
+      isThereMore.value = result.isThereMore;
+      professors.addAll(result.professors);
+      professors.refresh();
+    } else {
+      // TODO: Show error view
+    }
+
+    isLoadingMore.value = false;
   }
 }

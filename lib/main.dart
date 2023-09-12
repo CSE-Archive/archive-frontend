@@ -1,19 +1,18 @@
+import 'package:cse_archive/app/bindings/controllers.dart';
+import 'package:cse_archive/app/bindings/services.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:get/get.dart';
 
-import 'app/controllers/initializer.dart';
 import 'app/routes/config.dart';
-import 'app/services/initializer.dart';
 import 'app/services/theme_mode.dart';
 import 'app/themes.dart';
 
 void main() async {
-  await servicesInitializer();
-
-  controllersInitializer();
+  await servicesBinding();
+  await controllersBinding();
 
   usePathUrlStrategy();
 

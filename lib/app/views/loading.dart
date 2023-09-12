@@ -9,7 +9,7 @@ class LoadingView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ArchiveWebPage(
-      bodyPadding: 0,
+      applyPlatformVerticalPadding: false,
       body: SizedBox(
         height: MediaQuery.sizeOf(context).height - ArchiveThemes.appbarHeight,
         child: Center(

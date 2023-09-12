@@ -1,3 +1,5 @@
+import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/themes.dart';
 import 'package:flutter/material.dart';
 
 abstract class ArchivePlatform {
@@ -7,6 +9,7 @@ abstract class ArchivePlatform {
 
   double get maxWidth;
   double get margin;
+  int get cardsGridViewCrossAxisCount;
 }
 
 const _tabletMinWidth = 768;
@@ -29,6 +32,13 @@ extension ArchiveResponsive on BuildContext {
           ? (maxWidth - platform.maxWidth) / 2
           : 0) +
       platform.margin;
+
+  double get responsiveVisibleHeight => maxHeight - ArchiveThemes.appbarHeight;
+
+  double get responsiveCardWidth =>
+      ((platform.maxWidth - 2 * platform.margin) -
+          (platform.cardsGridViewCrossAxisCount - 1) * kSizeDefault) /
+      platform.cardsGridViewCrossAxisCount;
 
   bool get isMobile => maxWidth < _tabletMinWidth;
   bool get isTablet =>
@@ -82,6 +92,9 @@ class _Mobile extends ArchivePlatform {
 
   @override
   double get margin => 16;
+
+  @override
+  int get cardsGridViewCrossAxisCount => 1;
 }
 
 class _Tablet extends ArchivePlatform {
@@ -92,34 +105,46 @@ class _Tablet extends ArchivePlatform {
 
   @override
   double get margin => 24;
+
+  @override
+  int get cardsGridViewCrossAxisCount => 2;
 }
 
 class _Desktop extends ArchivePlatform {
   _Desktop(super.context);
 
   @override
-  double get maxWidth => 1110;
+  double get maxWidth => 1024;
 
   @override
   double get margin => 32;
+
+  @override
+  int get cardsGridViewCrossAxisCount => 3;
 }
 
 class _DesktopXL extends ArchivePlatform {
   _DesktopXL(super.context);
 
   @override
-  double get maxWidth => 1200;
+  double get maxWidth => 1300;
 
   @override
   double get margin => 40;
+
+  @override
+  int get cardsGridViewCrossAxisCount => 4;
 }
 
 class _DesktopFullHD extends ArchivePlatform {
   _DesktopFullHD(super.context);
 
   @override
-  double get maxWidth => 1360;
+  double get maxWidth => 1450;
 
   @override
   double get margin => 48;
+
+  @override
+  int get cardsGridViewCrossAxisCount => 4;
 }

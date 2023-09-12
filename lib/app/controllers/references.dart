@@ -1,41 +1,90 @@
+import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/models/reference.dart';
+import 'package:cse_archive/app/models/reference_type.dart';
+import 'package:cse_archive/app/services/api.dart';
 import 'package:get/get.dart';
 
 import 'search_text_field.dart';
 
 class ReferencesController extends GetxController with StateMixin {
-  static const searchParameter = 'q';
+  static const searchQueryParameter = 'search';
+  static const typeQueryParameter = 'type';
+  static const typeQueryOptions = ReferenceTypeModel.options;
+  static const typeQueryDefault = ReferenceTypeModel.defaultOption;
 
-  late List<ReferenceModel> references;
+  final searchController = SearchTextFieldController();
+  final selectedType = typeQueryDefault.obs;
 
-  final searchBarController = SearchTextFieldController();
+  int paginationCounter = 1;
 
-  @override
-  void onInit() async {
-    super.onInit();
+  final references = <ReferenceModel>[].obs;
+  final isThereMore = false.obs;
+  final isLoadingMore = false.obs;
 
-    await fetchData();
-  }
+  void setQueryParameters(Map<String, String> queryParameters) {
+    if (queryParameters.keys.contains(searchQueryParameter)) {
+      searchController.textController.text =
+          queryParameters[searchQueryParameter]!;
+    } else {
+      searchController.textController.clear();
+    }
 
-  void setParameters(Map<String, String> parameters) {
-    parameters.forEach(
-      (key, value) {
-        switch (key) {
-          case ReferencesController.searchParameter:
-            searchBarController.showClearButton(true);
-            searchBarController.textController.text = value;
-            break;
-        }
-      },
-    );
+    if (queryParameters.keys.contains(typeQueryParameter)) {
+      final queryParameterValue = queryParameters[typeQueryParameter]!;
+
+      selectedType.value = typeQueryOptions.firstWhere(
+        (referenceType) =>
+            referenceType.queryParameterValue == queryParameterValue,
+        orElse: () => typeQueryDefault,
+      );
+    } else {
+      selectedType.value = typeQueryDefault;
+    }
+
+    fetchData();
   }
 
   Future<void> fetchData() async {
     change(null, status: RxStatus.loading());
 
-    // TODO: Load data
-    references = [];
+    final result = await APIService.to.references(
+      type: selectedType.value,
+      search: searchController.textController.text,
+    );
 
-    change(null, status: RxStatus.success());
+    if (result != null) {
+      paginationCounter = 1;
+
+      isThereMore.value = result.isThereMore;
+      references.value = result.references;
+      references.refresh();
+
+      change(null, status: RxStatus.success());
+    } else {
+      // TODO: Show error view
+      change(null, status: RxStatus.error());
+    }
+  }
+
+  Future<void> loadMore() async {
+    isLoadingMore.value = true;
+
+    final result = await APIService.to.references(
+      type: selectedType.value,
+      search: searchController.textController.text,
+      offset: kDataLimit * paginationCounter,
+    );
+
+    if (result != null) {
+      paginationCounter++;
+
+      isThereMore.value = result.isThereMore;
+      references.addAll(result.references);
+      references.refresh();
+    } else {
+      // TODO: Show error view
+    }
+
+    isLoadingMore.value = false;
   }
 }

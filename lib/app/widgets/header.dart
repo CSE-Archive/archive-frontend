@@ -2,15 +2,16 @@ import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/widgets/divider.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/link.dart';
 
 class ArchiveHeader extends StatelessWidget {
   final String title;
-  final void Function()? seeAllOnPressed;
+  final Uri? seeAllUri;
 
   const ArchiveHeader({
     Key? key,
     required this.title,
-    this.seeAllOnPressed,
+    this.seeAllUri,
   }) : super(key: key);
 
   static TextStyle textStyle(BuildContext context) =>
@@ -37,14 +38,17 @@ class ArchiveHeader extends StatelessWidget {
               color: Theme.of(context).colorScheme.secondary,
               margin: EdgeInsets.only(
                 right: kSizeDefault,
-                left: (seeAllOnPressed != null) ? kSizeDefault : 0,
+                left: (seeAllUri != null) ? kSizeDefault : 0,
               ),
             ),
           ),
-          if (seeAllOnPressed != null)
-            OutlinedButton(
-              onPressed: seeAllOnPressed,
-              child: const Text(ArchiveStrings.homeSeeAll),
+          if (seeAllUri != null)
+            Link(
+              uri: seeAllUri,
+              builder: (_, followLink) => OutlinedButton(
+                onPressed: followLink,
+                child: const Text(ArchiveStrings.homeSeeAll),
+              ),
             ),
         ],
       ),

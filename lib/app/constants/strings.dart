@@ -6,10 +6,32 @@ class ArchiveStrings {
   static const courseTypeSpecialized = 'تخصصی';
   static const courseTypeOptional = 'اختیاری';
 
-  static const semesterTypeFirst = 'نیمسال اول';
-  static const semesterTypeSecond = 'نیمسال دوم';
-  static const semesterTypeSummer = 'ترم تابستان';
+  static const courseUnits1 = '۱';
+  static const courseUnits2 = '۲';
+  static const courseUnits3 = '۳';
 
+  static const referenceTypeBook = 'کتاب';
+  static const referenceTypeSolution = 'حل المسائل';
+  static const referenceTypeSlide = 'اسلاید';
+  static const referenceTypeSlideConcatenation = 'اسلایدهای';
+  static const referenceTypeHandout = 'جزوه';
+  static const referenceTypeSummary = 'خلاصه';
+  static const referenceTypeOther = 'دیگر';
+
+  static const resourceTypeMidterm = 'میان‌ترم';
+  static const resourceTypeFinal = 'پایان‌ترم';
+  static const resourceTypeProject = 'پروژه';
+  static const resourceTypeHomework = 'تمرین';
+  static const resourceTypeHomeworkConcatenation = 'تمرین‌های';
+  static const resourceTypeQuiz = 'کوییز';
+  static const resourceTypeOther = 'دیگر';
+
+  static const classroomSemesterFirst = 'نیمسال اول';
+  static const classroomSemesterSecond = 'نیمسال دوم';
+  static const classroomSemesterSummer = 'ترم تابستان';
+
+  static const all = 'همه';
+  static const loadMore = 'مشاهده‌ی موارد بیشتر';
   static const notFound = 'چیزی پیدا نشد!';
   static const search = ' جستجو ...';
   static const loading = 'لطفا صبر کنید ...';
@@ -18,57 +40,56 @@ class ArchiveStrings {
   static const filters = 'فیلترها';
 
   static const recordings = 'کلاس‌های ضبط شده';
-  static const resources = 'منبع‌ها';
 
-  static const appbarCourses = 'درس‌ها';
-  static const appbarReferences = 'مرجع‌ها';
-  static const appbarProfessors = 'استادها';
+  static const appbarCourses = 'دروس';
+  static const appbarReferences = 'مراجع';
+  static const appbarProfessors = 'اساتید';
   static const appbarChart = 'چارت مهندسی کامپیوتر';
   static const appbarSupport = 'حمایت';
 
   static const homeSeeAll = 'مشاهده‌ی همه';
-  static const homeLatestResources = 'تازه‌ترین منبع‌ها';
-  static const homeLatestResourcesMobile = 'منبع‌ها';
+  static const homeLatestResources = 'تازه‌ترین منابع';
+  static const homeLatestResourcesMobile = 'منابع';
   static const homeLatestRecordings = 'تازه‌ترین کلاس‌های ضبط شده';
   static const homeLatestRecordingsMobile = 'کلاس‌های ضبط شده';
-  static const homeLatestReferences = 'تازه‌ترین مرجع‌ها';
-  static const homeLatestReferencesMobile = 'مرجع‌ها';
+  static const homeLatestReferences = 'تازه‌ترین مراجع';
+  static const homeLatestReferencesMobile = 'مراجع';
 
-  static const references = 'مرجع‌ها';
-  static const referencesTitleAuthor = 'عنوان/نویسنده';
+  static const resources = 'منابع';
+  static const resourcesTypeFilter = 'نوع';
+
+  static const references = 'مراجع';
+  static const referencesTitleAuthorFilter = 'عنوان/نویسنده';
+  static const referencesTypeFilter = 'نوع';
+
+  static const referenceType = 'نوع';
   static const referenceTitle = '• عنوان';
-  static const referenceAuthors = '• نویسنده‌ها';
+  static const referenceAuthors = '• نویسندگان';
   static const referenceDownload = 'دانلود مرجع';
-  static const referenceRelatedCourses = 'درس‌های مرتبط';
-  static const referenceRelatedReferences = 'مرجع‌های مرتبط';
+  static const referenceRelatedCourses = 'دروس مرتبط';
+  static const referenceRelatedReferences = 'مراجع مرتبط';
 
-  static const professors = 'استادها';
-  static const professorsAll = 'همه';
-  static const professorsName = 'نام استاد';
-  static const professorsDepartment = 'بخش';
-  static const professorsDepartmentCSE = 'مهندسی کامپیوتر';
-  static const professorsDepartmentElectrical = 'مهندسی برق';
-  static const professorsDepartmentOthers = 'دیگر';
+  static const professors = 'اساتید';
+  static const professorsNameFilter = 'نام استاد';
+  static const professorsDepartmentFilter = 'بخش';
 
   static const professorEmails = '• ایمیل‌ها';
   static const professorRelatedLinks = '• لینک‌های مرتبط';
   static const professorDepartment = 'بخش';
 
-  static const courses = 'درس‌ها';
-  static const coursesTitle = 'عنوان';
-  static const coursesAll = 'همه';
-  static const coursesType = 'نوع درس';
-  static const coursesUnits = 'تعداد واحد';
+  static const courses = 'دروس';
+  static const coursesTitleFilter = 'عنوان';
+  static const coursesTypeFilter = 'نوع';
+  static const coursesUnitsFilter = 'تعداد واحد';
 
+  static const courseType = 'نوع';
   static const courseUnits = 'تعداد واحد';
-  static const courseType = 'نوع درس';
-  static const courseRequisitesAll = 'همه';
   static const coursePreRequisites = 'پیش‌نیازها';
   static const courseCoRequisites = 'هم‌نیازها';
   static const courseRequisiteFor = 'پیش‌نیاز چه درس‌هایی‌ست';
-  static const courseReferences = 'رفرنس‌ها';
-  static const courseProfessors = 'استادها';
-  static const courseResources = 'منبع‌ها';
+  static const courseReferences = 'مراجع';
+  static const courseProfessors = 'اساتید';
+  static const courseResources = 'منابع';
   static const courseRecords = 'کلاس‌های ضبط شده';
   static const courseTAs = '• گریدرها:';
 
@@ -107,9 +128,9 @@ class ArchiveStrings {
   static const footerAboutUs = 'درباره ما';
   static const footerContactUs = 'ارتباط با ما';
   static const footerSupport = 'حمایت';
-  static const footerCourses = 'درس‌ها';
-  static const footerReferences = 'مرجع‌ها';
-  static const footerProfessors = 'استادها';
+  static const footerCourses = 'دروس';
+  static const footerReferences = 'مراجع';
+  static const footerProfessors = 'اساتید';
   static const footerChart = 'چارت';
   static const footerNoteP1 = 'ساخته شده با';
   static const footerNoteP2 = 'برای استفاده‌ی عموم';

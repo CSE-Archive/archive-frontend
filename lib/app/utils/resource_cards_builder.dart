@@ -19,44 +19,41 @@ Widget resourceCardsBuilder({
         padding: EdgeInsets.symmetric(
           horizontal: context.responsiveHorizontalPadding,
         ),
-        child: Wrap(
-          spacing: kSizeDefault,
-          clipBehavior: Clip.none,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: resources
-              .map(
-                (resource) => ArchiveResourceCard(resource: resource),
-              )
-              .toList(),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: resources.indexed.map(
+            (indexedPair) {
+              final (index, resource) = indexedPair;
+
+              return Padding(
+                padding: EdgeInsets.only(
+                  left: index == resources.length - 1 ? 0 : kSizeDefault,
+                ),
+                child: ArchiveResourceCard(resource: resource),
+              );
+            },
+          ).toList(),
         ),
       ),
     );
   }
 
-  /// TODO: Make all builders like this:
-  /// 4 cards width for large desktops
-  /// 3 cards width for desktop
-  /// 2 cards width for tablet
-  /// 1 card width for mobile
-
-  return SizedBox(
-    width: double.infinity,
-    child: Wrap(
-      spacing: kSizeDefault,
-      runSpacing: kSizeDefault,
-      clipBehavior: Clip.none,
-      alignment: WrapAlignment.spaceBetween,
-      children: [
-        ...resources
-            .map(
-              (resource) => ArchiveResourceCard(resource: resource),
-            )
-            .toList(),
-        // TODO
-        const ArchiveResourceCard.invisible(),
-        const ArchiveResourceCard.invisible(),
-        const ArchiveResourceCard.invisible(),
-      ],
-    ),
+  return GridView.count(
+    // TODO: Card height is hard coded
+    childAspectRatio: context.responsiveCardWidth / 102,
+    shrinkWrap: true,
+    clipBehavior: Clip.none,
+    mainAxisSpacing: kSizeDefault,
+    crossAxisSpacing: kSizeDefault,
+    crossAxisCount: context.platform.cardsGridViewCrossAxisCount,
+    children: resources
+        .map(
+          (resource) => ArchiveResourceCard(
+            resource: resource,
+            width: context.responsiveCardWidth,
+          ),
+        )
+        .toList(),
   );
 }

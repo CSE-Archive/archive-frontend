@@ -1,25 +1,25 @@
 import 'package:cse_archive/app/models/professor.dart';
+import 'package:cse_archive/app/services/api.dart';
 import 'package:get/get.dart';
 
 class ProfessorController extends GetxController with StateMixin {
-  final int professorId;
+  final String uuid;
 
-  ProfessorController({required this.professorId});
+  ProfessorController({required this.uuid});
 
-  late ProfessorModel professor;
-
-  @override
-  void onInit() async {
-    super.onInit();
-
-    await fetchData();
-  }
+  ProfessorModel? professor;
 
   Future<void> fetchData() async {
     change(null, status: RxStatus.loading());
 
-    // TODO: Load data
+    final result = await APIService.to.professor(uuid: uuid);
 
-    change(null, status: RxStatus.success());
+    if (result != null) {
+      professor = result;
+
+      change(null, status: RxStatus.success());
+    } else {
+      change(null, status: RxStatus.error());
+    }
   }
 }

@@ -1,13 +1,13 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/references.dart';
-import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:cse_archive/app/routes/routes.dart';
-import 'package:cse_archive/app/themes.dart';
+import 'package:cse_archive/app/utils/expansion_tile_radio_button.dart';
 import 'package:cse_archive/app/utils/expansion_tile_search_bar.dart';
 import 'package:cse_archive/app/utils/reference_cards_builder.dart';
 import 'package:cse_archive/app/widgets/dialog.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
+import 'package:cse_archive/app/widgets/load_more_button.dart';
 import 'package:cse_archive/app/widgets/path.dart';
 import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
@@ -16,22 +16,19 @@ import 'package:get/get.dart';
 import 'loading.dart';
 
 class ReferencesView extends GetView<ReferencesController> {
-  final Map<String, String> parameters;
+  final Map<String, String> queryParameters;
 
   const ReferencesView({
     super.key,
-    required this.parameters,
+    required this.queryParameters,
   });
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Change
-
-    controller.setParameters(parameters);
-
-    return ArchiveWebPage(
-      body: controller.obx(
-        (_) => Column(
+    return controller.obx(
+      (_) => ArchiveWebPage(
+        body: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
@@ -54,7 +51,7 @@ class ReferencesView extends GetView<ReferencesController> {
                     builder: (context) => _getFiltersDialog(
                       context,
                       controller: controller,
-                      parameters: parameters,
+                      queryParameters: queryParameters,
                     ),
                   ),
                   child: Row(
@@ -79,21 +76,34 @@ class ReferencesView extends GetView<ReferencesController> {
               ],
             ),
             const Gap.vertical(1.5 * kSizeDefault),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: context.maxHeight -
-                    (ArchiveThemes.appbarHeight + 7 * kSizeDefault),
-              ),
-              child: referenceCardsBuilder(
-                context: context,
-                references: controller.references,
-                infiniteWidth: false,
-              ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Obx(
+                  () => referenceCardsBuilder(
+                    context: context,
+                    references: controller.references,
+                    infiniteWidth: false,
+                  ),
+                ),
+                Obx(
+                  () => controller.isThereMore.isTrue
+                      ? Padding(
+                          padding:
+                              const EdgeInsets.only(top: 1.5 * kSizeDefault),
+                          child: ArchiveLoadMoreButton(
+                            isLoadingMore: controller.isLoadingMore,
+                            onPressed: controller.loadMore,
+                          ),
+                        )
+                      : Gap.zero,
+                ),
+              ],
             ),
           ],
         ),
-        onLoading: const LoadingView(),
       ),
+      onLoading: const LoadingView(),
     );
   }
 }
@@ -101,18 +111,28 @@ class ReferencesView extends GetView<ReferencesController> {
 Widget _getFiltersDialog(
   BuildContext context, {
   required ReferencesController controller,
-  required Map<String, String> parameters,
+  required Map<String, String> queryParameters,
 }) {
   return ArchiveDialog(
     title: ArchiveStrings.filters,
     children: [
       expansionTileSearchBar(
         context: context,
-        title: ArchiveStrings.referencesTitleAuthor,
-        oldParameters: parameters,
-        searchBarController: controller.searchBarController,
-        onSelectMainRoute: ArchiveRoutes.references,
-        parameter: ReferencesController.searchParameter,
+        title: ArchiveStrings.referencesTitleAuthorFilter,
+        queryParameters: queryParameters,
+        queryParameter: ReferencesController.searchQueryParameter,
+        searchController: controller.searchController,
+        effectiveRoute: ArchiveRoutes.references,
+      ),
+      expansionTileRadioButton(
+        context: context,
+        title: ArchiveStrings.referencesTypeFilter,
+        queryParameters: queryParameters,
+        queryParameter: ReferencesController.typeQueryParameter,
+        options: ReferencesController.typeQueryOptions,
+        defaultOption: ReferencesController.typeQueryDefault,
+        selectedOption: controller.selectedType,
+        effectiveRoute: ArchiveRoutes.references,
       ),
     ],
   );
