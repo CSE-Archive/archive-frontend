@@ -1,6 +1,7 @@
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/search_text_field.dart';
 import 'package:cse_archive/app/utils/search_bar.dart';
+import 'package:cse_archive/app/widgets/expansion_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,7 +13,7 @@ Widget expansionTileSearchBar({
   required String queryParameter,
   required String effectiveRoute,
 }) {
-  return ExpansionTile(
+  return ArchiveExpansionTile(
     title: Text(
       title,
       style: Theme.of(context).textTheme.bodyLarge!.copyWith(

@@ -1,5 +1,5 @@
 name: cse_archive
-description: A new Flutter project.
+description: CSE Archive web app.
 publish_to: 'none'
 version: 0.1.0
 
@@ -33,13 +33,14 @@ dev_dependencies:
   flutter_lints: ^2.0.2
 
 flutter:
-  uses-material-design: true
-
   assets:
     - assets/riv/
     - assets/svg/
 
   fonts:
+    - family: icons
+      fonts:
+        - asset: assets/font/icons.ttf
     - family: peyda
       fonts:
         - asset: assets/font/peyda/peyda-light.ttf

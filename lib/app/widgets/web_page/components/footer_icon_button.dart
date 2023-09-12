@@ -1,15 +1,14 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 class FooterIconButton extends StatelessWidget {
-  final String iconAsset;
+  final IconData icon;
   final void Function()? onPressed;
 
   const FooterIconButton({
     super.key,
-    required this.iconAsset,
+    required this.icon,
     required this.onPressed,
   });
 
@@ -38,16 +37,12 @@ class FooterIconButton extends StatelessWidget {
               ),
             ),
             child: Center(
-              child: SvgPicture.asset(
-                iconAsset,
-                width: 1.1 * kSizeDefault,
-                height: 1.1 * kSizeDefault,
-                colorFilter: ColorFilter.mode(
-                  hovered.isTrue
-                      ? Theme.of(context).colorScheme.primary
-                      : Theme.of(context).colorScheme.secondary,
-                  BlendMode.srcIn,
-                ),
+              child: Icon(
+                icon,
+                size: 1.25 * kSizeDefault,
+                color: hovered.isTrue
+                    ? Theme.of(context).colorScheme.primary
+                    : Theme.of(context).colorScheme.secondary,
               ),
             ),
           ),

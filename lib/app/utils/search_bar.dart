@@ -1,3 +1,4 @@
+import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/search_text_field.dart';
@@ -35,7 +36,7 @@ Widget searchBar({
                 color: primaryColor,
                 padding: const EdgeInsets.all(kSizeDefault / 2),
                 child: ArchiveIconButton(
-                  icon: Icons.clear,
+                  icon: ArchiveIcons.x,
                   color: secondaryColor,
                   size: kSizeDefault,
                   onPressed: () {

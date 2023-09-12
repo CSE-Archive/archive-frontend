@@ -1,3 +1,4 @@
+import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/professors.dart';
@@ -66,7 +67,7 @@ class ProfessorsView extends GetView<ProfessorsController> {
                       ),
                       const Gap.horizontal(kSizeDefault / 2),
                       Icon(
-                        Icons.filter_alt_rounded,
+                        ArchiveIcons.adjustmentsAlt,
                         color: Theme.of(context).colorScheme.secondary,
                         size: kSizeDefault,
                       ),

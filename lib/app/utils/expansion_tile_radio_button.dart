@@ -1,5 +1,6 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/models/base_enum.dart';
+import 'package:cse_archive/app/widgets/expansion_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -14,7 +15,7 @@ Widget expansionTileRadioButton({
   required String queryParameter,
   required String effectiveRoute,
 }) {
-  return ExpansionTile(
+  return ArchiveExpansionTile(
     title: Text(
       title,
       style: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -22,8 +23,6 @@ Widget expansionTileRadioButton({
             fontWeight: FontWeight.w500,
           ),
     ),
-    expandedCrossAxisAlignment: CrossAxisAlignment.start,
-    expandedAlignment: Alignment.topRight,
     children: options
         .map(
           (option) => Obx(

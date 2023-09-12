@@ -1,4 +1,5 @@
 import 'package:cse_archive/app/constants/assets.dart';
+import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/links.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
@@ -125,7 +126,7 @@ Widget footer({required BuildContext context}) {
         uri: Uri.parse(ArchiveLinks.telegram),
         target: LinkTarget.blank,
         builder: (_, followLink) => FooterIconButton(
-          iconAsset: ArchiveAssets.svg.iconTelegram,
+          icon: ArchiveIcons.brandTelegram,
           onPressed: followLink,
         ),
       ),
@@ -134,7 +135,7 @@ Widget footer({required BuildContext context}) {
         uri: Uri.parse(ArchiveLinks.github),
         target: LinkTarget.blank,
         builder: (_, followLink) => FooterIconButton(
-          iconAsset: ArchiveAssets.svg.iconGithub,
+          icon: ArchiveIcons.brandGithub,
           onPressed: followLink,
         ),
       ),

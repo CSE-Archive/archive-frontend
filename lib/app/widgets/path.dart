@@ -1,3 +1,4 @@
+import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
@@ -34,7 +35,7 @@ class ArchivePath extends StatelessWidget {
           ),
         ),
         separatorBuilder: (_, __) => Icon(
-          Icons.chevron_right,
+          ArchiveIcons.chevronRight,
           size: kSizeDefault,
           color: Theme.of(context).colorScheme.secondary,
         ),

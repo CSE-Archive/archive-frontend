@@ -23,15 +23,15 @@ class ArchiveCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final hovered = false.obs;
 
-    return Obx(
-      () => GestureDetector(
-        onTap: onPressed,
-        child: MouseRegion(
-          cursor:
-              onPressed == null ? MouseCursor.defer : SystemMouseCursors.click,
-          onEnter: (_) => hovered(true),
-          onExit: (_) => hovered(false),
-          child: AnimatedContainer(
+    return GestureDetector(
+      onTap: onPressed,
+      child: MouseRegion(
+        cursor:
+            onPressed == null ? MouseCursor.defer : SystemMouseCursors.click,
+        onEnter: (_) => hovered(true),
+        onExit: (_) => hovered(false),
+        child: Obx(
+          () => AnimatedContainer(
             duration: 100.milliseconds,
             width: width,
             height: height,

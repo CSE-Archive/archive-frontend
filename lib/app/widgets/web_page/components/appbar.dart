@@ -1,4 +1,5 @@
 import 'package:cse_archive/app/constants/assets.dart';
+import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/search.dart';
@@ -129,8 +130,8 @@ SliverAppBar sliverAppbar({required BuildContext context}) {
       if (!context.isMobileOrTablet) ...[
         ArchiveIconButton(
           icon: ThemeModeService.to.isDarkMode(context)
-              ? Icons.light_mode
-              : Icons.dark_mode,
+              ? ArchiveIcons.sunFilled
+              : ArchiveIcons.moonStarsFilled,
           onPressed: () => ThemeModeService.to.toggle(context),
           size: 1.7 * kSizeDefault,
           color: Theme.of(context).colorScheme.secondary,

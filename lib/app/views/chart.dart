@@ -1,3 +1,4 @@
+import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/chart.dart';
@@ -64,7 +65,7 @@ class ChartView extends GetView<ChartController> {
                         ),
                         const Gap.horizontal(kSizeDefault / 2),
                         Icon(
-                          Icons.help,
+                          ArchiveIcons.helpSquare,
                           color: Theme.of(context).colorScheme.secondary,
                           size: kSizeDefault,
                         ),

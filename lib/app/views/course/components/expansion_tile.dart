@@ -6,6 +6,7 @@ import 'package:cse_archive/app/models/recorded_classroom.dart';
 import 'package:cse_archive/app/models/resource.dart';
 import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
 import 'package:cse_archive/app/widgets/divider.dart';
+import 'package:cse_archive/app/widgets/expansion_tile.dart';
 import 'package:flutter/material.dart';
 
 class CourseExpansionTile extends StatelessWidget {
@@ -35,7 +36,7 @@ class CourseExpansionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ExpansionTile(
+    return ArchiveExpansionTile(
       title: Text(
         '$semester ${enToFaDigits(year.toString())}',
         style: Theme.of(context).textTheme.bodyLarge,

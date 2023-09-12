@@ -1,3 +1,4 @@
+import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class ArchiveDialog extends StatelessWidget {
                   const Spacer(),
                   const Gap.horizontal(kSizeDefault),
                   ArchiveIconButton(
-                    icon: Icons.close,
+                    icon: ArchiveIcons.x,
                     onPressed: context.pop,
                   ),
                 ],
