@@ -1,3 +1,4 @@
+import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/professor.dart';
@@ -40,17 +41,30 @@ class ProfessorView extends GetView<ProfessorController> {
           width: 17 * kSizeDefault,
           height: 17 * kSizeDefault,
           onPressed: null,
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(kSizeDefault / 2),
-            child: (controller.professor!.image != null)
-                ? Image.network(
+          child: (controller.professor!.image != null)
+              ? ClipRRect(
+                  borderRadius: BorderRadius.circular(kSizeDefault / 2),
+                  child: Image.network(
                     controller.professor!.image.toString(),
                     fit: BoxFit.cover,
-                  )
-                : Placeholder(
-                    color: Theme.of(context).colorScheme.primary,
                   ),
-          ),
+                )
+              : DecoratedBox(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(kSizeDefault / 2),
+                    border: Border.all(
+                      width: 4,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                  child: Center(
+                    child: Icon(
+                      ArchiveIcons.photoOff,
+                      size: 5 * kSizeDefault,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+                  ),
+                ),
         );
 
         final nameColumn = Align(

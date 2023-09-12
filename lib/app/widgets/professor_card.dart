@@ -1,3 +1,4 @@
+import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/models/professor.dart';
@@ -54,7 +55,7 @@ class ArchiveProfessorCard extends StatelessWidget {
             decoration: BoxDecoration(
               image: (professor.image != null)
                   ? DecorationImage(
-                      image: AssetImage(professor.image.toString()),
+                      image: NetworkImage(professor.image.toString()),
                       fit: BoxFit.cover,
                     )
                   : null,
@@ -63,8 +64,12 @@ class ArchiveProfessorCard extends StatelessWidget {
             ),
             child: (professor.image != null)
                 ? null
-                : Placeholder(
-                    color: Theme.of(context).colorScheme.secondary,
+                : Center(
+                    child: Icon(
+                      ArchiveIcons.photoOff,
+                      size: 3 * kSizeDefault,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
           ),
         ],

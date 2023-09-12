@@ -1,3 +1,4 @@
+import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/models/reference.dart';
 import 'package:cse_archive/app/routes/routes.dart';
@@ -61,7 +62,7 @@ class ArchiveReferenceCard extends StatelessWidget {
             decoration: BoxDecoration(
               image: (reference.image != null)
                   ? DecorationImage(
-                      image: AssetImage(reference.image.toString()),
+                      image: NetworkImage(reference.image.toString()),
                       fit: BoxFit.cover,
                     )
                   : null,
@@ -70,8 +71,12 @@ class ArchiveReferenceCard extends StatelessWidget {
             ),
             child: (reference.image != null)
                 ? null
-                : Placeholder(
-                    color: Theme.of(context).colorScheme.secondary,
+                : Center(
+                    child: Icon(
+                      ArchiveIcons.photoOff,
+                      size: 3 * kSizeDefault,
+                      color: Theme.of(context).colorScheme.secondary,
+                    ),
                   ),
           ),
         ],
