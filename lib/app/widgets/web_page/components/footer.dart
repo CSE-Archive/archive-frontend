@@ -3,7 +3,9 @@ import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/links.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/show_support_dialog.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
@@ -21,7 +23,7 @@ Widget footer({required BuildContext context}) {
   final logoIcon = SvgPicture.asset(
     ArchiveAssets.svg.logo,
     colorFilter: ColorFilter.mode(
-      Theme.of(context).colorScheme.secondary,
+      context.secondaryColor,
       BlendMode.srcIn,
     ),
   );
@@ -41,9 +43,9 @@ Widget footer({required BuildContext context}) {
               const Gap.vertical(kSizeDefault / 2),
               Text(
                 ArchiveStrings.footerTitleMobile,
-                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                style: context.headlineSmall.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ],
           ),
@@ -57,10 +59,10 @@ Widget footer({required BuildContext context}) {
                 offset: const Offset(0, 4),
                 child: Text(
                   ArchiveStrings.footerTitleDesktop,
-                  style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                        fontWeight: FontWeight.w600,
-                        height: 1,
-                      ),
+                  style: context.headlineSmall.copyWith(
+                    fontWeight: FontWeight.w600,
+                    height: 1,
+                  ),
                 ),
               ),
             ],
@@ -143,9 +145,9 @@ Widget footer({required BuildContext context}) {
   );
 
   final publicUseNote = DefaultTextStyle(
-    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-          color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
-        ),
+    style: context.bodySmall.copyWith(
+      color: context.secondaryColor.withOpacity(0.7),
+    ),
     child: Row(
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -174,8 +176,8 @@ Widget footer({required BuildContext context}) {
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
         colors: [
-          Theme.of(context).colorScheme.tertiary,
-          Theme.of(context).colorScheme.onTertiary,
+          context.tertiaryColor,
+          context.onTertiaryColor,
         ],
       ),
     ),
@@ -198,7 +200,7 @@ Widget footer({required BuildContext context}) {
               Container(
                 height: 1,
                 width: 2 / 3 * context.platform.maxWidth,
-                color: Theme.of(context).colorScheme.secondary,
+                color: context.secondaryColor,
               ),
               const Gap.vertical(1.5 * kSizeDefault),
               Wrap(

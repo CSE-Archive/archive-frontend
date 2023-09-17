@@ -1,4 +1,5 @@
 import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +23,7 @@ class ArchiveIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final hovered = false.obs;
 
-    final color_ = color ?? Theme.of(context).colorScheme.secondary;
+    final effectiveColor = color ?? context.secondaryColor;
 
     return GestureDetector(
       onTap: onPressed,
@@ -36,7 +37,9 @@ class ArchiveIconButton extends StatelessWidget {
             () => Icon(
               icon,
               size: size ?? 1.5 * kSizeDefault,
-              color: hovered.isTrue ? color_.withOpacity(0.8) : color_,
+              color: hovered.isTrue
+                  ? effectiveColor.withOpacity(0.8)
+                  : effectiveColor,
             ),
           ),
         ),

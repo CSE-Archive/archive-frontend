@@ -1,4 +1,6 @@
 import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/models/base_enum.dart';
 import 'package:cse_archive/app/widgets/expansion_tile.dart';
 import 'package:flutter/material.dart';
@@ -18,10 +20,10 @@ Widget expansionTileRadioButton({
   return ArchiveExpansionTile(
     title: Text(
       title,
-      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            color: Theme.of(context).colorScheme.secondary,
-            fontWeight: FontWeight.w500,
-          ),
+      style: context.bodyLarge.copyWith(
+        color: context.secondaryColor,
+        fontWeight: FontWeight.w500,
+      ),
     ),
     children: options
         .map(
@@ -29,14 +31,14 @@ Widget expansionTileRadioButton({
             () => RadioListTile<BaseEnumModel>(
               value: option,
               groupValue: selectedOption.value,
-              activeColor: Theme.of(context).colorScheme.secondary,
+              activeColor: context.secondaryColor,
               contentPadding:
                   const EdgeInsets.symmetric(horizontal: kSizeDefault / 2),
               title: Text(
                 option.representation,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
+                style: context.bodyMedium.copyWith(
+                  color: context.secondaryColor,
+                ),
               ),
               onChanged: (value) {
                 selectedOption.value = value!;

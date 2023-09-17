@@ -1,5 +1,7 @@
 import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
 
@@ -30,14 +32,14 @@ class ArchivePath extends StatelessWidget {
             onPressed: followLink,
             child: Text(
               labels[index],
-              style: Theme.of(context).textTheme.bodySmall,
+              style: context.bodySmall,
             ),
           ),
         ),
         separatorBuilder: (_, __) => Icon(
           ArchiveIcons.chevronRight,
           size: kSizeDefault,
-          color: Theme.of(context).colorScheme.secondary,
+          color: context.secondaryColor,
         ),
       ),
     );

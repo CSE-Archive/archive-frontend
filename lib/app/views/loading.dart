@@ -1,4 +1,5 @@
 import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +14,9 @@ class LoadingView extends StatelessWidget {
         child: Center(
           child: Text(
             ArchiveStrings.loading,
-            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  fontWeight: FontWeight.w300,
-                ),
+            style: context.headlineSmall.copyWith(
+              fontWeight: FontWeight.w300,
+            ),
           ),
         ),
       ),

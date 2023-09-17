@@ -2,7 +2,9 @@ import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/chart.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/course_cards_builder.dart';
 import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
@@ -59,15 +61,14 @@ class ChartView extends GetView<ChartController> {
                       children: [
                         Text(
                           ArchiveStrings.chartHelp,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                          style: context.bodyMedium.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                         const Gap.horizontal(kSizeDefault / 2),
                         Icon(
                           ArchiveIcons.helpSquare,
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: context.secondaryColor,
                           size: kSizeDefault,
                         ),
                       ],
@@ -125,14 +126,14 @@ class ChartView extends GetView<ChartController> {
 }
 
 Widget _getHelpDialog(BuildContext context) {
-  final textStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
-        color: Theme.of(context).colorScheme.secondary.withOpacity(0.9),
-        fontWeight: FontWeight.w300,
-      );
+  final textStyle = context.bodyMedium.copyWith(
+    color: context.secondaryColor.withOpacity(0.9),
+    fontWeight: FontWeight.w300,
+  );
 
-  final titleStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
-        fontWeight: FontWeight.w500,
-      );
+  final titleStyle = context.bodyMedium.copyWith(
+    fontWeight: FontWeight.w500,
+  );
 
   return ArchiveDialog(
     title: ArchiveStrings.chartHelp,

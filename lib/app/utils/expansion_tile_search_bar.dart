@@ -1,5 +1,7 @@
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/search_text_field.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/utils/search_bar.dart';
 import 'package:cse_archive/app/widgets/expansion_tile.dart';
 import 'package:flutter/material.dart';
@@ -16,18 +18,18 @@ Widget expansionTileSearchBar({
   return ArchiveExpansionTile(
     title: Text(
       title,
-      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-            color: Theme.of(context).colorScheme.secondary,
-            fontWeight: FontWeight.w500,
-          ),
+      style: context.bodyLarge.copyWith(
+        color: context.secondaryColor,
+        fontWeight: FontWeight.w500,
+      ),
     ),
     children: [
       searchBar(
         context: context,
         hintText: ArchiveStrings.search,
         searchController: searchController,
-        primaryColor: Theme.of(context).colorScheme.primary,
-        secondaryColor: Theme.of(context).colorScheme.secondary,
+        primaryColor: context.primaryColor,
+        secondaryColor: context.secondaryColor,
         onClear: () {
           queryParameters.remove(queryParameter);
 

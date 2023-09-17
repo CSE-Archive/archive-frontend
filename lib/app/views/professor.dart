@@ -2,7 +2,9 @@ import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/professor.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/course_cards_builder.dart';
 import 'package:cse_archive/app/widgets/card.dart';
@@ -54,14 +56,14 @@ class ProfessorView extends GetView<ProfessorController> {
                     borderRadius: BorderRadius.circular(kSizeDefault / 2),
                     border: Border.all(
                       width: 4,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: context.primaryColor,
                     ),
                   ),
                   child: Center(
                     child: Icon(
                       ArchiveIcons.photoOff,
                       size: 5 * kSizeDefault,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: context.primaryColor,
                     ),
                   ),
                 ),
@@ -77,16 +79,16 @@ class ProfessorView extends GetView<ProfessorController> {
                 if (controller.professor!.honorific != null)
                   Text(
                     controller.professor!.honorific!,
-                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
+                    style: context.bodyLarge.copyWith(
+                      color: context.primaryColor,
+                    ),
                   ),
                 Text(
                   controller.professor!.fullName,
-                  style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                        color: Theme.of(context).colorScheme.primary,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  style: context.headlineMedium.copyWith(
+                    color: context.primaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -101,22 +103,19 @@ class ProfessorView extends GetView<ProfessorController> {
               const Gap.vertical(kSizeDefault / 2),
               SelectableText(
                 controller.professor!.about!,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withOpacity(0.8),
-                    ),
+                style: context.bodyMedium.copyWith(
+                  color: context.primaryColor.withOpacity(0.8),
+                ),
               ),
             ],
             if (controller.professor!.emails.isNotEmpty) ...[
               const Gap.vertical(2 * kSizeDefault),
               SelectableText(
                 ArchiveStrings.professorEmails,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: context.bodyLarge.copyWith(
+                  color: context.primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const Gap.vertical(kSizeDefault / 2),
               Column(
@@ -133,16 +132,14 @@ class ProfessorView extends GetView<ProfessorController> {
                           onPressed: followLink,
                           child: Text(
                             email,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary
-                                          .withOpacity(0.8),
-                                      decoration: TextDecoration.underline,
-                                      decorationColor:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
+                            style: context.bodyLarge.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.8),
+                              decoration: TextDecoration.underline,
+                              decorationColor: context.primaryColor,
+                            ),
                           ),
                         ),
                       ),
@@ -154,10 +151,10 @@ class ProfessorView extends GetView<ProfessorController> {
               const Gap.vertical(2 * kSizeDefault),
               SelectableText(
                 ArchiveStrings.professorRelatedLinks,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: context.bodyLarge.copyWith(
+                  color: context.primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const Gap.vertical(kSizeDefault / 2),
               Column(
@@ -172,16 +169,14 @@ class ProfessorView extends GetView<ProfessorController> {
                           onPressed: followLink,
                           child: Text(
                             link.title,
-                            style:
-                                Theme.of(context).textTheme.bodyLarge!.copyWith(
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .primary
-                                          .withOpacity(0.8),
-                                      decoration: TextDecoration.underline,
-                                      decorationColor:
-                                          Theme.of(context).colorScheme.primary,
-                                    ),
+                            style: context.bodyLarge.copyWith(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(0.8),
+                              decoration: TextDecoration.underline,
+                              decorationColor: context.primaryColor,
+                            ),
                           ),
                         ),
                       ),
@@ -227,7 +222,7 @@ class ProfessorView extends GetView<ProfessorController> {
                 child: Container(
                   padding: const EdgeInsets.all(kSizeDefault),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: context.secondaryColor,
                     borderRadius: BorderRadius.circular(kSizeDefault),
                   ),
                   child: context.responsiveBuilder(

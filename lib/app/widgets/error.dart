@@ -1,4 +1,6 @@
 import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +33,7 @@ class ArchiveError extends StatelessWidget {
             height: 130,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.1),
+              color: context.secondaryColor.withOpacity(0.1),
             ),
             child: Center(
               child: Transform.translate(
@@ -41,9 +43,9 @@ class ArchiveError extends StatelessWidget {
                     ArchiveErrorType.notFound => '۴۰۴',
                     ArchiveErrorType.general => '!',
                   },
-                  style: Theme.of(context).textTheme.displayLarge!.copyWith(
-                        fontWeight: FontWeight.w300,
-                      ),
+                  style: context.displayLarge.copyWith(
+                    fontWeight: FontWeight.w300,
+                  ),
                 ),
               ),
             ),
@@ -52,16 +54,16 @@ class ArchiveError extends StatelessWidget {
           SelectableText(
             title,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.displaySmall!.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+            style: context.displaySmall.copyWith(
+              fontWeight: FontWeight.bold,
+            ),
           ),
           SelectableText(
             description,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  fontWeight: FontWeight.w300,
-                ),
+            style: context.headlineSmall.copyWith(
+              fontWeight: FontWeight.w300,
+            ),
           ),
           if (button != null) ...[
             const Gap.vertical(kSizeDefault),

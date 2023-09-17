@@ -1,5 +1,7 @@
 import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/models/reference.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +24,7 @@ class ArchiveReferenceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ArchiveCard(
       width: width,
-      color: Theme.of(context).colorScheme.primary,
+      color: context.primaryColor,
       padding: const EdgeInsets.all(kSizeDefault),
       onPressed: () =>
           context.go('${ArchiveRoutes.references}/${reference.uuid}'),
@@ -37,7 +39,7 @@ class ArchiveReferenceCard extends StatelessWidget {
               reference.title,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodyLarge,
+              style: context.bodyLarge,
             ),
           ),
           const Gap.vertical(kSizeDefault / 2),
@@ -47,12 +49,9 @@ class ArchiveReferenceCard extends StatelessWidget {
               reference.writers.join(', '),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .secondary
-                        .withOpacity(0.8),
-                  ),
+              style: context.bodySmall.copyWith(
+                color: context.secondaryColor.withOpacity(0.8),
+              ),
             ),
           ),
           const Gap.vertical(kSizeDefault),
@@ -66,8 +65,7 @@ class ArchiveReferenceCard extends StatelessWidget {
                       fit: BoxFit.cover,
                     )
                   : null,
-              border:
-                  Border.all(color: Theme.of(context).colorScheme.secondary),
+              border: Border.all(color: context.secondaryColor),
             ),
             child: (reference.image != null)
                 ? null
@@ -75,7 +73,7 @@ class ArchiveReferenceCard extends StatelessWidget {
                     child: Icon(
                       ArchiveIcons.photoOff,
                       size: 3 * kSizeDefault,
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: context.secondaryColor,
                     ),
                   ),
           ),

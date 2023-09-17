@@ -1,4 +1,5 @@
 import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
 
@@ -22,7 +23,7 @@ class BulletText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final defaultTextStyle = Theme.of(context).textTheme.bodyMedium;
+    final defaultTextStyle = context.bodyMedium;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -50,7 +51,7 @@ class BulletText extends StatelessWidget {
                     child: Text(
                       text,
                       softWrap: true,
-                      style: (textStyle ?? defaultTextStyle)!.copyWith(
+                      style: (textStyle ?? defaultTextStyle).copyWith(
                         decoration: TextDecoration.underline,
                         decorationColor: Theme.of(context)
                             .colorScheme

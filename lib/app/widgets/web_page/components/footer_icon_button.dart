@@ -1,4 +1,5 @@
 import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,11 +30,11 @@ class FooterIconButton extends StatelessWidget {
             height: 2.2 * kSizeDefault,
             decoration: BoxDecoration(
               color: hovered.isTrue
-                  ? Theme.of(context).colorScheme.secondary
-                  : Theme.of(context).colorScheme.primary.withOpacity(0),
+                  ? context.secondaryColor
+                  : context.primaryColor.withOpacity(0),
               border: Border.all(
                 width: 1,
-                color: Theme.of(context).colorScheme.secondary,
+                color: context.secondaryColor,
               ),
             ),
             child: Center(
@@ -41,8 +42,8 @@ class FooterIconButton extends StatelessWidget {
                 icon,
                 size: 1.25 * kSizeDefault,
                 color: hovered.isTrue
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.secondary,
+                    ? context.primaryColor
+                    : context.secondaryColor,
               ),
             ),
           ),

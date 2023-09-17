@@ -1,5 +1,6 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
+import 'package:cse_archive/app/themes.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
 import 'package:cse_archive/app/widgets/web_page/components/footer.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,8 @@ class ArchiveWebPage extends StatelessWidget {
             child: Center(
               child: ConstrainedBox(
                   constraints: BoxConstraints(
-                    minHeight: context.responsiveVisibleHeight -
+                    minHeight: context.screenHeight -
+                        ArchiveThemes.appbarHeight -
                         (applyPlatformVerticalPadding
                             ? 2 * verticalPadding
                             : 0) -

@@ -2,6 +2,8 @@ import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/professors.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/expansion_tile_radio_button.dart';
 import 'package:cse_archive/app/utils/expansion_tile_search_bar.dart';
@@ -64,14 +66,14 @@ class ProfessorsView extends GetView<ProfessorsController> {
                     children: [
                       Text(
                         ArchiveStrings.filters,
-                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
+                        style: context.bodyMedium.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       const Gap.horizontal(kSizeDefault / 2),
                       Icon(
                         ArchiveIcons.adjustmentsAlt,
-                        color: Theme.of(context).colorScheme.secondary,
+                        color: context.secondaryColor,
                         size: kSizeDefault,
                       ),
                     ],

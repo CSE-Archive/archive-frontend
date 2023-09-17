@@ -2,7 +2,9 @@ import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/reference.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/course_cards_builder.dart';
 import 'package:cse_archive/app/utils/reference_cards_builder.dart';
@@ -49,14 +51,14 @@ class ReferenceView extends GetView<ReferenceController> {
                     borderRadius: BorderRadius.circular(kSizeDefault / 2),
                     border: Border.all(
                       width: 4,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: context.primaryColor,
                     ),
                   ),
                   child: Center(
                     child: Icon(
                       ArchiveIcons.photoOff,
                       size: 5 * kSizeDefault,
-                      color: Theme.of(context).colorScheme.primary,
+                      color: context.primaryColor,
                     ),
                   ),
                 ),
@@ -69,10 +71,10 @@ class ReferenceView extends GetView<ReferenceController> {
 
         final title = SelectableText(
           controller.reference!.title,
-          style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-                fontWeight: FontWeight.bold,
-              ),
+          style: context.headlineMedium.copyWith(
+            color: context.primaryColor,
+            fontWeight: FontWeight.bold,
+          ),
         );
 
         final dataColumn = Column(
@@ -83,20 +85,17 @@ class ReferenceView extends GetView<ReferenceController> {
               const Gap.vertical(2 * kSizeDefault),
               SelectableText(
                 ArchiveStrings.referenceAuthors,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: context.bodyLarge.copyWith(
+                  color: context.primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const Gap.vertical(kSizeDefault / 2),
               SelectableText(
                 controller.reference!.writers.join('\n'),
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withOpacity(0.8),
-                    ),
+                style: context.bodyLarge.copyWith(
+                  color: context.primaryColor.withOpacity(0.8),
+                ),
               ),
             ],
             // TODO: Add download buttons
@@ -138,7 +137,7 @@ class ReferenceView extends GetView<ReferenceController> {
                   width: double.infinity,
                   padding: const EdgeInsets.all(kSizeDefault),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: context.secondaryColor,
                     borderRadius: BorderRadius.circular(kSizeDefault),
                   ),
                   child: context.responsiveBuilder(

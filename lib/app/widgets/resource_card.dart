@@ -1,4 +1,6 @@
 import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/models/resource.dart';
 import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +22,7 @@ class ArchiveResourceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ArchiveCard(
       width: width,
-      color: Theme.of(context).colorScheme.primary,
+      color: context.primaryColor,
       padding: const EdgeInsets.all(kSizeDefault),
       onPressed: () {}, // TODO: Add on press download options
       child: Column(
@@ -31,7 +33,7 @@ class ArchiveResourceCard extends StatelessWidget {
             '${resource.title ?? resource.type.concatenation} ${resource.classroom!.course.title}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: context.bodyLarge,
           ),
           const Gap.vertical(kSizeDefault),
           Text(
@@ -40,10 +42,9 @@ class ArchiveResourceCard extends StatelessWidget {
             ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.secondary.withOpacity(0.8),
-                ),
+            style: context.bodySmall.copyWith(
+              color: context.secondaryColor.withOpacity(0.8),
+            ),
           ),
           Text(
             resource.classroom!.professors
@@ -53,10 +54,9 @@ class ArchiveResourceCard extends StatelessWidget {
                 .join(', '),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.secondary.withOpacity(0.8),
-                ),
+            style: context.bodySmall.copyWith(
+              color: context.secondaryColor.withOpacity(0.8),
+            ),
           ),
         ],
       ),

@@ -1,5 +1,7 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/widgets/divider.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
@@ -15,9 +17,9 @@ class ArchiveHeader extends StatelessWidget {
   }) : super(key: key);
 
   static TextStyle textStyle(BuildContext context) =>
-      Theme.of(context).textTheme.headlineSmall!.copyWith(
-            fontWeight: FontWeight.bold,
-          );
+      context.headlineSmall.copyWith(
+        fontWeight: FontWeight.bold,
+      );
 
   static const bottomPadding = kSizeDefault;
 
@@ -35,7 +37,7 @@ class ArchiveHeader extends StatelessWidget {
           ),
           Expanded(
             child: ArchiveDivider(
-              color: Theme.of(context).colorScheme.secondary,
+              color: context.secondaryColor,
               margin: EdgeInsets.only(
                 right: kSizeDefault,
                 left: (seeAllUri != null) ? kSizeDefault : 0,

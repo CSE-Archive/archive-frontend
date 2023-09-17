@@ -1,6 +1,8 @@
 import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/models/professor.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:flutter/material.dart';
@@ -23,7 +25,7 @@ class ArchiveProfessorCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ArchiveCard(
       width: width,
-      color: Theme.of(context).colorScheme.primary,
+      color: context.primaryColor,
       padding: const EdgeInsets.all(kSizeDefault),
       onPressed: () =>
           context.go('${ArchiveRoutes.professors}/${professor.uuid}'),
@@ -36,17 +38,16 @@ class ArchiveProfessorCard extends StatelessWidget {
             professor.fullNameWithHonorific,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: context.bodyLarge,
           ),
           const Gap.vertical(kSizeDefault / 2),
           Text(
             '${ArchiveStrings.professorDepartment} ${professor.department.representation}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.secondary.withOpacity(0.8),
-                ),
+            style: context.bodySmall.copyWith(
+              color: context.secondaryColor.withOpacity(0.8),
+            ),
           ),
           const Gap.vertical(kSizeDefault),
           Container(
@@ -59,8 +60,7 @@ class ArchiveProfessorCard extends StatelessWidget {
                       fit: BoxFit.cover,
                     )
                   : null,
-              border:
-                  Border.all(color: Theme.of(context).colorScheme.secondary),
+              border: Border.all(color: context.secondaryColor),
             ),
             child: (professor.image != null)
                 ? null
@@ -68,7 +68,7 @@ class ArchiveProfessorCard extends StatelessWidget {
                     child: Icon(
                       ArchiveIcons.photoOff,
                       size: 3 * kSizeDefault,
-                      color: Theme.of(context).colorScheme.secondary,
+                      color: context.secondaryColor,
                     ),
                   ),
           ),

@@ -1,6 +1,8 @@
 import 'package:cse_archive/app/constants/links.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/widgets/bullet_text.dart';
 import 'package:cse_archive/app/widgets/dialog.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
@@ -10,14 +12,14 @@ void showAboutUsDialog({required BuildContext context}) {
   showDialog(
     context: context,
     builder: (context) {
-      final textStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.9),
-            fontWeight: FontWeight.w300,
-          );
+      final textStyle = context.bodyMedium.copyWith(
+        color: context.secondaryColor.withOpacity(0.9),
+        fontWeight: FontWeight.w300,
+      );
 
-      final membersStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
-            fontWeight: FontWeight.w500,
-          );
+      final membersStyle = context.bodyMedium.copyWith(
+        fontWeight: FontWeight.w500,
+      );
 
       return ArchiveDialog(
         title: ArchiveStrings.about,

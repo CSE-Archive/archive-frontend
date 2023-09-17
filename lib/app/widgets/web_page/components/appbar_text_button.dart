@@ -1,4 +1,5 @@
 import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/services/pages_tracker.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
 import 'package:flutter/material.dart';
@@ -29,9 +30,9 @@ class AppbarTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hovered = false.obs;
-    final textStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
-          fontWeight: FontWeight.w500,
-        );
+    final textStyle = context.bodyMedium.copyWith(
+      fontWeight: FontWeight.w500,
+    );
 
     return Link(
       uri: Uri(path: route),

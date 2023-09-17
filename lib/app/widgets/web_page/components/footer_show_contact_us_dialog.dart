@@ -1,6 +1,8 @@
 import 'package:cse_archive/app/constants/links.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/widgets/dialog.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
 import 'package:flutter/material.dart';
@@ -10,17 +12,16 @@ void showContactUsDialog({required BuildContext context}) {
   showDialog(
     context: context,
     builder: (context) {
-      final textStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
-            color: Theme.of(context).colorScheme.secondary.withOpacity(0.9),
-            fontWeight: FontWeight.w300,
-          );
+      final textStyle = context.bodyMedium.copyWith(
+        color: context.secondaryColor.withOpacity(0.9),
+        fontWeight: FontWeight.w300,
+      );
 
-      final linkStyle = Theme.of(context).textTheme.bodyMedium!.copyWith(
-            fontWeight: FontWeight.w500,
-            decoration: TextDecoration.underline,
-            decorationColor:
-                Theme.of(context).colorScheme.secondary.withOpacity(0.4),
-          );
+      final linkStyle = context.bodyMedium.copyWith(
+        fontWeight: FontWeight.w500,
+        decoration: TextDecoration.underline,
+        decorationColor: context.secondaryColor.withOpacity(0.4),
+      );
 
       return ArchiveDialog(
         title: ArchiveStrings.contact,

@@ -4,6 +4,7 @@ import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/search.dart';
 import 'package:cse_archive/app/controllers/search_text_field.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/services/pages_tracker.dart';
@@ -34,8 +35,8 @@ SliverAppBar sliverAppbar({required BuildContext context}) {
     },
     context: context,
     searchController: searchController,
-    primaryColor: Theme.of(context).colorScheme.secondary,
-    secondaryColor: Theme.of(context).colorScheme.primary,
+    primaryColor: context.secondaryColor,
+    secondaryColor: context.primaryColor,
     onSubmitted: (query) {
       if (query.trim().isEmpty) return;
 
@@ -56,8 +57,8 @@ SliverAppBar sliverAppbar({required BuildContext context}) {
     elevation: 8,
     toolbarHeight: ArchiveThemes.appbarHeight,
     leadingWidth: context.responsiveHorizontalPadding + logoWidth,
-    backgroundColor: Theme.of(context).colorScheme.tertiary,
-    shadowColor: Theme.of(context).colorScheme.shadow.withOpacity(0.7),
+    backgroundColor: context.tertiaryColor,
+    shadowColor: context.shadowColor.withOpacity(0.7),
     leading: Padding(
       padding: EdgeInsets.only(right: context.responsiveHorizontalPadding),
       child: Center(
@@ -72,7 +73,7 @@ SliverAppBar sliverAppbar({required BuildContext context}) {
                 width: logoWidth,
                 height: logoWidth,
                 colorFilter: ColorFilter.mode(
-                  Theme.of(context).colorScheme.secondary,
+                  context.secondaryColor,
                   BlendMode.srcIn,
                 ),
               ),
@@ -134,7 +135,7 @@ SliverAppBar sliverAppbar({required BuildContext context}) {
               : ArchiveIcons.moonStarsFilled,
           onPressed: () => ThemeModeService.to.toggle(context),
           size: 1.7 * kSizeDefault,
-          color: Theme.of(context).colorScheme.secondary,
+          color: context.secondaryColor,
         ),
         const Gap.horizontal(kSizeDefault),
         Center(

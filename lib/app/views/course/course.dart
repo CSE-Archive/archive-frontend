@@ -1,7 +1,9 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/course.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/course_cards_builder.dart';
 import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
@@ -63,18 +65,18 @@ class CourseView extends GetView<CourseController> {
           children: [
             SelectableText(
               controller.course!.title,
-              style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
+              style: context.headlineMedium.copyWith(
+                fontWeight: FontWeight.bold,
+                color: context.primaryColor,
+              ),
             ),
             if (controller.course!.titleEn != null) ...[
               const Gap.vertical(kSizeDefault / 4),
               SelectableText(
                 controller.course!.titleEn!,
-                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                style: context.bodyLarge.copyWith(
+                  color: context.primaryColor,
+                ),
               ),
             ],
           ],
@@ -115,7 +117,7 @@ class CourseView extends GetView<CourseController> {
                 child: Container(
                   padding: const EdgeInsets.all(kSizeDefault),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.secondary,
+                    color: context.secondaryColor,
                     borderRadius: BorderRadius.circular(kSizeDefault),
                   ),
                   child: Column(
@@ -155,13 +157,12 @@ class CourseView extends GetView<CourseController> {
                         const Gap.vertical(kSizeDefault),
                         SelectableText(
                           controller.course!.description!,
-                          style:
-                              Theme.of(context).textTheme.bodyMedium!.copyWith(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .primary
-                                        .withOpacity(0.8),
-                                  ),
+                          style: context.bodyMedium.copyWith(
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.8),
+                          ),
                         ),
                       ],
                     ],
@@ -277,7 +278,7 @@ class CourseView extends GetView<CourseController> {
                       ),
                       Expanded(
                         child: ArchiveDivider(
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: context.secondaryColor,
                         ),
                       ),
                     ],

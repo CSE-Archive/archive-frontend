@@ -1,5 +1,7 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/models/classroom.dart';
 import 'package:cse_archive/app/models/professor.dart';
 import 'package:cse_archive/app/models/recorded_classroom.dart';
@@ -39,7 +41,7 @@ class CourseExpansionTile extends StatelessWidget {
     return ArchiveExpansionTile(
       title: Text(
         '$semester ${enToFaDigits(year.toString())}',
-        style: Theme.of(context).textTheme.bodyLarge,
+        style: context.bodyLarge,
       ),
       subtitle: Text(
         professors
@@ -48,14 +50,14 @@ class CourseExpansionTile extends StatelessWidget {
             )
             .join(', '),
         softWrap: true,
-        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-              color: Theme.of(context).colorScheme.secondary.withOpacity(0.7),
-            ),
+        style: context.bodyMedium.copyWith(
+          color: context.secondaryColor.withOpacity(0.7),
+        ),
       ),
       children: [
         Container(
           width: double.infinity,
-          color: Theme.of(context).colorScheme.secondary.withOpacity(0.2),
+          color: context.secondaryColor.withOpacity(0.2),
           padding: const EdgeInsets.all(kSizeDefault),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -64,19 +66,19 @@ class CourseExpansionTile extends StatelessWidget {
               if (tas.isNotEmpty) ...[
                 Text(
                   ArchiveStrings.courseTAs,
-                  style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.8),
-                      ),
+                  style: context.bodySmall.copyWith(
+                    color: Theme.of(context)
+                        .colorScheme
+                        .secondary
+                        .withOpacity(0.8),
+                  ),
                 ),
                 Text(
                   tas.join(', '),
-                  style: Theme.of(context).textTheme.bodyMedium,
+                  style: context.bodyMedium,
                 ),
                 ArchiveDivider(
-                  color: Theme.of(context).colorScheme.secondary,
+                  color: context.secondaryColor,
                   margin: const EdgeInsets.symmetric(vertical: kSizeDefault),
                 ),
               ],

@@ -1,5 +1,6 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -23,7 +24,7 @@ class ArchiveLoadMoreButton extends StatelessWidget {
       children: [
         Expanded(
           child: ArchiveDivider(
-            color: Theme.of(context).colorScheme.secondary,
+            color: context.secondaryColor,
             margin: const EdgeInsets.only(left: kSizeDefault),
           ),
         ),
@@ -63,18 +64,14 @@ class ArchiveLoadMoreButton extends StatelessWidget {
                 isLoadingMore.isTrue ? SystemMouseCursors.wait : null,
               ),
               foregroundColor: MaterialStatePropertyAll(
-                isLoadingMore.isTrue
-                    ? Theme.of(context).colorScheme.primary
-                    : null,
+                isLoadingMore.isTrue ? context.primaryColor : null,
               ),
               iconColor: MaterialStatePropertyAll(
-                isLoadingMore.isTrue
-                    ? Theme.of(context).colorScheme.primary
-                    : null,
+                isLoadingMore.isTrue ? context.primaryColor : null,
               ),
               backgroundColor: MaterialStatePropertyAll(
                 isLoadingMore.isTrue
-                    ? Theme.of(context).colorScheme.secondary.withOpacity(0.7)
+                    ? context.secondaryColor.withOpacity(0.7)
                     : null,
               ),
               side: MaterialStatePropertyAll(
@@ -86,7 +83,7 @@ class ArchiveLoadMoreButton extends StatelessWidget {
         ),
         Expanded(
           child: ArchiveDivider(
-            color: Theme.of(context).colorScheme.secondary,
+            color: context.secondaryColor,
             margin: const EdgeInsets.only(right: kSizeDefault),
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -41,9 +42,9 @@ class ArchiveCard extends StatelessWidget {
               boxShadow: [
                 BoxShadow(
                   blurRadius: 6,
-                  color: Theme.of(context).colorScheme.shadow.withOpacity(
-                        hovered.isTrue && onPressed != null ? 0.7 : 0.4,
-                      ),
+                  color: context.shadowColor.withOpacity(
+                    hovered.isTrue && onPressed != null ? 0.7 : 0.4,
+                  ),
                 ),
               ],
             ),

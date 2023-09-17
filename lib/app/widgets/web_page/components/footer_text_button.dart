@@ -1,3 +1,5 @@
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:flutter/material.dart';
 
 class FooterTextButton extends StatelessWidget {
@@ -15,16 +17,16 @@ class FooterTextButton extends StatelessWidget {
     return TextButton(
       style: ButtonStyle(
         textStyle: MaterialStatePropertyAll(
-          Theme.of(context).textTheme.bodyMedium!.copyWith(
-                fontWeight: FontWeight.w500,
-              ),
+          context.bodyMedium.copyWith(
+            fontWeight: FontWeight.w500,
+          ),
         ),
         foregroundColor: MaterialStateProperty.resolveWith(
           (states) {
             if (states.contains(MaterialState.hovered)) {
-              return Theme.of(context).colorScheme.secondary.withOpacity(0.6);
+              return context.secondaryColor.withOpacity(0.6);
             }
-            return Theme.of(context).colorScheme.secondary;
+            return context.secondaryColor;
           },
         ),
       ),

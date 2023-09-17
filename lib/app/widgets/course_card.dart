@@ -1,6 +1,8 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/controllers/courses.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/models/chart_node.dart';
 import 'package:cse_archive/app/models/course.dart';
 import 'package:cse_archive/app/routes/routes.dart';
@@ -36,7 +38,7 @@ class ArchiveCourseCard extends StatelessWidget {
 
     final child = ArchiveCard(
       width: width,
-      color: Theme.of(context).colorScheme.primary,
+      color: context.primaryColor,
       padding: const EdgeInsets.all(kSizeDefault),
       onPressed: () => context.go(
         chartNode != null && effectiveCourse == null
@@ -60,24 +62,22 @@ class ArchiveCourseCard extends StatelessWidget {
                 : effectiveCourse!.title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: context.bodyLarge,
           ),
           const Gap.vertical(kSizeDefault),
           Text(
             enToFaDigits(
               '${chartNode != null && effectiveCourse == null ? chartNode!.courseUnits!.representation : effectiveCourse!.units.representation} ${ArchiveStrings.courseUnit}',
             ),
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.secondary.withOpacity(0.8),
-                ),
+            style: context.bodySmall.copyWith(
+              color: context.secondaryColor.withOpacity(0.8),
+            ),
           ),
           Text(
             effectiveCourse?.type.representation ?? '',
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color:
-                      Theme.of(context).colorScheme.secondary.withOpacity(0.8),
-                ),
+            style: context.bodySmall.copyWith(
+              color: context.secondaryColor.withOpacity(0.8),
+            ),
           ),
         ],
       ),

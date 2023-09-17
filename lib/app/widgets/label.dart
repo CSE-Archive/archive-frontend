@@ -1,4 +1,6 @@
 import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:flutter/material.dart';
 
 import 'gap.dart';
@@ -19,7 +21,7 @@ class ArchiveLabel extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(kSizeDefault / 2),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+          color: context.primaryColor,
           borderRadius: BorderRadius.circular(kSizeDefault / 2),
         ),
         child: Row(
@@ -28,7 +30,7 @@ class ArchiveLabel extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: context.bodyMedium,
             ),
             const Gap.horizontal(kSizeDefault / 2),
             Container(
@@ -37,16 +39,16 @@ class ArchiveLabel extends StatelessWidget {
                 vertical: kSizeDefault / 4,
               ),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.secondary,
+                color: context.secondaryColor,
                 borderRadius: BorderRadius.circular(
                   kSizeDefault / 4,
                 ),
               ),
               child: Text(
                 value,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                style: context.bodyMedium.copyWith(
+                  color: context.primaryColor,
+                ),
               ),
             ),
           ],

@@ -1,54 +1,41 @@
 import 'package:cse_archive/app/constants/sizes.dart';
-import 'package:cse_archive/app/themes.dart';
 import 'package:flutter/material.dart';
 
-abstract class ArchivePlatform {
-  final BuildContext context;
-
-  ArchivePlatform(this.context);
-
-  double get maxWidth;
-  double get margin;
-  int get cardsGridViewCrossAxisCount;
-}
-
-const _tabletMinWidth = 768;
-const _desktopMinWidth = 1024;
-const _desktopXLMinWidth = 1600;
-const _desktopFullHDMinWidth = 1920;
-
 extension ArchiveResponsive on BuildContext {
+  static const _tabletMinWidth = 768;
+  static const _desktopMinWidth = 1024;
+  static const _desktopXLMinWidth = 1600;
+  static const _desktopFullHDMinWidth = 1920;
+
   ArchivePlatform get mobilePlatform => _Mobile(this);
   ArchivePlatform get tabletPlatform => _Tablet(this);
   ArchivePlatform get desktopPlatform => _Desktop(this);
   ArchivePlatform get desktopXLPlatform => _DesktopXL(this);
   ArchivePlatform get desktopFullHDPlatform => _DesktopFullHD(this);
 
-  double get maxWidth => MediaQuery.sizeOf(this).width;
-  double get maxHeight => MediaQuery.sizeOf(this).height;
+  double get screenWidth => MediaQuery.sizeOf(this).width;
+  double get screenHeight => MediaQuery.sizeOf(this).height;
 
   double get responsiveHorizontalPadding =>
-      (maxWidth - platform.maxWidth > 0
-          ? (maxWidth - platform.maxWidth) / 2
+      (screenWidth - platform.maxWidth > 0
+          ? (screenWidth - platform.maxWidth) / 2
           : 0) +
       platform.margin;
-
-  double get responsiveVisibleHeight => maxHeight - ArchiveThemes.appbarHeight;
 
   double get responsiveCardWidth =>
       ((platform.maxWidth - 2 * platform.margin) -
           (platform.cardsGridViewCrossAxisCount - 1) * kSizeDefault) /
       platform.cardsGridViewCrossAxisCount;
 
-  bool get isMobile => maxWidth < _tabletMinWidth;
+  bool get isMobile => screenWidth < _tabletMinWidth;
   bool get isTablet =>
-      maxWidth >= _tabletMinWidth && maxWidth < _desktopMinWidth;
+      screenWidth >= _tabletMinWidth && screenWidth < _desktopMinWidth;
   bool get isMobileOrTablet => isMobile || isTablet;
   bool get isDesktop =>
-      maxWidth >= _desktopMinWidth && maxWidth < _desktopXLMinWidth;
+      screenWidth >= _desktopMinWidth && screenWidth < _desktopXLMinWidth;
   bool get isDesktopXL =>
-      maxWidth >= _desktopXLMinWidth && maxWidth < _desktopFullHDMinWidth;
-  bool get isDesktopFullHD => maxWidth >= _desktopFullHDMinWidth;
+      screenWidth >= _desktopXLMinWidth && screenWidth < _desktopFullHDMinWidth;
+  bool get isDesktopFullHD => screenWidth >= _desktopFullHDMinWidth;
 
   ArchivePlatform get platform {
     if (isMobile) return mobilePlatform;
@@ -84,11 +71,21 @@ extension ArchiveResponsive on BuildContext {
       builder(platform);
 }
 
+abstract class ArchivePlatform {
+  final BuildContext context;
+
+  ArchivePlatform(this.context);
+
+  double get maxWidth;
+  double get margin;
+  int get cardsGridViewCrossAxisCount;
+}
+
 class _Mobile extends ArchivePlatform {
   _Mobile(super.context);
 
   @override
-  double get maxWidth => context.maxWidth;
+  double get maxWidth => context.screenWidth;
 
   @override
   double get margin => 16;
@@ -101,7 +98,7 @@ class _Tablet extends ArchivePlatform {
   _Tablet(super.context);
 
   @override
-  double get maxWidth => context.maxWidth;
+  double get maxWidth => context.screenWidth;
 
   @override
   double get margin => 24;

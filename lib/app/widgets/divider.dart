@@ -1,3 +1,4 @@
+import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:flutter/material.dart';
 
 class ArchiveDivider extends StatelessWidget {
@@ -16,7 +17,7 @@ class ArchiveDivider extends StatelessWidget {
       height: 1.5,
       margin: margin ?? EdgeInsets.zero,
       width: double.infinity,
-      color: (color ?? Theme.of(context).colorScheme.primary).withOpacity(0.15),
+      color: (color ?? context.primaryColor).withOpacity(0.15),
     );
   }
 }
