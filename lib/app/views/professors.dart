@@ -6,7 +6,7 @@ import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/expansion_tile_radio_button.dart';
-import 'package:cse_archive/app/utils/expansion_tile_search_bar.dart';
+import 'package:cse_archive/app/utils/expansion_tile_search_box.dart';
 import 'package:cse_archive/app/utils/professor_cards_builder.dart';
 import 'package:cse_archive/app/widgets/dialog.dart';
 import 'package:cse_archive/app/widgets/error.dart';
@@ -136,12 +136,13 @@ Widget _getFiltersDialog(
   return ArchiveDialog(
     title: ArchiveStrings.filters,
     children: [
-      expansionTileSearchBar(
+      expansionTileSearchBox(
         context: context,
         title: ArchiveStrings.professorsNameFilter,
         queryParameters: queryParameters,
         queryParameter: ProfessorsController.searchQueryParameter,
         searchController: controller.searchController,
+        searchControllerEmpty: controller.searchControllerEmpty,
         effectiveRoute: ArchiveRoutes.professors,
       ),
       expansionTileRadioButton(

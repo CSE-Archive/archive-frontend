@@ -2,9 +2,8 @@ import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/models/professor_department.dart';
 import 'package:cse_archive/app/models/professor.dart';
 import 'package:cse_archive/app/services/api.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'search_text_field.dart';
 
 class ProfessorsController extends GetxController with StateMixin {
   static const searchQueryParameter = 'search';
@@ -13,8 +12,10 @@ class ProfessorsController extends GetxController with StateMixin {
 
   late List<ProfessorDepartmentModel> departmentQueryOptions = [];
 
-  final searchController = SearchTextFieldController();
   final selectedDepartment = departmentQueryDefault.obs;
+
+  final searchController = TextEditingController();
+  final searchControllerEmpty = true.obs;
 
   int paginationCounter = 1;
 
@@ -22,14 +23,32 @@ class ProfessorsController extends GetxController with StateMixin {
   final isThereMore = false.obs;
   final isLoadingMore = false.obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+
+    searchController.addListener(
+      () {
+        searchControllerEmpty.value = searchController.text.isEmpty;
+        searchControllerEmpty.refresh();
+      },
+    );
+  }
+
+  @override
+  void onClose() {
+    searchController.dispose();
+
+    super.onClose();
+  }
+
   Future<void> setQueryParameters(Map<String, String> queryParameters) async {
     await _fetchOptions();
 
     if (queryParameters.keys.contains(searchQueryParameter)) {
-      searchController.textController.text =
-          queryParameters[searchQueryParameter]!;
+      searchController.text = queryParameters[searchQueryParameter]!;
     } else {
-      searchController.textController.clear();
+      searchController.clear();
     }
 
     if (queryParameters.keys.contains(departmentQueryParameter)) {
@@ -69,7 +88,7 @@ class ProfessorsController extends GetxController with StateMixin {
 
     final result = await APIService.to.professors(
       department: selectedDepartment.value,
-      search: searchController.textController.text,
+      search: searchController.text,
     );
 
     if (result != null) {
@@ -90,7 +109,7 @@ class ProfessorsController extends GetxController with StateMixin {
 
     final result = await APIService.to.professors(
       department: selectedDepartment.value,
-      search: searchController.textController.text,
+      search: searchController.text,
       offset: kDataLimit * paginationCounter,
     );
 

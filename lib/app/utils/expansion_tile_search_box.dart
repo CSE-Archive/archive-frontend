@@ -1,16 +1,17 @@
 import 'package:cse_archive/app/constants/strings.dart';
-import 'package:cse_archive/app/controllers/search_text_field.dart';
 import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/utils/search_bar.dart';
 import 'package:cse_archive/app/widgets/expansion_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-Widget expansionTileSearchBar({
+Widget expansionTileSearchBox({
   required BuildContext context,
   required String title,
-  required SearchTextFieldController searchController,
+  required TextEditingController searchController,
+  required RxBool searchControllerEmpty,
   required Map<String, String> queryParameters,
   required String queryParameter,
   required String effectiveRoute,
@@ -27,7 +28,8 @@ Widget expansionTileSearchBar({
       searchBar(
         context: context,
         hintText: ArchiveStrings.search,
-        searchController: searchController,
+        controller: searchController,
+        controllerEmpty: searchControllerEmpty,
         primaryColor: context.primaryColor,
         secondaryColor: context.secondaryColor,
         onClear: () {

@@ -1,4 +1,6 @@
 import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/controllers/general.dart';
+import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/services/pages_tracker.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
@@ -30,14 +32,19 @@ class AppbarTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hovered = false.obs;
-    final textStyle = context.bodyMedium.copyWith(
+    final textStyle =
+        (context.isMobileOrTablet ? context.bodyLarge : context.bodyMedium)
+            .copyWith(
       fontWeight: FontWeight.w500,
     );
 
     return Link(
       uri: Uri(path: route),
       builder: (_, followLink) => GestureDetector(
-        onTap: followLink,
+        onTap: () {
+          GeneralController.closeDrawer();
+          followLink!();
+        },
         child: MouseRegion(
           cursor: SystemMouseCursors.click,
           onEnter: (_) => hovered(true),

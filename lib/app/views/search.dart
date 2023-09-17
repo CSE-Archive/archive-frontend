@@ -35,7 +35,7 @@ class SearchView extends GetView<SearchViewController> {
                   type: ArchiveErrorType.notFound,
                   title: ArchiveStrings.searchNotFoundTitle,
                   description: ArchiveStrings.searchNotFoundDescriptionP1 +
-                      controller.searchController.text +
+                      controller.appbarSearchController.text +
                       ArchiveStrings.searchNotFoundDescriptionP2,
                 ),
               )
@@ -56,7 +56,7 @@ class SearchView extends GetView<SearchViewController> {
                           path: ArchiveRoutes.courses,
                           queryParameters: {
                             CoursesController.searchQueryParameter:
-                                controller.searchController.text,
+                                controller.appbarSearchController.text,
                           },
                         ),
                       ),
@@ -83,7 +83,7 @@ class SearchView extends GetView<SearchViewController> {
                           path: ArchiveRoutes.references,
                           queryParameters: {
                             ReferencesController.searchQueryParameter:
-                                controller.searchController.text,
+                                controller.appbarSearchController.text,
                           },
                         ),
                       ),
@@ -109,7 +109,7 @@ class SearchView extends GetView<SearchViewController> {
                           path: ArchiveRoutes.professors,
                           queryParameters: {
                             ProfessorsController.searchQueryParameter:
-                                controller.searchController.text,
+                                controller.appbarSearchController.text,
                           },
                         ),
                       ),

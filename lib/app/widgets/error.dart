@@ -54,7 +54,7 @@ class ArchiveError extends StatelessWidget {
           SelectableText(
             title,
             textAlign: TextAlign.center,
-            style: context.displaySmall.copyWith(
+            style: context.headlineLarge.copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),

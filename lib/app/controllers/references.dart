@@ -2,9 +2,8 @@ import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/models/reference.dart';
 import 'package:cse_archive/app/models/reference_type.dart';
 import 'package:cse_archive/app/services/api.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
-import 'search_text_field.dart';
 
 class ReferencesController extends GetxController with StateMixin {
   static const searchQueryParameter = 'search';
@@ -12,8 +11,10 @@ class ReferencesController extends GetxController with StateMixin {
   static const typeQueryOptions = ReferenceTypeModel.options;
   static const typeQueryDefault = ReferenceTypeModel.defaultOption;
 
-  final searchController = SearchTextFieldController();
   final selectedType = typeQueryDefault.obs;
+
+  final searchController = TextEditingController();
+  final searchControllerEmpty = true.obs;
 
   int paginationCounter = 1;
 
@@ -21,12 +22,30 @@ class ReferencesController extends GetxController with StateMixin {
   final isThereMore = false.obs;
   final isLoadingMore = false.obs;
 
+  @override
+  void onInit() {
+    super.onInit();
+
+    searchController.addListener(
+      () {
+        searchControllerEmpty.value = searchController.text.isEmpty;
+        searchControllerEmpty.refresh();
+      },
+    );
+  }
+
+  @override
+  void onClose() {
+    searchController.dispose();
+
+    super.onClose();
+  }
+
   void setQueryParameters(Map<String, String> queryParameters) {
     if (queryParameters.keys.contains(searchQueryParameter)) {
-      searchController.textController.text =
-          queryParameters[searchQueryParameter]!;
+      searchController.text = queryParameters[searchQueryParameter]!;
     } else {
-      searchController.textController.clear();
+      searchController.clear();
     }
 
     if (queryParameters.keys.contains(typeQueryParameter)) {
@@ -49,7 +68,7 @@ class ReferencesController extends GetxController with StateMixin {
 
     final result = await APIService.to.references(
       type: selectedType.value,
-      search: searchController.textController.text,
+      search: searchController.text,
     );
 
     if (result != null) {
@@ -70,7 +89,7 @@ class ReferencesController extends GetxController with StateMixin {
 
     final result = await APIService.to.references(
       type: selectedType.value,
-      search: searchController.textController.text,
+      search: searchController.text,
       offset: kDataLimit * paginationCounter,
     );
 

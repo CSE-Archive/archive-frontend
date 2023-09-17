@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 class ArchiveIconButton extends StatelessWidget {
   final IconData icon;
   final Color? color;
-  final double? size;
+  final double size;
   final EdgeInsetsGeometry? padding;
   final void Function()? onPressed;
 
@@ -15,8 +15,8 @@ class ArchiveIconButton extends StatelessWidget {
     required this.icon,
     required this.onPressed,
     this.color,
-    this.size,
     this.padding,
+    this.size = 1.5 * kSizeDefault,
   });
 
   @override
@@ -36,7 +36,7 @@ class ArchiveIconButton extends StatelessWidget {
           child: Obx(
             () => Icon(
               icon,
-              size: size ?? 1.5 * kSizeDefault,
+              size: size,
               color: hovered.isTrue
                   ? effectiveColor.withOpacity(0.8)
                   : effectiveColor,

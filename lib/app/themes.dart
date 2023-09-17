@@ -1,3 +1,4 @@
+import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:flutter/material.dart';
 
 import 'constants/colors.dart';
@@ -6,7 +7,8 @@ import 'constants/sizes.dart';
 class ArchiveThemes {
   ArchiveThemes._();
 
-  static const appbarHeight = 4 * kSizeDefault;
+  static double appbarHeight(BuildContext context) =>
+      context.isMobileOrTablet ? 3 * kSizeDefault : 4 * kSizeDefault;
 
   static final dark = _basicThemeData(
     brightness: Brightness.dark,
