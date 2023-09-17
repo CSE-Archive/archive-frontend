@@ -4,8 +4,6 @@ import 'course_units.dart';
 import 'reference.dart';
 import 'professor.dart';
 
-// TODO: Backend had a bug, check again when its fixed
-
 class CourseModel {
   final String uuid;
   final String title;

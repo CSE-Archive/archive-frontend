@@ -12,6 +12,7 @@ import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'error.dart';
 import 'loading.dart';
 
 class HomeView extends GetView<HomeController> {
@@ -80,6 +81,7 @@ class HomeView extends GetView<HomeController> {
         ),
       ),
       onLoading: const LoadingView(),
+      onError: (_) => ErrorView(retryButtonOnPressed: controller.fetchData),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 
 enum ArchivePage {
   home,
+  notFound,
   chart,
   course,
   courses,

@@ -6,16 +6,17 @@ import 'package:cse_archive/app/controllers/references.dart';
 import 'package:cse_archive/app/controllers/search.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:cse_archive/app/routes/routes.dart';
-import 'package:cse_archive/app/utils/not_found_svg.dart';
 import 'package:cse_archive/app/utils/course_cards_builder.dart';
 import 'package:cse_archive/app/utils/professor_cards_builder.dart';
 import 'package:cse_archive/app/utils/reference_cards_builder.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
 import 'package:cse_archive/app/widgets/header.dart';
+import 'package:cse_archive/app/widgets/error.dart';
 import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'error.dart';
 import 'loading.dart';
 
 class SearchView extends GetView<SearchViewController> {
@@ -29,18 +30,14 @@ class SearchView extends GetView<SearchViewController> {
         body: (controller.courses.isEmpty &&
                 controller.references.isEmpty &&
                 controller.professors.isEmpty)
-            ? // TODO: Empty widget
-            Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  notFoundSVG(context),
-                  Text(
-                    ArchiveStrings.notFound,
-                    style: Theme.of(context).textTheme.headlineMedium!.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
-                  ),
-                ],
+            ? IntrinsicHeight(
+                child: ArchiveError(
+                  type: ArchiveErrorType.notFound,
+                  title: ArchiveStrings.searchNotFoundTitle,
+                  description: ArchiveStrings.searchNotFoundDescriptionP1 +
+                      controller.searchController.text +
+                      ArchiveStrings.searchNotFoundDescriptionP2,
+                ),
               )
             : Column(
                 mainAxisSize: MainAxisSize.min,
@@ -127,6 +124,7 @@ class SearchView extends GetView<SearchViewController> {
               ),
       ),
       onLoading: const LoadingView(),
+      onError: (_) => ErrorView(retryButtonOnPressed: controller.fetchData),
     );
   }
 }

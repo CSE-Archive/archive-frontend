@@ -39,7 +39,6 @@ class SearchViewController extends GetxController with StateMixin {
 
       change(null, status: RxStatus.success());
     } else {
-      // TODO: Show error view
       change(null, status: RxStatus.error());
     }
   }

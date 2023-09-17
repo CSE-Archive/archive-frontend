@@ -1,6 +1,18 @@
 class ArchiveStrings {
   ArchiveStrings._();
 
+  static const all = 'همه';
+  static const loadMore = 'مشاهده‌ی موارد بیشتر';
+  static const search = ' جستجو ...';
+  static const loading = 'لطفا صبر کنید ...';
+  static const home = 'صفحه اصلی';
+  static const courseUnit = 'واحد';
+
+  static const errorTitle = 'خطایی رخ داد';
+  static const errorDescription =
+      'لطفا از برقراری اتصال اینترنت خود مطمئن شوید و مجددا تلاش کنید.';
+  static const errorButton = 'تلاش مجدد';
+
   static const courseTypeBasic = 'پایه';
   static const courseTypeGeneral = 'عمومی';
   static const courseTypeSpecialized = 'تخصصی';
@@ -30,14 +42,23 @@ class ArchiveStrings {
   static const classroomSemesterSecond = 'نیمسال دوم';
   static const classroomSemesterSummer = 'ترم تابستان';
 
-  static const all = 'همه';
-  static const loadMore = 'مشاهده‌ی موارد بیشتر';
-  static const notFound = 'چیزی پیدا نشد!';
-  static const search = ' جستجو ...';
-  static const loading = 'لطفا صبر کنید ...';
-  static const home = 'صفحه اصلی';
-  static const courseUnit = 'واحد';
+  static const notFoundTitle = 'صفحه پیدا نشد';
+  static const notFoundDescriptionP1 = 'متاسفانه صفحه‌ای با آدرس ';
+  static const notFoundDescriptionP1_5 = 'مورد نظر';
+  static const notFoundDescriptionP2 =
+      ' پیدا نکردیم. لطفا از درستی آدرس اطمینان حاصل کنید. ';
+  static const notFoundButton = 'صفحه اصلی';
+
+  static const searchNotFoundTitle = 'چیزی پیدا نشد';
+  static const searchNotFoundDescriptionP1 = 'متاسفانه نتیجه‌ای برای «';
+  static const searchNotFoundDescriptionP2 =
+      '» پیدا نکردیم. لطفا از درستی عبارت مورد جستجو اطمینان حاصل کنید. ';
+
   static const filters = 'فیلترها';
+  static const filtersNotFoundTitle = 'چیزی پیدا نشد';
+  static const filtersNotFoundDescription =
+      'نتیجه‌ای با فیلترهای مورد نظر شما پیدا نکردیم.';
+  static const filtersNotFoundButton = 'حذف فیلتر‌ها';
 
   static const recordings = 'کلاس‌های ضبط شده';
 

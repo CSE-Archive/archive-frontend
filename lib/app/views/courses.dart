@@ -7,13 +7,16 @@ import 'package:cse_archive/app/utils/course_cards_builder.dart';
 import 'package:cse_archive/app/utils/expansion_tile_radio_button.dart';
 import 'package:cse_archive/app/utils/expansion_tile_search_bar.dart';
 import 'package:cse_archive/app/widgets/dialog.dart';
+import 'package:cse_archive/app/widgets/error.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
 import 'package:cse_archive/app/widgets/load_more_button.dart';
 import 'package:cse_archive/app/widgets/path.dart';
 import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
+import 'error.dart';
 import 'loading.dart';
 
 class CoursesView extends GetView<CoursesController> {
@@ -77,34 +80,48 @@ class CoursesView extends GetView<CoursesController> {
               ],
             ),
             const Gap.vertical(1.5 * kSizeDefault),
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Obx(
-                  () => courseCardsBuilder(
-                    context: context,
-                    courses: controller.courses,
-                    infiniteWidth: false,
+            controller.courses.isEmpty
+                ? Center(
+                    child: ArchiveError(
+                      type: ArchiveErrorType.notFound,
+                      title: ArchiveStrings.filtersNotFoundTitle,
+                      description: ArchiveStrings.filtersNotFoundDescription,
+                      button: OutlinedButton(
+                        onPressed: () => context.go(ArchiveRoutes.courses),
+                        child: const Text(ArchiveStrings.filtersNotFoundButton),
+                      ),
+                    ),
+                  )
+                : Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Obx(
+                        () => courseCardsBuilder(
+                          context: context,
+                          courses: controller.courses,
+                          infiniteWidth: false,
+                        ),
+                      ),
+                      Obx(
+                        () => controller.isThereMore.isTrue
+                            ? Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 1.5 * kSizeDefault,
+                                ),
+                                child: ArchiveLoadMoreButton(
+                                  isLoadingMore: controller.isLoadingMore,
+                                  onPressed: controller.loadMore,
+                                ),
+                              )
+                            : Gap.zero,
+                      ),
+                    ],
                   ),
-                ),
-                Obx(
-                  () => controller.isThereMore.isTrue
-                      ? Padding(
-                          padding:
-                              const EdgeInsets.only(top: 1.5 * kSizeDefault),
-                          child: ArchiveLoadMoreButton(
-                            isLoadingMore: controller.isLoadingMore,
-                            onPressed: controller.loadMore,
-                          ),
-                        )
-                      : Gap.zero,
-                ),
-              ],
-            ),
           ],
         ),
       ),
       onLoading: const LoadingView(),
+      onError: (_) => ErrorView(retryButtonOnPressed: controller.fetchData),
     );
   }
 }

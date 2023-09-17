@@ -1,5 +1,4 @@
 import 'package:cse_archive/app/constants/strings.dart';
-import 'package:cse_archive/app/themes.dart';
 import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
 
@@ -10,12 +9,13 @@ class LoadingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ArchiveWebPage(
       applyPlatformVerticalPadding: false,
-      body: SizedBox(
-        height: MediaQuery.sizeOf(context).height - ArchiveThemes.appbarHeight,
+      body: IntrinsicHeight(
         child: Center(
           child: Text(
             ArchiveStrings.loading,
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  fontWeight: FontWeight.w300,
+                ),
           ),
         ),
       ),

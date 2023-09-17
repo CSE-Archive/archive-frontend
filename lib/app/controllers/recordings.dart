@@ -24,28 +24,29 @@ class RecordingsController extends GetxController with StateMixin {
 
       change(null, status: RxStatus.success());
     } else {
-      // TODO: Show error view
       change(null, status: RxStatus.error());
     }
   }
 
-  Future<void> loadMore() async {
+  Future<bool> loadMore() async {
     isLoadingMore.value = true;
 
     final result = await APIService.to.recordings(
       offset: kDataLimit * paginationCounter,
     );
 
-    if (result != null) {
-      paginationCounter++;
-
-      isThereMore.value = result.isThereMore;
-      recordings.addAll(result.recordings);
-      recordings.refresh();
-    } else {
-      // TODO: Show error view
+    if (result == null) {
+      isLoadingMore.value = false;
+      return false;
     }
 
+    paginationCounter++;
+
+    isThereMore.value = result.isThereMore;
+    recordings.addAll(result.recordings);
+    recordings.refresh();
+
     isLoadingMore.value = false;
+    return true;
   }
 }

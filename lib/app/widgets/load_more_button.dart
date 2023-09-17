@@ -3,11 +3,12 @@ import 'package:cse_archive/app/constants/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'dialog.dart';
 import 'divider.dart';
 
 class ArchiveLoadMoreButton extends StatelessWidget {
   final RxBool isLoadingMore;
-  final void Function()? onPressed;
+  final Future<bool> Function() onPressed;
 
   const ArchiveLoadMoreButton({
     super.key,
@@ -28,7 +29,35 @@ class ArchiveLoadMoreButton extends StatelessWidget {
         ),
         Obx(
           () => OutlinedButton(
-            onPressed: isLoadingMore.isTrue ? null : onPressed,
+            onPressed: isLoadingMore.isTrue
+                ? null
+                : () => onPressed().then(
+                      (result) {
+                        if (!result) {
+                          showDialog(
+                            context: context,
+                            builder: (context) => ArchiveDialog(
+                              title: ArchiveStrings.errorTitle,
+                              children: [
+                                SelectableText(
+                                  ArchiveStrings.errorDescription,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .secondary
+                                            .withOpacity(0.9),
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                      },
+                    ),
             style: ButtonStyle(
               mouseCursor: MaterialStatePropertyAll(
                 isLoadingMore.isTrue ? SystemMouseCursors.wait : null,

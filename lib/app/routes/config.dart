@@ -16,6 +16,7 @@ import 'package:cse_archive/app/views/course/course.dart' deferred as course;
 import 'package:cse_archive/app/views/courses.dart' deferred as courses;
 import 'package:cse_archive/app/views/home.dart' deferred as home;
 import 'package:cse_archive/app/views/loading.dart';
+import 'package:cse_archive/app/views/not_found.dart' deferred as not_found;
 import 'package:cse_archive/app/views/recordings.dart' deferred as recordings;
 import 'package:cse_archive/app/views/reference.dart' deferred as reference;
 import 'package:cse_archive/app/views/references.dart' deferred as references;
@@ -53,12 +54,31 @@ Widget _viewLoader({
       },
     );
 
-// TODO: Add 404 not found route to onException
 // TODO: Add SentryNavigatorObserver to observers
 final kRouterConfig = GoRouter(
   debugLogDiagnostics: true,
   initialLocation: ArchiveRoutes.home,
+  onException: (_, state, router) => router.go(
+    ArchiveRoutes.notFound,
+    extra: state.uri.path,
+  ),
   routes: [
+    GoRoute(
+      path: ArchiveRoutes.notFound,
+      pageBuilder: (_, state) {
+        PageTrackerService.to.activePage = ArchivePage.notFound;
+
+        return _noTransitionBuilder(
+          state: state,
+          child: _viewLoader(
+            future: not_found.loadLibrary(),
+            view: not_found.NotFoundView(
+              route: state.extra as String?,
+            ),
+          ),
+        );
+      },
+    ),
     GoRoute(
       path: ArchiveRoutes.home,
       pageBuilder: (_, state) {

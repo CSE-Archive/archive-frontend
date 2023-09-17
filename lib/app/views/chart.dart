@@ -14,6 +14,7 @@ import 'package:cse_archive/app/widgets/gap.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'error.dart';
 import 'loading.dart';
 
 class ChartView extends GetView<ChartController> {
@@ -118,6 +119,7 @@ class ChartView extends GetView<ChartController> {
         ),
       ),
       onLoading: const LoadingView(),
+      onError: (_) => ErrorView(retryButtonOnPressed: controller.fetchData),
     );
   }
 }

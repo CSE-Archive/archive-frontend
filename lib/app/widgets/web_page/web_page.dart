@@ -20,10 +20,10 @@ class ArchiveWebPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const footerHeight = 200;
+
     final verticalPadding =
         context.isMobileOrTablet ? 2 * kSizeDefault : 3 * kSizeDefault;
-
-    const footerHeight = 200;
 
     return Scaffold(
       body: CustomScrollView(
