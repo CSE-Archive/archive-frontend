@@ -265,7 +265,7 @@ ThemeData _basicThemeData({
       padding: const EdgeInsets.all(kSizeDefault / 2),
       textStyle: textTheme.bodyMedium!.copyWith(color: primaryColor),
       decoration: BoxDecoration(
-        color: secondaryColor.withOpacity(0.8),
+        color: secondaryColor,
         borderRadius: BorderRadius.circular(kSizeDefault / 2),
       ),
     ),

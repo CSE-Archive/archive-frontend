@@ -124,7 +124,8 @@ class ArchiveStrings {
       'درس «الف» هم‌نیاز درس «ب» هست؛ یعنی، اجازه‌ی برداشتن درس «ب» رو داری، ولی قبلش یا باید درس «الف» رو گذرونده باشی، یا اینکه هم‌زمان با برداشتن درس «ب»، درس «الف» رو هم برداری. (توجه داشته باش که رابطه‌ی هم‌نیازی یه رابطه‌ی یک طرفه هست؛ یعنی، برای برداشتن درس «الف» نیازی به گذروندن یا برداشتن هم‌زمان درس «ب» نیست)';
   static const chartCo = 'هم‌نیاز:';
   static const chartPre = 'پیش‌نیاز:';
-  static const chartSeeCourses = 'برای دیدن درس‌ها کلیک کنید';
+  static const chartClickToSeeCoursesP1 = 'برای دیدن لیستی از تمام دروس ';
+  static const chartClickToSeeCoursesP2 = ' کلیک کنید';
   static const chartSemester1 = 'نیمسال اول';
   static const chartSemester2 = 'نیمسال دوم';
   static const chartSemester3 = 'نیمسال سوم';

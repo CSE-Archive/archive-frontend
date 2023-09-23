@@ -8,6 +8,7 @@ import 'package:cse_archive/app/models/course.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import 'gap.dart';
@@ -85,7 +86,8 @@ class ArchiveCourseCard extends StatelessWidget {
 
     if (chartNode != null) {
       return Tooltip(
-        message: _getTooltip(chartNode!),
+        message: _generateTooltipMessage(chartNode!),
+        waitDuration: 850.milliseconds,
         child: child,
       );
     }
@@ -94,8 +96,12 @@ class ArchiveCourseCard extends StatelessWidget {
   }
 }
 
-String _getTooltip(ChartNodeModel chartNode) {
-  if (chartNode.course == null) return ArchiveStrings.chartSeeCourses;
+String _generateTooltipMessage(ChartNodeModel chartNode) {
+  if (chartNode.course == null) {
+    return ArchiveStrings.chartClickToSeeCoursesP1 +
+        chartNode.courseType!.representation +
+        ArchiveStrings.chartClickToSeeCoursesP2;
+  }
 
   final coRequisites = chartNode.course!.coRequisites;
   final preRequisites = chartNode.course!.preRequisites;
