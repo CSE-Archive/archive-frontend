@@ -30,7 +30,7 @@ class ArchiveWebPage extends StatelessWidget {
 
     return Scaffold(
       key: GeneralController.scaffoldKey,
-      drawerScrimColor: context.shadowColor.withOpacity(0.5),
+      drawerScrimColor: context.shadowColor.withOpacity(0.1),
       drawer:
           context.isMobileOrTablet ? ArchiveSliverAppbar.drawer(context) : null,
       body: CustomScrollView(

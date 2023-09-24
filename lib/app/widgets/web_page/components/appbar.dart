@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cse_archive/app/constants/assets.dart';
 import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
@@ -25,6 +27,8 @@ import 'appbar_text_button.dart';
 class ArchiveSliverAppbar extends StatelessWidget {
   const ArchiveSliverAppbar({super.key});
 
+  static const _logoWidth = 2 * kSizeDefault;
+
   static Widget _supportButton(BuildContext context) {
     return ElevatedButton(
       onPressed: () {
@@ -32,6 +36,27 @@ class ArchiveSliverAppbar extends StatelessWidget {
         showSupportDialog(context: context);
       },
       child: const Text(ArchiveStrings.appbarSupport),
+    );
+  }
+
+  static Widget _logo(BuildContext context) {
+    return Link(
+      uri: Uri(path: ArchiveRoutes.home),
+      builder: (_, followLink) => GestureDetector(
+        onTap: followLink,
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: SvgPicture.asset(
+            ArchiveAssets.svg.logo,
+            width: _logoWidth,
+            height: _logoWidth,
+            colorFilter: ColorFilter.mode(
+              context.secondaryColor,
+              BlendMode.srcIn,
+            ),
+          ),
+        ),
+      ),
     );
   }
 
@@ -65,48 +90,78 @@ class ArchiveSliverAppbar extends StatelessWidget {
           ? ArchiveIcons.sunFilled
           : ArchiveIcons.moonStarsFilled,
       onPressed: () => ThemeModeService.to.toggle(context),
-      size: context.isMobileOrTablet ? 2.5 * kSizeDefault : 1.7 * kSizeDefault,
+      size: 1.7 * kSizeDefault,
       color: context.secondaryColor,
     );
   }
 
-  static Drawer drawer(BuildContext context) {
-    return Drawer(
-      width: 4 / 5 * context.screenWidth,
-      backgroundColor: context.primaryColor,
-      shadowColor: context.shadowColor.withOpacity(0.8),
-      child: Padding(
-        padding: EdgeInsets.all(context.platform.margin),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  _coursesButton,
-                  const Gap.vertical(kSizeDefault),
-                  _referencesButton,
-                  const Gap.vertical(kSizeDefault),
-                  _professorsButton,
-                  const Gap.vertical(kSizeDefault),
-                  _chartButton,
-                  const Gap.vertical(1.5 * kSizeDefault),
-                  _supportButton(context),
-                ],
-              ),
+  static Widget drawer(BuildContext context) {
+    return Stack(
+      children: [
+        Positioned.fill(
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: context.shadowColor.withOpacity(0.2),
+                  blurRadius: 15,
+                ),
+              ],
             ),
-            _themeSwitchButton(context),
-          ],
+          ),
         ),
-      ),
+        Positioned.fill(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaY: 10),
+            child: Container(
+              color: context.primaryColor.withOpacity(0.8),
+            ),
+          ),
+        ),
+        Drawer(
+          width: 4 / 5 * context.screenWidth,
+          backgroundColor: context.primaryColor.withOpacity(0),
+          shadowColor: context.shadowColor.withOpacity(0),
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: context.platform.margin,
+              right: context.platform.margin,
+              bottom: context.platform.margin,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: ArchiveThemes.appbarHeight(context),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      _logo(context),
+                      const Spacer(),
+                      _themeSwitchButton(context),
+                    ],
+                  ),
+                ),
+                const Gap.vertical(1.5 * kSizeDefault),
+                _coursesButton,
+                const Gap.vertical(kSizeDefault),
+                _referencesButton,
+                const Gap.vertical(kSizeDefault),
+                _professorsButton,
+                const Gap.vertical(kSizeDefault),
+                _chartButton,
+                const Gap.vertical(1.5 * kSizeDefault),
+                _supportButton(context),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    const logoWidth = 2 * kSizeDefault;
-
     final generalController = Get.find<GeneralController>();
 
     final searchBox = searchBar(
@@ -139,30 +194,13 @@ class ArchiveSliverAppbar extends StatelessWidget {
       forceElevated: true,
       elevation: 8,
       toolbarHeight: ArchiveThemes.appbarHeight(context),
-      leadingWidth: context.responsiveHorizontalPadding + logoWidth,
+      leadingWidth: context.responsiveHorizontalPadding + _logoWidth,
       backgroundColor: context.tertiaryColor,
       shadowColor: context.shadowColor.withOpacity(0.7),
       leading: Padding(
         padding: EdgeInsets.only(right: context.responsiveHorizontalPadding),
         child: Center(
-          child: Link(
-            uri: Uri(path: ArchiveRoutes.home),
-            builder: (_, followLink) => GestureDetector(
-              onTap: followLink,
-              child: MouseRegion(
-                cursor: SystemMouseCursors.click,
-                child: SvgPicture.asset(
-                  ArchiveAssets.svg.logo,
-                  width: logoWidth,
-                  height: logoWidth,
-                  colorFilter: ColorFilter.mode(
-                    context.secondaryColor,
-                    BlendMode.srcIn,
-                  ),
-                ),
-              ),
-            ),
-          ),
+          child: _logo(context),
         ),
       ),
       title: context.isMobileOrTablet
