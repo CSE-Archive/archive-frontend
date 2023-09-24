@@ -31,10 +31,7 @@ class ArchiveSliverAppbar extends StatelessWidget {
 
   static Widget _supportButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        GeneralController.closeDrawer();
-        showSupportDialog(context: context);
-      },
+      onPressed: () => showSupportDialog(context: context),
       child: const Text(ArchiveStrings.appbarSupport),
     );
   }
@@ -225,12 +222,12 @@ class ArchiveSliverAppbar extends StatelessWidget {
             ),
       actions: [
         context.responsiveBuilder(
-          mobile: const SizedBox.square(
+          mobile: SizedBox.square(
             dimension: 2 * kSizeDefault,
             child: Center(
               child: ArchiveIconButton(
                 icon: ArchiveIcons.menu,
-                onPressed: GeneralController.openDrawer,
+                onPressed: () => GeneralController.openDrawer(context: context),
               ),
             ),
           ),

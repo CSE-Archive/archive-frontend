@@ -1,5 +1,4 @@
 import 'package:cse_archive/app/constants/sizes.dart';
-import 'package:cse_archive/app/controllers/general.dart';
 import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:cse_archive/app/themes.dart';
@@ -29,7 +28,6 @@ class ArchiveWebPage extends StatelessWidget {
         context.isMobileOrTablet ? 2 * kSizeDefault : 3 * kSizeDefault;
 
     return Scaffold(
-      key: GeneralController.scaffoldKey,
       drawerScrimColor: context.shadowColor.withOpacity(0.1),
       drawer:
           context.isMobileOrTablet ? ArchiveSliverAppbar.drawer(context) : null,

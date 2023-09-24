@@ -42,7 +42,7 @@ class AppbarTextButton extends StatelessWidget {
       uri: Uri(path: route),
       builder: (_, followLink) => GestureDetector(
         onTap: () {
-          GeneralController.closeDrawer();
+          GeneralController.closeDrawer(context: context);
           followLink!();
         },
         child: MouseRegion(
