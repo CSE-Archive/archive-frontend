@@ -19,6 +19,7 @@ class CourseModel {
   final List<CourseModel> coRequisites;
   final List<CourseModel> preRequisites;
   final List<CourseModel> requisiteFor;
+  final List<CourseModel> incompatibles;
 
   CourseModel({
     required this.uuid,
@@ -35,6 +36,7 @@ class CourseModel {
     this.coRequisites = const [],
     this.preRequisites = const [],
     this.requisiteFor = const [],
+    this.incompatibles = const [],
   });
 
   static CourseModel? fromJson(dynamic json) {
@@ -55,6 +57,7 @@ class CourseModel {
       coRequisites: CourseModel.listFromJson(json['co_requisites']),
       preRequisites: CourseModel.listFromJson(json['pre_requisites']),
       requisiteFor: CourseModel.listFromJson(json['requisite_for']),
+      incompatibles: CourseModel.listFromJson(json['incompatibles']),
     );
   }
 

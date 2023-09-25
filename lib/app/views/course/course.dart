@@ -5,15 +5,14 @@ import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/routes/routes.dart';
-import 'package:cse_archive/app/utils/course_cards_builder.dart';
 import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
 import 'package:cse_archive/app/utils/professor_cards_builder.dart';
 import 'package:cse_archive/app/utils/reference_cards_builder.dart';
+import 'package:cse_archive/app/views/course/components/relations_tab_bar.dart';
 import 'package:cse_archive/app/widgets/label.dart';
 import 'package:cse_archive/app/widgets/path.dart';
 import 'package:cse_archive/app/widgets/header.dart';
 import 'package:cse_archive/app/views/loading.dart';
-import 'package:cse_archive/app/widgets/divider.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
 import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
@@ -36,27 +35,16 @@ class CourseView extends GetView<CourseController> {
   Widget build(BuildContext context) {
     return controller.obx(
       (_) {
-        const preRequisiteValue = 1;
-        const coRequisiteValue = 2;
-        const requisiteForValue = 3;
-
-        final activeRequisite = (controller.course!.preRequisites.isNotEmpty
-                ? preRequisiteValue
-                : controller.course!.coRequisites.isNotEmpty
-                    ? coRequisiteValue
-                    : requisiteForValue)
-            .obs;
+        final course = controller.course!;
 
         final unitsLabel = ArchiveLabel(
           title: ArchiveStrings.courseUnits,
-          value: enToFaDigits(
-            controller.course!.units.representation,
-          ),
+          value: enToFaDigits(course.units.representation),
         );
 
         final typeLabel = ArchiveLabel(
           title: ArchiveStrings.courseType,
-          value: controller.course!.type.representation,
+          value: course.type.representation,
         );
 
         final titleColumn = Column(
@@ -64,16 +52,16 @@ class CourseView extends GetView<CourseController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SelectableText(
-              controller.course!.title,
+              course.title,
               style: context.headlineMedium.copyWith(
                 fontWeight: FontWeight.bold,
                 color: context.primaryColor,
               ),
             ),
-            if (controller.course!.titleEn != null) ...[
+            if (course.titleEn != null) ...[
               const Gap.vertical(kSizeDefault / 4),
               SelectableText(
-                controller.course!.titleEn!,
+                course.titleEn!,
                 style: context.bodyLarge.copyWith(
                   color: context.primaryColor,
                 ),
@@ -98,12 +86,12 @@ class CourseView extends GetView<CourseController> {
                   labels: [
                     ArchiveStrings.home,
                     ArchiveStrings.courses,
-                    controller.course!.title,
+                    course.title,
                   ],
                   routes: [
                     ArchiveRoutes.home,
                     ArchiveRoutes.courses,
-                    '${ArchiveRoutes.courses}/${controller.course!.uuid}',
+                    '${ArchiveRoutes.courses}/${course.uuid}',
                   ],
                 ),
               ),
@@ -153,15 +141,12 @@ class CourseView extends GetView<CourseController> {
                           ],
                         ),
                       ),
-                      if (controller.course!.description != null) ...[
+                      if (course.description != null) ...[
                         const Gap.vertical(kSizeDefault),
                         SelectableText(
-                          controller.course!.description!,
+                          course.description!,
                           style: context.bodyMedium.copyWith(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withOpacity(0.8),
+                            color: context.primaryColor.withOpacity(0.8),
                           ),
                         ),
                       ],
@@ -169,143 +154,31 @@ class CourseView extends GetView<CourseController> {
                   ),
                 ),
               ),
-              if (controller.course!.preRequisites.isNotEmpty ||
-                  controller.course!.coRequisites.isNotEmpty ||
-                  controller.course!.requisiteFor.isNotEmpty) ...[
+              if (course.preRequisites.isNotEmpty ||
+                  course.coRequisites.isNotEmpty ||
+                  course.incompatibles.isNotEmpty ||
+                  course.requisiteFor.isNotEmpty) ...[
                 const Gap.vertical(2 * kSizeDefault),
-                Container(
-                  constraints:
-                      BoxConstraints(maxWidth: context.platform.maxWidth),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: context.platform.margin),
-                  child: Row(
-                    children: [
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            if (controller
-                                .course!.preRequisites.isNotEmpty) ...[
-                              TextButton(
-                                onPressed: () =>
-                                    activeRequisite.value = preRequisiteValue,
-                                child: Obx(
-                                  () => AnimatedDefaultTextStyle(
-                                    duration: 100.milliseconds,
-                                    style: ArchiveHeader.textStyle(context)
-                                        .copyWith(
-                                      color: activeRequisite.value ==
-                                              preRequisiteValue
-                                          ? null
-                                          : Theme.of(context)
-                                              .colorScheme
-                                              .secondary
-                                              .withOpacity(0.5),
-                                      fontWeight: activeRequisite.value ==
-                                              preRequisiteValue
-                                          ? null
-                                          : FontWeight.w400,
-                                    ),
-                                    child: const Text(
-                                      ArchiveStrings.coursePreRequisites,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const Gap.horizontal(kSizeDefault),
-                            ],
-                            if (controller.course!.coRequisites.isNotEmpty) ...[
-                              TextButton(
-                                onPressed: () =>
-                                    activeRequisite.value = coRequisiteValue,
-                                child: Obx(
-                                  () => AnimatedDefaultTextStyle(
-                                    duration: 100.milliseconds,
-                                    style: ArchiveHeader.textStyle(context)
-                                        .copyWith(
-                                      color: activeRequisite.value ==
-                                              coRequisiteValue
-                                          ? null
-                                          : Theme.of(context)
-                                              .colorScheme
-                                              .secondary
-                                              .withOpacity(0.5),
-                                      fontWeight: activeRequisite.value ==
-                                              coRequisiteValue
-                                          ? null
-                                          : FontWeight.w400,
-                                    ),
-                                    child: const Text(
-                                      ArchiveStrings.courseCoRequisites,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const Gap.horizontal(kSizeDefault),
-                            ],
-                            if (controller.course!.requisiteFor.isNotEmpty) ...[
-                              TextButton(
-                                onPressed: () =>
-                                    activeRequisite.value = requisiteForValue,
-                                child: Obx(
-                                  () => AnimatedDefaultTextStyle(
-                                    duration: 100.milliseconds,
-                                    style: ArchiveHeader.textStyle(context)
-                                        .copyWith(
-                                      color: activeRequisite.value ==
-                                              requisiteForValue
-                                          ? null
-                                          : Theme.of(context)
-                                              .colorScheme
-                                              .secondary
-                                              .withOpacity(0.5),
-                                      fontWeight: activeRequisite.value ==
-                                              requisiteForValue
-                                          ? null
-                                          : FontWeight.w400,
-                                    ),
-                                    child: const Text(
-                                      ArchiveStrings.courseRequisiteFor,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              const Gap.horizontal(kSizeDefault),
-                            ],
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: ArchiveDivider(
-                          color: context.secondaryColor,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                const Gap.vertical(ArchiveHeader.bottomPadding),
-                Obx(
-                  () => activeRequisite.value == preRequisiteValue
-                      ? courseCardsBuilder(
-                          context: context,
-                          courses: controller.course!.preRequisites,
-                          infiniteWidth: true,
-                        )
-                      : activeRequisite.value == coRequisiteValue
-                          ? courseCardsBuilder(
-                              context: context,
-                              courses: controller.course!.coRequisites,
-                              infiniteWidth: true,
-                            )
-                          : courseCardsBuilder(
-                              context: context,
-                              courses: controller.course!.requisiteFor,
-                              infiniteWidth: true,
-                            ),
+                RelationsTabBar(
+                  labels: [
+                    if (course.preRequisites.isNotEmpty)
+                      ArchiveStrings.coursePreRequisites,
+                    if (course.coRequisites.isNotEmpty)
+                      ArchiveStrings.courseCoRequisites,
+                    if (course.incompatibles.isNotEmpty)
+                      ArchiveStrings.courseIncompatibles,
+                    if (course.requisiteFor.isNotEmpty)
+                      ArchiveStrings.courseRequisiteFor,
+                  ],
+                  listOfCourses: [
+                    if (course.preRequisites.isNotEmpty) course.preRequisites,
+                    if (course.coRequisites.isNotEmpty) course.coRequisites,
+                    if (course.incompatibles.isNotEmpty) course.incompatibles,
+                    if (course.requisiteFor.isNotEmpty) course.requisiteFor,
+                  ],
                 ),
               ],
-              if (controller.course!.references.isNotEmpty) ...[
+              if (course.references.isNotEmpty) ...[
                 const Gap.vertical(2 * kSizeDefault),
                 Container(
                   constraints:
@@ -318,11 +191,11 @@ class CourseView extends GetView<CourseController> {
                 ),
                 referenceCardsBuilder(
                   context: context,
-                  references: controller.course!.references,
+                  references: course.references,
                   infiniteWidth: true,
                 ),
               ],
-              if (controller.course!.professors.isNotEmpty) ...[
+              if (course.professors.isNotEmpty) ...[
                 const Gap.vertical(2 * kSizeDefault),
                 Container(
                   constraints:
@@ -335,12 +208,12 @@ class CourseView extends GetView<CourseController> {
                 ),
                 professorCardsBuilder(
                   context: context,
-                  professors: controller.course!.professors,
+                  professors: course.professors,
                   infiniteWidth: true,
                 ),
               ],
-              if (controller.course!.classrooms.isNotEmpty &&
-                  controller.course!.classrooms.any(
+              if (course.classrooms.isNotEmpty &&
+                  course.classrooms.any(
                     (classroom) => classroom.resources.isNotEmpty,
                   )) ...[
                 const Gap.vertical(2 * kSizeDefault),
@@ -359,7 +232,7 @@ class CourseView extends GetView<CourseController> {
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
                   child: Column(
-                    children: controller.course!.classrooms
+                    children: course.classrooms
                         .map(
                           (classroom) => classroom.resources.isEmpty
                               ? Gap.zero
@@ -375,8 +248,8 @@ class CourseView extends GetView<CourseController> {
                   ),
                 ),
               ],
-              if (controller.course!.classrooms.isNotEmpty &&
-                  controller.course!.classrooms.any(
+              if (course.classrooms.isNotEmpty &&
+                  course.classrooms.any(
                     (classroom) => classroom.recordings != null,
                   )) ...[
                 const Gap.vertical(2 * kSizeDefault),
@@ -394,7 +267,7 @@ class CourseView extends GetView<CourseController> {
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
                   child: Column(
-                    children: controller.course!.classrooms
+                    children: course.classrooms
                         .map(
                           (classroom) => classroom.recordings == null
                               ? Gap.zero

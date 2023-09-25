@@ -107,6 +107,7 @@ class ArchiveStrings {
   static const courseUnits = 'تعداد واحد';
   static const coursePreRequisites = 'پیش‌نیازها';
   static const courseCoRequisites = 'هم‌نیازها';
+  static const courseIncompatibles = 'موانع جمع';
   static const courseRequisiteFor = 'پیش‌نیاز چه درس‌هایی‌ست';
   static const courseReferences = 'مراجع';
   static const courseProfessors = 'اساتید';

@@ -1,4 +1,5 @@
 import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/link.dart';
@@ -53,10 +54,8 @@ class BulletText extends StatelessWidget {
                       softWrap: true,
                       style: (textStyle ?? defaultTextStyle).copyWith(
                         decoration: TextDecoration.underline,
-                        decorationColor: Theme.of(context)
-                            .colorScheme
-                            .secondary
-                            .withOpacity(0.4),
+                        decorationColor:
+                            context.secondaryColor.withOpacity(0.4),
                       ),
                     ),
                   ),

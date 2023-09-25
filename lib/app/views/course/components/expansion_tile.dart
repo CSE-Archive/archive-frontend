@@ -67,10 +67,7 @@ class CourseExpansionTile extends StatelessWidget {
                 Text(
                   ArchiveStrings.courseTAs,
                   style: context.bodySmall.copyWith(
-                    color: Theme.of(context)
-                        .colorScheme
-                        .secondary
-                        .withOpacity(0.8),
+                    color: context.secondaryColor.withOpacity(0.8),
                   ),
                 ),
                 Text(

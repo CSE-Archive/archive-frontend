@@ -133,10 +133,7 @@ class ProfessorView extends GetView<ProfessorController> {
                           child: Text(
                             email,
                             style: context.bodyLarge.copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withOpacity(0.8),
+                              color: context.primaryColor.withOpacity(0.8),
                               decoration: TextDecoration.underline,
                               decorationColor: context.primaryColor,
                             ),
@@ -170,10 +167,7 @@ class ProfessorView extends GetView<ProfessorController> {
                           child: Text(
                             link.title,
                             style: context.bodyLarge.copyWith(
-                              color: Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withOpacity(0.8),
+                              color: context.primaryColor.withOpacity(0.8),
                               decoration: TextDecoration.underline,
                               decorationColor: context.primaryColor,
                             ),

@@ -1,6 +1,7 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/extensions/color_scheme.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -42,16 +43,11 @@ class ArchiveLoadMoreButton extends StatelessWidget {
                               children: [
                                 SelectableText(
                                   ArchiveStrings.errorDescription,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .secondary
-                                            .withOpacity(0.9),
-                                        fontWeight: FontWeight.w300,
-                                      ),
+                                  style: context.bodyLarge.copyWith(
+                                    color:
+                                        context.secondaryColor.withOpacity(0.9),
+                                    fontWeight: FontWeight.w300,
+                                  ),
                                 ),
                               ],
                             ),
