@@ -32,28 +32,30 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 CustomTransitionPage<void> _noTransitionBuilder({
   required GoRouterState state,
   required Widget child,
-}) =>
-    CustomTransitionPage<void>(
-      key: state.pageKey,
-      opaque: false,
-      barrierDismissible: true,
-      transitionDuration: Duration.zero,
-      reverseTransitionDuration: Duration.zero,
-      transitionsBuilder: (_, __, ___, child) => child,
-      child: child,
-    );
+}) {
+  return CustomTransitionPage<void>(
+    key: state.pageKey,
+    opaque: false,
+    barrierDismissible: true,
+    transitionDuration: Duration.zero,
+    reverseTransitionDuration: Duration.zero,
+    transitionsBuilder: (_, __, ___, child) => child,
+    child: child,
+  );
+}
 
 Widget _viewLoader({
   required Future<dynamic> future,
-  required Widget view,
-}) =>
-    FutureBuilder(
-      future: future,
-      builder: (_, snapshot) {
-        if (snapshot.connectionState == ConnectionState.done) return view;
-        return const LoadingView();
-      },
-    );
+  required Widget Function() builder,
+}) {
+  return FutureBuilder(
+    future: future,
+    builder: (_, snapshot) {
+      if (snapshot.connectionState == ConnectionState.done) return builder();
+      return const LoadingView();
+    },
+  );
+}
 
 final kRouterConfig = GoRouter(
   debugLogDiagnostics: true,
@@ -73,7 +75,7 @@ final kRouterConfig = GoRouter(
           state: state,
           child: _viewLoader(
             future: not_found.loadLibrary(),
-            view: not_found.NotFoundView(
+            builder: () => not_found.NotFoundView(
               route: state.extra as String?,
             ),
           ),
@@ -91,7 +93,7 @@ final kRouterConfig = GoRouter(
           state: state,
           child: _viewLoader(
             future: home.loadLibrary(),
-            view: home.HomeView(),
+            builder: () => home.HomeView(),
           ),
         );
       },
@@ -107,7 +109,7 @@ final kRouterConfig = GoRouter(
           state: state,
           child: _viewLoader(
             future: chart.loadLibrary(),
-            view: chart.ChartView(),
+            builder: () => chart.ChartView(),
           ),
         );
       },
@@ -128,7 +130,7 @@ final kRouterConfig = GoRouter(
           state: state,
           child: _viewLoader(
             future: search.loadLibrary(),
-            view: search.SearchView(),
+            builder: () => search.SearchView(),
           ),
         );
       },
@@ -146,7 +148,7 @@ final kRouterConfig = GoRouter(
           state: state,
           child: _viewLoader(
             future: recordings.loadLibrary(),
-            view: recordings.RecordingsView(),
+            builder: () => recordings.RecordingsView(),
           ),
         );
       },
@@ -167,7 +169,7 @@ final kRouterConfig = GoRouter(
           state: state,
           child: _viewLoader(
             future: resources.loadLibrary(),
-            view: resources.ResourcesView(
+            builder: () => resources.ResourcesView(
               queryParameters: queryParameters,
             ),
           ),
@@ -190,7 +192,7 @@ final kRouterConfig = GoRouter(
           state: state,
           child: _viewLoader(
             future: references.loadLibrary(),
-            view: references.ReferencesView(
+            builder: () => references.ReferencesView(
               queryParameters: queryParameters,
             ),
           ),
@@ -221,7 +223,7 @@ final kRouterConfig = GoRouter(
               state: state,
               child: _viewLoader(
                 future: reference.loadLibrary(),
-                view: reference.ReferenceView(
+                builder: () => reference.ReferenceView(
                   uuid: uuid,
                 ),
               ),
@@ -247,7 +249,7 @@ final kRouterConfig = GoRouter(
               professors.loadLibrary(),
               controller.setQueryParameters(queryParameters),
             ]),
-            view: professors.ProfessorsView(
+            builder: () => professors.ProfessorsView(
               queryParameters: queryParameters,
             ),
           ),
@@ -278,7 +280,7 @@ final kRouterConfig = GoRouter(
               state: state,
               child: _viewLoader(
                 future: professor.loadLibrary(),
-                view: professor.ProfessorView(
+                builder: () => professor.ProfessorView(
                   uuid: uuid,
                 ),
               ),
@@ -303,7 +305,7 @@ final kRouterConfig = GoRouter(
           state: state,
           child: _viewLoader(
             future: courses.loadLibrary(),
-            view: courses.CoursesView(
+            builder: () => courses.CoursesView(
               queryParameters: queryParameters,
             ),
           ),
@@ -334,9 +336,7 @@ final kRouterConfig = GoRouter(
               state: state,
               child: _viewLoader(
                 future: course.loadLibrary(),
-                view: course.CourseView(
-                  uuid: uuid,
-                ),
+                builder: () => course.CourseView(uuid: uuid),
               ),
             );
           },
