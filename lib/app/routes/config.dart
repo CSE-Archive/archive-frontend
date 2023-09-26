@@ -27,6 +27,7 @@ import 'package:cse_archive/app/views/professors.dart' deferred as professors;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 CustomTransitionPage<void> _noTransitionBuilder({
   required GoRouterState state,
@@ -54,9 +55,9 @@ Widget _viewLoader({
       },
     );
 
-// TODO: Add SentryNavigatorObserver to observers
 final kRouterConfig = GoRouter(
   debugLogDiagnostics: true,
+  observers: [SentryNavigatorObserver()],
   initialLocation: ArchiveRoutes.home,
   onException: (_, state, router) => router.go(
     ArchiveRoutes.notFound,

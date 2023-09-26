@@ -16,6 +16,7 @@ import 'package:cse_archive/app/models/resource_type.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 Future<T?> _requestHandler<T>({
   required Future<dio.Response> Function() request,
@@ -37,8 +38,7 @@ Future<T?> _requestHandler<T>({
         stackTrace: stackTrace,
       );
     } else {
-      // TODO:
-      // Sentry.captureException(exception, stackTrace: stackTrace);
+      Sentry.captureException(exception, stackTrace: stackTrace);
     }
 
     return null;
@@ -46,8 +46,7 @@ Future<T?> _requestHandler<T>({
     if (kDebugMode) {
       debugPrint(error.toString());
     } else {
-      // TODO:
-      // Sentry.captureMessage(error.toString(), level: SentryLevel.error);
+      Sentry.captureMessage(error.toString(), level: SentryLevel.error);
     }
 
     return null;

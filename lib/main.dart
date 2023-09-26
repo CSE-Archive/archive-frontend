@@ -1,11 +1,13 @@
 import 'package:cse_archive/app/bindings/controllers.dart';
 import 'package:cse_archive/app/bindings/services.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:get/get.dart';
+import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'app/routes/config.dart';
 import 'app/services/theme_mode.dart';
@@ -19,7 +21,18 @@ void main() async {
 
   usePathUrlStrategy();
 
-  runApp(const CSEArchive());
+  if (kDebugMode) {
+    runApp(const CSEArchive());
+  } else {
+    await SentryFlutter.init(
+      (options) {
+        options.tracesSampleRate = 1.0;
+        options.attachStacktrace = true;
+        options.dsn = dotenv.env['SENTRY_DSN'];
+      },
+      appRunner: () => runApp(const CSEArchive()),
+    );
+  }
 }
 
 class CSEArchive extends StatelessWidget {
