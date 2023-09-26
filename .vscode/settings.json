@@ -2,6 +2,7 @@
   "cmake.configureOnOpen": false,
   "cmake.sourceDirectory": "${workspaceFolder}/linux",
   "cSpell.words": [
+    "dotenv",
     "تمارین"
   ]
 }
