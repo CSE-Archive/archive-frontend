@@ -1,0 +1,46 @@
+name: Build and deploy for web
+
+on:
+  push:
+    branches:
+      - main
+
+  # Enable running this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          flutter-version: '3.13.4'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      # CI is set to false to prevent treating warnings as errors
+      - name: Build Flutter for Web
+        run: CI=false flutter build web --web-renderer html --release --no-tree-shake-icons
+
+      - name: Run Post-Build Script
+        run: |
+          chmod 755 ./post_build.sh
+          ./post_build.sh
+
+      - name: Upload build files to VPS via SSH
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          rm: true
+          source: "./build/web/*"
+          target: ${{ secrets.SCP_TARGET }}
