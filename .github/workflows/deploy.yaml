@@ -36,9 +36,6 @@ jobs:
         run: |
           chmod 755 ./post_build.sh
           ./post_build.sh
-      
-      - name: List Contents of build/web Directory
-        run: ls -la ./build/web/
 
       - name: Upload build files to VPS via SSH
         uses: appleboy/scp-action@v0.1.4
