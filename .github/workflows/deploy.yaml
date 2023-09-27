@@ -15,6 +15,9 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+      
+      - name: 'Create .env file'
+        run: echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
