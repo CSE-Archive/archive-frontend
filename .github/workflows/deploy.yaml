@@ -45,6 +45,6 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           rm: true
-          source: "./build/web/index.html"
+          source: "./build/web/*"
           target: "${{ secrets.SCP_TARGET }}"
           strip_components: 2
