@@ -7,6 +7,7 @@ import 'package:cse_archive/app/widgets/bullet_text.dart';
 import 'package:cse_archive/app/widgets/dialog.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/link.dart';
 
 void showAboutUsDialog({required BuildContext context}) {
   showDialog(
@@ -17,58 +18,86 @@ void showAboutUsDialog({required BuildContext context}) {
         fontWeight: FontWeight.w300,
       );
 
-      final membersStyle = context.bodyMedium.copyWith(
-        fontWeight: FontWeight.w500,
-      );
-
       return ArchiveDialog(
         title: ArchiveStrings.about,
         children: [
-          SelectableText(
+          Text(
             ArchiveStrings.aboutDescriptionP1,
             style: textStyle,
           ),
           const Gap.vertical(kSizeDefault / 2),
-          SelectableText(
+          Text(
             ArchiveStrings.aboutDescriptionP2,
             style: textStyle,
           ),
           const Gap.vertical(kSizeDefault / 2),
-          SelectableText(
+          Text(
             ArchiveStrings.aboutDescriptionP3,
             style: textStyle,
           ),
           const Gap.vertical(kSizeDefault / 2),
-          SelectableText(
+          Text(
             ArchiveStrings.aboutMembersAnnounce,
             style: textStyle,
           ),
           const Gap.vertical(kSizeDefault / 2),
-          BulletText(
+          _memberBulletText(
+            context: context,
             text: ArchiveStrings.aboutMemberSetia,
-            textStyle: membersStyle,
-            uri: Uri.parse(ArchiveLinks.linkedinSetia),
+            url: ArchiveLinks.linkedinSetia,
           ),
           const Gap.vertical(kSizeDefault / 4),
-          BulletText(
+          _memberBulletText(
+            context: context,
             text: ArchiveStrings.aboutMemberAmirH,
-            textStyle: membersStyle,
-            uri: Uri.parse(ArchiveLinks.linkedinAmirH),
+            url: ArchiveLinks.linkedinAmirH,
           ),
           const Gap.vertical(kSizeDefault / 4),
-          BulletText(
+          _memberBulletText(
+            context: context,
             text: ArchiveStrings.aboutMemberAmirR,
-            textStyle: membersStyle,
-            uri: Uri.parse(ArchiveLinks.linkedinAmirR),
+            url: ArchiveLinks.linkedinAmirR,
           ),
           const Gap.vertical(kSizeDefault / 4),
-          BulletText(
+          _memberBulletText(
+            context: context,
             text: ArchiveStrings.aboutMemberReza,
-            textStyle: membersStyle,
-            uri: Uri.parse(ArchiveLinks.linkedinReza),
+            url: ArchiveLinks.linkedinReza,
           ),
         ],
       );
     },
+  );
+}
+
+BulletText _memberBulletText({
+  required BuildContext context,
+  required String text,
+  required String url,
+}) {
+  return BulletText(
+    richText: Text.rich(
+      style: context.bodyMedium.copyWith(fontWeight: FontWeight.w500),
+      WidgetSpan(
+        child: Link(
+          uri: Uri.parse(url),
+          target: LinkTarget.blank,
+          builder: (_, followLink) => GestureDetector(
+            onTap: followLink,
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Text(
+                text,
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  decoration: TextDecoration.underline,
+                  decorationColor: context.secondaryColor.withOpacity(0.4),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    ),
   );
 }

@@ -1,3 +1,4 @@
+import 'package:cse_archive/app/constants/links.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/extensions/color_scheme.dart';
@@ -6,6 +7,7 @@ import 'package:cse_archive/app/widgets/bullet_text.dart';
 import 'package:cse_archive/app/widgets/dialog.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/link.dart';
 
 void showSupportDialog({required BuildContext context}) {
   showDialog(
@@ -23,39 +25,93 @@ void showSupportDialog({required BuildContext context}) {
       return ArchiveDialog(
         title: ArchiveStrings.support,
         children: [
-          SelectableText(
+          Text(
             ArchiveStrings.supportStart,
             style: textStyle,
           ),
           const Gap.vertical(kSizeDefault / 2),
-          SelectableText(
+          Text(
             ArchiveStrings.supportDescription,
             style: textStyle,
           ),
           const Gap.vertical(kSizeDefault),
-          SelectableText(
+          Text(
             ArchiveStrings.supportDonateTitle,
             style: titleStyle,
           ),
           const Gap.vertical(kSizeDefault / 2),
-          SelectableText(
-            ArchiveStrings.supportDonateDescription,
+          Text.rich(
             style: textStyle,
+            TextSpan(
+              children: [
+                const TextSpan(text: ArchiveStrings.supportDonateDescriptionP1),
+                WidgetSpan(
+                  child: Link(
+                    uri: Uri.parse(ArchiveLinks.support),
+                    target: LinkTarget.blank,
+                    builder: (_, followLink) => GestureDetector(
+                      onTap: followLink,
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: Text(
+                          ArchiveStrings.supportDonateDescriptionLink,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w500,
+                            decoration: TextDecoration.underline,
+                            decorationColor:
+                                context.secondaryColor.withOpacity(0.5),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                const TextSpan(text: ArchiveStrings.supportDonateDescriptionP2),
+              ],
+            ),
           ),
           const Gap.vertical(kSizeDefault),
-          SelectableText(
+          Text(
             ArchiveStrings.supportOtherTitle,
             style: titleStyle,
           ),
           const Gap.vertical(kSizeDefault / 2),
-          SelectableText(
+          Text(
             ArchiveStrings.supportOtherDescription,
             style: textStyle,
           ),
           const Gap.vertical(kSizeDefault / 2),
           BulletText(
-            text: ArchiveStrings.supportOtherCase1,
-            textStyle: textStyle,
+            richText: Text.rich(
+              style: textStyle,
+              TextSpan(
+                children: [
+                  const TextSpan(text: ArchiveStrings.supportOtherCase1P1),
+                  WidgetSpan(
+                    child: Link(
+                      uri: Uri.parse(ArchiveLinks.projectRepos),
+                      target: LinkTarget.blank,
+                      builder: (_, followLink) => GestureDetector(
+                        onTap: followLink,
+                        child: MouseRegion(
+                          cursor: SystemMouseCursors.click,
+                          child: Text(
+                            ArchiveStrings.supportOtherCase1Repos,
+                            style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              decoration: TextDecoration.underline,
+                              decorationColor:
+                                  context.secondaryColor.withOpacity(0.5),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const TextSpan(text: ArchiveStrings.supportOtherCase1P2),
+                ],
+              ),
+            ),
           ),
           const Gap.vertical(kSizeDefault / 4),
           BulletText(
@@ -68,11 +124,10 @@ void showSupportDialog({required BuildContext context}) {
             textStyle: textStyle,
           ),
           const Gap.vertical(kSizeDefault),
-          SelectableText(
+          Text(
             ArchiveStrings.supportEnd,
             style: textStyle,
           ),
-          // TODO: Add support buttons
         ],
       );
     },

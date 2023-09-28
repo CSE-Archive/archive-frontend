@@ -1,26 +1,31 @@
 import 'package:cse_archive/app/constants/sizes.dart';
-import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/link.dart';
 
 class BulletText extends StatelessWidget {
-  final String text;
+  final Text? richText;
+  final String? text;
   final TextStyle? textStyle;
   final TextStyle? bulletStyle;
-  final Uri? uri;
   final String bullet;
   final int tabs;
 
   const BulletText({
     super.key,
-    required this.text,
+    this.text,
     this.textStyle,
     this.bulletStyle,
-    this.uri,
     this.bullet = '•',
     this.tabs = 1,
-  });
+    this.richText,
+  })  : assert(
+          text != null || richText != null,
+          'One of text or richText must not be null',
+        ),
+        assert(
+          text == null || richText == null,
+          'One of text or richText must be null',
+        );
 
   @override
   Widget build(BuildContext context) {
@@ -35,32 +40,14 @@ class BulletText extends StatelessWidget {
           '$bullet  ',
           style: bulletStyle ?? defaultTextStyle,
         ),
-        uri == null
-            ? Expanded(
-                child: SelectableText(
-                  text,
+        Expanded(
+          child: text != null
+              ? Text(
+                  text!,
                   style: textStyle ?? defaultTextStyle,
-                ),
-              )
-            : Link(
-                uri: uri,
-                target: LinkTarget.blank,
-                builder: (_, followLink) => GestureDetector(
-                  onTap: followLink,
-                  child: MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: Text(
-                      text,
-                      softWrap: true,
-                      style: (textStyle ?? defaultTextStyle).copyWith(
-                        decoration: TextDecoration.underline,
-                        decorationColor:
-                            context.secondaryColor.withOpacity(0.4),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+                )
+              : richText!,
+        )
       ],
     );
   }

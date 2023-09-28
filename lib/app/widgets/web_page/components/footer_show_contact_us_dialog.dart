@@ -20,28 +20,28 @@ void showContactUsDialog({required BuildContext context}) {
       final linkStyle = context.bodyMedium.copyWith(
         fontWeight: FontWeight.w500,
         decoration: TextDecoration.underline,
-        decorationColor: context.secondaryColor.withOpacity(0.4),
+        decorationColor: context.secondaryColor.withOpacity(0.5),
       );
 
       return ArchiveDialog(
         title: ArchiveStrings.contact,
         children: [
-          SelectableText(
+          Text(
             ArchiveStrings.contactDescriptionP1,
             style: textStyle,
           ),
           const Gap.vertical(kSizeDefault / 2),
-          SelectableText(
+          Text(
             ArchiveStrings.contactDescriptionP2,
             style: textStyle,
           ),
           const Gap.vertical(kSizeDefault / 2),
-          SelectableText(
+          Text(
             ArchiveStrings.contactDescriptionP3,
             style: textStyle,
           ),
           const Gap.vertical(kSizeDefault),
-          SelectableText(
+          Text(
             ArchiveStrings.contactBotTitle,
             style: textStyle,
           ),
@@ -58,7 +58,7 @@ void showContactUsDialog({required BuildContext context}) {
             ),
           ),
           const Gap.vertical(kSizeDefault / 2),
-          SelectableText(
+          Text(
             ArchiveStrings.contactEmailTitle,
             style: textStyle,
           ),

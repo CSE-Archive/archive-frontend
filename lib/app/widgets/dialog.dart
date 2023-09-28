@@ -33,7 +33,7 @@ class ArchiveDialog extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SelectableText(
+                  Text(
                     title,
                     style: context.headlineSmall.copyWith(
                       fontWeight: FontWeight.bold,

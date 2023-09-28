@@ -11,4 +11,10 @@ class ArchiveLinks {
 
   static const email = 'cse.archive.shirazu@gmail.com';
   static const telegramBot = 'https://t.me/CSE_Archive_Bot';
+
+  static const projectRepos =
+      'https://github.com/orgs/CSE-Archive/repositories';
+
+  static const support =
+      'https://github.com/CSE-Archive#handshake-support--contribution';
 }
