@@ -43,13 +43,15 @@ class ProfessorModel {
   static ProfessorModel? fromJson(dynamic json) {
     if (json == null) return null;
 
+    final image = json['image'];
+
     return ProfessorModel(
       uuid: json['uuid'],
       department: ProfessorDepartmentModel.fromJson(json['department']),
       honorific: json['honorific'],
       firstName: json['first_name'],
       lastName: json['last_name'],
-      image: json['image'],
+      image: image == null ? null : Uri.parse(image),
       about: json['about'],
       emails: List<String>.from(json['emails'] ??= []),
       links: LinkModel.listFromJson(json['links']),
