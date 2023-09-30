@@ -92,68 +92,44 @@ class ArchiveSliverAppbar extends StatelessWidget {
     );
   }
 
-  static Widget drawer(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: DecoratedBox(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: context.shadowColor.withOpacity(0.2),
-                  blurRadius: 15,
-                ),
-              ],
-            ),
-          ),
+  static Drawer drawer(BuildContext context) {
+    return Drawer(
+      width: 4 / 5 * context.screenWidth,
+      shadowColor: context.shadowColor.withOpacity(0.5),
+      backgroundColor: context.primaryColor,
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: context.platform.margin,
+          right: context.platform.margin,
+          bottom: context.platform.margin,
         ),
-        Positioned.fill(
-          child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaY: 10),
-            child: Container(
-              color: context.primaryColor.withOpacity(0.8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: ArchiveThemes.appbarHeight(context),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _logo(context),
+                  const Spacer(),
+                  _themeSwitchButton(context),
+                ],
+              ),
             ),
-          ),
+            const Gap.vertical(1.5 * kSizeDefault),
+            _coursesButton,
+            const Gap.vertical(kSizeDefault),
+            _referencesButton,
+            const Gap.vertical(kSizeDefault),
+            _professorsButton,
+            const Gap.vertical(kSizeDefault),
+            _chartButton,
+            const Gap.vertical(1.5 * kSizeDefault),
+            _supportButton(context),
+          ],
         ),
-        Drawer(
-          width: 4 / 5 * context.screenWidth,
-          backgroundColor: context.primaryColor.withOpacity(0),
-          shadowColor: context.shadowColor.withOpacity(0),
-          child: Padding(
-            padding: EdgeInsets.only(
-              left: context.platform.margin,
-              right: context.platform.margin,
-              bottom: context.platform.margin,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: ArchiveThemes.appbarHeight(context),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      _logo(context),
-                      const Spacer(),
-                      _themeSwitchButton(context),
-                    ],
-                  ),
-                ),
-                const Gap.vertical(1.5 * kSizeDefault),
-                _coursesButton,
-                const Gap.vertical(kSizeDefault),
-                _referencesButton,
-                const Gap.vertical(kSizeDefault),
-                _professorsButton,
-                const Gap.vertical(kSizeDefault),
-                _chartButton,
-                const Gap.vertical(1.5 * kSizeDefault),
-                _supportButton(context),
-              ],
-            ),
-          ),
-        ),
-      ],
+      ),
     );
   }
 
