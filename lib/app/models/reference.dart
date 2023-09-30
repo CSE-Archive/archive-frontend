@@ -6,6 +6,7 @@ class ReferenceModel {
   final String uuid;
   final String title;
   final ReferenceTypeModel type;
+  final Uri? file;
   final Uri? image;
   final String? notes;
   final DateTime? createdTime;
@@ -19,6 +20,7 @@ class ReferenceModel {
     required this.uuid,
     required this.title,
     required this.type,
+    this.file,
     this.image,
     this.notes,
     this.createdTime,
@@ -32,6 +34,7 @@ class ReferenceModel {
   static ReferenceModel? fromJson(dynamic json) {
     if (json == null) return null;
 
+    final file = json['file'];
     final image = json['cover_image'];
     final createdTime = json['created_time'];
     final modifiedTime = json['modified_time'];
@@ -42,6 +45,7 @@ class ReferenceModel {
       uuid: json['uuid'],
       title: json['title'] ?? '${type.concatenation} ${courses.first.title}',
       type: type,
+      file: file == null ? null : Uri.parse(file),
       image: image == null ? null : Uri.parse(image),
       notes: json['notes'],
       createdTime: createdTime == null ? null : DateTime.parse(createdTime),

@@ -84,9 +84,9 @@ class ArchiveStrings {
   static const referencesTypeFilter = 'نوع';
 
   static const referenceType = 'نوع';
-  static const referenceTitle = '• عنوان';
+  static const referenceNotes = '• توضیحات';
   static const referenceAuthors = '• نویسندگان';
-  static const referenceDownload = 'دانلود مرجع';
+  static const referenceDownload = 'دانلود فایل';
   static const referenceRelatedCourses = 'دروس مرتبط';
   static const referenceRelatedReferences = 'مراجع مرتبط';
 

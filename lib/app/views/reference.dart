@@ -16,6 +16,7 @@ import 'package:cse_archive/app/widgets/path.dart';
 import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/link.dart';
 
 import 'loading.dart';
 
@@ -34,15 +35,17 @@ class ReferenceView extends GetView<ReferenceController> {
   Widget build(BuildContext context) {
     return controller.obx(
       (_) {
+        final reference = controller.reference!;
+
         final image = ArchiveCard(
           onPressed: null,
           width: 17 * kSizeDefault,
           height: 20 * kSizeDefault,
-          child: (controller.reference!.image != null)
+          child: (reference.image != null)
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(kSizeDefault / 2),
                   child: Image.network(
-                    controller.reference!.image.toString(),
+                    reference.image.toString(),
                     fit: BoxFit.cover,
                   ),
                 )
@@ -66,11 +69,11 @@ class ReferenceView extends GetView<ReferenceController> {
 
         final typeLabel = ArchiveLabel(
           title: ArchiveStrings.referenceType,
-          value: controller.reference!.type.representation,
+          value: reference.type.representation,
         );
 
         final title = SelectableText(
-          controller.reference!.title,
+          reference.title,
           style: context.headlineMedium.copyWith(
             color: context.primaryColor,
             fontWeight: FontWeight.bold,
@@ -81,7 +84,24 @@ class ReferenceView extends GetView<ReferenceController> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (controller.reference!.writers.isNotEmpty) ...[
+            if (reference.notes != null) ...[
+              const Gap.vertical(2 * kSizeDefault),
+              SelectableText(
+                ArchiveStrings.referenceNotes,
+                style: context.bodyLarge.copyWith(
+                  color: context.primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Gap.vertical(kSizeDefault / 2),
+              SelectableText(
+                reference.notes!,
+                style: context.bodyLarge.copyWith(
+                  color: context.primaryColor.withOpacity(0.8),
+                ),
+              ),
+            ],
+            if (reference.writers.isNotEmpty) ...[
               const Gap.vertical(2 * kSizeDefault),
               SelectableText(
                 ArchiveStrings.referenceAuthors,
@@ -92,13 +112,12 @@ class ReferenceView extends GetView<ReferenceController> {
               ),
               const Gap.vertical(kSizeDefault / 2),
               SelectableText(
-                controller.reference!.writers.join('\n'),
+                reference.writers.join('\n'),
                 style: context.bodyLarge.copyWith(
                   color: context.primaryColor.withOpacity(0.8),
                 ),
               ),
             ],
-            // TODO: Add download buttons
           ],
         );
 
@@ -118,12 +137,12 @@ class ReferenceView extends GetView<ReferenceController> {
                   labels: [
                     ArchiveStrings.home,
                     ArchiveStrings.references,
-                    controller.reference!.title
+                    reference.title
                   ],
                   routes: [
                     ArchiveRoutes.home,
                     ArchiveRoutes.references,
-                    '${ArchiveRoutes.references}/${controller.reference!.uuid}'
+                    '${ArchiveRoutes.references}/${reference.uuid}'
                   ],
                 ),
               ),
@@ -183,7 +202,36 @@ class ReferenceView extends GetView<ReferenceController> {
                   ),
                 ),
               ),
-              if (controller.reference!.courses.isNotEmpty) ...[
+              if (reference.file != null) ...[
+                const Gap.vertical(1.5 * kSizeDefault),
+                Container(
+                  alignment: Alignment.centerRight,
+                  constraints:
+                      BoxConstraints(maxWidth: context.platform.maxWidth),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: context.platform.margin),
+                  child: Link(
+                    uri: reference.file,
+                    target: LinkTarget.blank,
+                    builder: (_, followLink) => ElevatedButton(
+                      onPressed: followLink,
+                      style: ButtonStyle(
+                        padding: const MaterialStatePropertyAll(
+                          EdgeInsets.all(kSizeDefault),
+                        ),
+                        textStyle: MaterialStatePropertyAll(
+                          context.bodyLarge.copyWith(
+                            color: context.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      child: const Text(ArchiveStrings.referenceDownload),
+                    ),
+                  ),
+                ),
+              ],
+              if (reference.courses.isNotEmpty) ...[
                 const Gap.vertical(2 * kSizeDefault),
                 Container(
                   constraints:
@@ -196,11 +244,11 @@ class ReferenceView extends GetView<ReferenceController> {
                 ),
                 courseCardsBuilder(
                   context: context,
-                  courses: controller.reference!.courses,
+                  courses: reference.courses,
                   infiniteWidth: true,
                 ),
               ],
-              if (controller.reference!.relatedReferences.isNotEmpty) ...[
+              if (reference.relatedReferences.isNotEmpty) ...[
                 const Gap.vertical(2 * kSizeDefault),
                 Container(
                   constraints:
@@ -213,7 +261,7 @@ class ReferenceView extends GetView<ReferenceController> {
                 ),
                 referenceCardsBuilder(
                   context: context,
-                  references: controller.reference!.relatedReferences,
+                  references: reference.relatedReferences,
                   infiniteWidth: true,
                 ),
               ],
