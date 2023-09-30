@@ -7,6 +7,7 @@ import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
 import 'package:cse_archive/app/utils/professor_cards_builder.dart';
+import 'package:cse_archive/app/utils/recording_cards_builder.dart';
 import 'package:cse_archive/app/utils/reference_cards_builder.dart';
 import 'package:cse_archive/app/views/course/components/relations_tab_bar.dart';
 import 'package:cse_archive/app/widgets/label.dart';
@@ -214,6 +215,28 @@ class CourseView extends GetView<CourseController> {
               ],
               if (course.classrooms.isNotEmpty &&
                   course.classrooms.any(
+                    (classroom) => classroom.recordings != null,
+                  )) ...[
+                const Gap.vertical(2 * kSizeDefault),
+                Container(
+                  constraints:
+                      BoxConstraints(maxWidth: context.platform.maxWidth),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: context.platform.margin),
+                  child:
+                      const ArchiveHeader(title: ArchiveStrings.courseRecords),
+                ),
+                recordingCardsBuilder(
+                  context: context,
+                  recordings: course.classrooms
+                      .where((classroom) => classroom.recordings != null)
+                      .map((classroom) => classroom.recordings!)
+                      .toList(),
+                  infiniteWidth: true,
+                ),
+              ],
+              if (course.classrooms.isNotEmpty &&
+                  course.classrooms.any(
                     (classroom) => classroom.resources.isNotEmpty,
                   )) ...[
                 const Gap.vertical(2 * kSizeDefault),
@@ -237,45 +260,11 @@ class CourseView extends GetView<CourseController> {
                           (classroom) => classroom.resources.isEmpty
                               ? Gap.zero
                               : CourseExpansionTile(
-                                  resources: classroom.resources,
                                   year: classroom.year,
                                   semester: classroom.semester,
+                                  resources: classroom.resources,
                                   professors: classroom.professors,
                                   tas: classroom.tas,
-                                ),
-                        )
-                        .toList(),
-                  ),
-                ),
-              ],
-              if (course.classrooms.isNotEmpty &&
-                  course.classrooms.any(
-                    (classroom) => classroom.recordings != null,
-                  )) ...[
-                const Gap.vertical(2 * kSizeDefault),
-                Container(
-                  constraints:
-                      BoxConstraints(maxWidth: context.platform.maxWidth),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: context.platform.margin),
-                  child:
-                      const ArchiveHeader(title: ArchiveStrings.courseRecords),
-                ),
-                Container(
-                  constraints:
-                      BoxConstraints(maxWidth: context.platform.maxWidth),
-                  padding:
-                      EdgeInsets.symmetric(horizontal: context.platform.margin),
-                  child: Column(
-                    children: course.classrooms
-                        .map(
-                          (classroom) => classroom.recordings == null
-                              ? Gap.zero
-                              : CourseExpansionTile(
-                                  recordings: classroom.recordings,
-                                  year: classroom.year,
-                                  semester: classroom.semester,
-                                  professors: classroom.professors,
                                 ),
                         )
                         .toList(),

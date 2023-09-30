@@ -4,7 +4,6 @@ import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/models/classroom.dart';
 import 'package:cse_archive/app/models/professor.dart';
-import 'package:cse_archive/app/models/recorded_classroom.dart';
 import 'package:cse_archive/app/models/resource.dart';
 import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
 import 'package:cse_archive/app/widgets/divider.dart';
@@ -14,27 +13,18 @@ import 'package:flutter/material.dart';
 class CourseExpansionTile extends StatelessWidget {
   final int year;
   final ClassroomSemester semester;
+  final List<ResourceModel> resources;
   final List<ProfessorModel> professors;
-  final List<ResourceModel>? resources;
-  final RecordedClassroomModel? recordings;
   final List<String> tas;
 
   const CourseExpansionTile({
     super.key,
     required this.year,
     required this.semester,
+    required this.resources,
     required this.professors,
-    this.resources,
-    this.recordings,
-    this.tas = const [],
-  })  : assert(
-          resources != null || recordings != null,
-          'One of resources or recordings must not be null',
-        ),
-        assert(
-          resources == null || recordings == null,
-          'One of resources or recordings must be null',
-        );
+    required this.tas,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -43,17 +33,19 @@ class CourseExpansionTile extends StatelessWidget {
         '$semester ${enToFaDigits(year.toString())}',
         style: context.bodyLarge,
       ),
-      subtitle: Text(
-        professors
-            .map(
-              (professor) => professor.fullNameWithHonorific,
-            )
-            .join(', '),
-        softWrap: true,
-        style: context.bodyMedium.copyWith(
-          color: context.secondaryColor.withOpacity(0.7),
-        ),
-      ),
+      subtitle: professors.isEmpty
+          ? null
+          : Text(
+              professors
+                  .map(
+                    (professor) => professor.fullNameWithHonorific,
+                  )
+                  .join(', '),
+              softWrap: true,
+              style: context.bodyMedium.copyWith(
+                color: context.secondaryColor.withOpacity(0.7),
+              ),
+            ),
       children: [
         Container(
           width: double.infinity,
@@ -79,10 +71,19 @@ class CourseExpansionTile extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(vertical: kSizeDefault),
                 ),
               ],
-              // TODO: Add download buttons
               Wrap(
                 spacing: kSizeDefault,
                 runSpacing: kSizeDefault,
+                children: resources
+                    .map(
+                      (resource) => ElevatedButton(
+                        onPressed: () {}, // TODO,
+                        child: Text(
+                          resource.title ?? resource.type.representation,
+                        ),
+                      ),
+                    )
+                    .toList(),
               ),
             ],
           ),
