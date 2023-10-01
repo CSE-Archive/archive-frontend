@@ -90,6 +90,23 @@ class ResourceView extends GetView<ResourceController> {
                 ),
               ),
             ],
+            if (resource.classroom!.tas.isNotEmpty) ...[
+              const Gap.vertical(2 * kSizeDefault),
+              SelectableText(
+                ArchiveStrings.resourceTAs,
+                style: context.bodyLarge.copyWith(
+                  color: context.primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Gap.vertical(kSizeDefault / 2),
+              SelectableText(
+                resource.classroom!.tas.join('\n'),
+                style: context.bodyLarge.copyWith(
+                  color: context.primaryColor.withOpacity(0.8),
+                ),
+              ),
+            ],
           ],
         );
 

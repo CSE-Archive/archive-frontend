@@ -86,7 +86,7 @@ class ArchiveStrings {
 
   static const resourceType = 'نوع';
   static const resourceNotes = '• توضیحات';
-  static const resourceProfessors = '• اساتید';
+  static const resourceTAs = '• گریدرها:';
   static const resourceDownload = 'دانلود فایل';
   static const resourceRelatedCourse = 'درس مربوطه';
   static const resourceRelatedProfessors = 'اساتید مربوطه';
