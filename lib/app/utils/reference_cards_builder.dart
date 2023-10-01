@@ -41,7 +41,7 @@ Widget referenceCardsBuilder({
 
   return GridView.count(
     // TODO: Card height is hard coded
-    childAspectRatio: context.responsiveCardWidth / 246,
+    childAspectRatio: context.responsiveCardWidth / 128,
     shrinkWrap: true,
     clipBehavior: Clip.none,
     mainAxisSpacing: kSizeDefault,

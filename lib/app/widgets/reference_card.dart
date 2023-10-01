@@ -28,36 +28,45 @@ class ArchiveReferenceCard extends StatelessWidget {
       padding: const EdgeInsets.all(kSizeDefault),
       onPressed: () =>
           context.go('${ArchiveRoutes.references}/${reference.uuid}'),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              reference.title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: context.bodyLarge,
+          Expanded(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    reference.title,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.bodyLarge,
+                  ),
+                ),
+                const Gap.vertical(kSizeDefault / 2),
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    reference.writers.isEmpty
+                        ? '—'
+                        : reference.writers.join(', '),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: context.bodySmall.copyWith(
+                      color: context.secondaryColor.withOpacity(0.8),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-          const Gap.vertical(kSizeDefault / 2),
-          SizedBox(
-            width: double.infinity,
-            child: Text(
-              reference.writers.join(', '),
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: context.bodySmall.copyWith(
-                color: context.secondaryColor.withOpacity(0.8),
-              ),
-            ),
-          ),
-          const Gap.vertical(kSizeDefault),
+          const Gap.horizontal(kSizeDefault),
           Container(
-            width: double.infinity,
-            height: kSizeCardWidth / 2,
+            width: 6 * kSizeDefault,
+            height: 6 * kSizeDefault,
             decoration: BoxDecoration(
               image: (reference.image != null)
                   ? DecorationImage(
@@ -72,7 +81,7 @@ class ArchiveReferenceCard extends StatelessWidget {
                 : Center(
                     child: Icon(
                       ArchiveIcons.photoOff,
-                      size: 3 * kSizeDefault,
+                      size: 2 * kSizeDefault,
                       color: context.secondaryColor,
                     ),
                   ),
