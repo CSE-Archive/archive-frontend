@@ -1,3 +1,4 @@
+import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/links.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/constants/strings.dart';
@@ -46,24 +47,35 @@ void showSupportDialog({required BuildContext context}) {
               children: [
                 const TextSpan(text: ArchiveStrings.supportDonateDescriptionP1),
                 WidgetSpan(
-                  child: Link(
-                    uri: Uri.parse(ArchiveLinks.support),
-                    target: LinkTarget.blank,
-                    builder: (_, followLink) => GestureDetector(
-                      onTap: followLink,
-                      child: MouseRegion(
-                        cursor: SystemMouseCursors.click,
-                        child: Text(
-                          ArchiveStrings.supportDonateDescriptionLink,
-                          style: TextStyle(
-                            fontWeight: FontWeight.w500,
-                            decoration: TextDecoration.underline,
-                            decorationColor:
-                                context.secondaryColor.withOpacity(0.5),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Link(
+                        uri: Uri.parse(ArchiveLinks.support),
+                        target: LinkTarget.blank,
+                        builder: (_, followLink) => GestureDetector(
+                          onTap: followLink,
+                          child: MouseRegion(
+                            cursor: SystemMouseCursors.click,
+                            child: Text(
+                              ArchiveStrings.supportDonateDescriptionLink,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                decoration: TextDecoration.underline,
+                                decorationColor:
+                                    context.secondaryColor.withOpacity(0.5),
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                      Icon(
+                        ArchiveIcons.externalLink,
+                        color: context.secondaryColor,
+                        size: textStyle.fontSize,
+                      ),
+                    ],
                   ),
                 ),
                 const TextSpan(text: ArchiveStrings.supportDonateDescriptionP2),
@@ -88,24 +100,35 @@ void showSupportDialog({required BuildContext context}) {
                 children: [
                   const TextSpan(text: ArchiveStrings.supportOtherCase1P1),
                   WidgetSpan(
-                    child: Link(
-                      uri: Uri.parse(ArchiveLinks.projectRepos),
-                      target: LinkTarget.blank,
-                      builder: (_, followLink) => GestureDetector(
-                        onTap: followLink,
-                        child: MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: Text(
-                            ArchiveStrings.supportOtherCase1Repos,
-                            style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              decoration: TextDecoration.underline,
-                              decorationColor:
-                                  context.secondaryColor.withOpacity(0.5),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Link(
+                          uri: Uri.parse(ArchiveLinks.projectRepos),
+                          target: LinkTarget.blank,
+                          builder: (_, followLink) => GestureDetector(
+                            onTap: followLink,
+                            child: MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: Text(
+                                ArchiveStrings.supportOtherCase1Repos,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  decoration: TextDecoration.underline,
+                                  decorationColor:
+                                      context.secondaryColor.withOpacity(0.5),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
+                        Icon(
+                          ArchiveIcons.externalLink,
+                          color: context.secondaryColor,
+                          size: textStyle.fontSize,
+                        ),
+                      ],
                     ),
                   ),
                   const TextSpan(text: ArchiveStrings.supportOtherCase1P2),

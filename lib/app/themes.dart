@@ -8,7 +8,7 @@ class ArchiveThemes {
   ArchiveThemes._();
 
   static double appbarHeight(BuildContext context) =>
-      context.isMobileOrTablet ? 3 * kSizeDefault : 4 * kSizeDefault;
+      context.isMobileOrTablet ? 3.2 * kSizeDefault : 4 * kSizeDefault;
 
   static final dark = _basicThemeData(
     brightness: Brightness.dark,
