@@ -33,6 +33,7 @@ class ReferencesView extends GetView<ReferencesController> {
   Widget build(BuildContext context) {
     return controller.obx(
       (_) => ArchiveWebPage(
+        onRefresh: controller.fetchData,
         body: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

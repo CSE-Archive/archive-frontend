@@ -27,6 +27,7 @@ class SearchView extends GetView<SearchViewController> {
     return controller.obx(
       (_) => ArchiveWebPage(
         applyPlatformConstraints: false,
+        onRefresh: controller.fetchData,
         body: (controller.courses.isEmpty &&
                 controller.references.isEmpty &&
                 controller.professors.isEmpty)

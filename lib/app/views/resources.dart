@@ -32,6 +32,7 @@ class ResourcesView extends GetView<ResourcesController> {
   Widget build(BuildContext context) {
     return controller.obx(
       (_) => ArchiveWebPage(
+        onRefresh: controller.fetchData,
         body: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

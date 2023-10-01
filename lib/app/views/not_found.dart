@@ -3,6 +3,7 @@ import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/widgets/error.dart';
 import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/link.dart';
 
 class NotFoundView extends StatelessWidget {
@@ -16,6 +17,7 @@ class NotFoundView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ArchiveWebPage(
+      onRefresh: () async => GoRouter.of(context).refresh(),
       body: ArchiveError(
         type: ArchiveErrorType.notFound,
         title: ArchiveStrings.notFoundTitle,

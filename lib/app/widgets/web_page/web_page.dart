@@ -12,10 +12,12 @@ class ArchiveWebPage extends StatelessWidget {
   final Widget body;
   final bool applyPlatformConstraints;
   final bool applyPlatformVerticalPadding;
+  final Future<void> Function() onRefresh;
 
   const ArchiveWebPage({
     super.key,
     required this.body,
+    required this.onRefresh,
     this.applyPlatformConstraints = true,
     this.applyPlatformVerticalPadding = true,
   });
@@ -27,7 +29,7 @@ class ArchiveWebPage extends StatelessWidget {
     final verticalPadding =
         context.isMobileOrTablet ? 2 * kSizeDefault : 3 * kSizeDefault;
 
-    return Scaffold(
+    final scaffold = Scaffold(
       drawerScrimColor: context.shadowColor.withOpacity(0.1),
       drawer:
           context.isMobileOrTablet ? ArchiveSliverAppbar.drawer(context) : null,
@@ -72,6 +74,16 @@ class ArchiveWebPage extends StatelessWidget {
           ),
         ],
       ),
+    );
+
+    return context.responsiveBuilder(
+      mobile: RefreshIndicator(
+        color: context.secondaryColor,
+        backgroundColor: context.primaryColor,
+        onRefresh: onRefresh,
+        child: scaffold,
+      ),
+      desktop: scaffold,
     );
   }
 }

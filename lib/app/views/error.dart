@@ -14,6 +14,7 @@ class ErrorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ArchiveWebPage(
+      onRefresh: () async => retryButtonOnPressed!(),
       body: ArchiveError(
         type: ArchiveErrorType.general,
         title: ArchiveStrings.errorTitle,

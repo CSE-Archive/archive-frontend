@@ -27,6 +27,7 @@ class ChartView extends GetView<ChartController> {
     return controller.obx(
       (_) => ArchiveWebPage(
         applyPlatformConstraints: false,
+        onRefresh: controller.fetchData,
         body: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,

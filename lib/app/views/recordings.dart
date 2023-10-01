@@ -22,6 +22,7 @@ class RecordingsView extends GetView<RecordingsController> {
   Widget build(BuildContext context) {
     return controller.obx(
       (_) => ArchiveWebPage(
+        onRefresh: controller.fetchData,
         body: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,

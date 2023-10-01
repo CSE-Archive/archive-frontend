@@ -183,6 +183,7 @@ class ProfessorView extends GetView<ProfessorController> {
 
         return ArchiveWebPage(
           applyPlatformConstraints: false,
+          onRefresh: controller.fetchData,
           body: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
