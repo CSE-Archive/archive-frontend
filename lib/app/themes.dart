@@ -213,9 +213,12 @@ ThemeData _basicThemeData({
         overlayColor: const MaterialStatePropertyAll(Colors.transparent),
         minimumSize: const MaterialStatePropertyAll(Size.zero),
         padding: const MaterialStatePropertyAll(
-          EdgeInsets.all(4 / 5 * kSizeDefault),
+          EdgeInsets.symmetric(
+            horizontal: 4 / 5 * kSizeDefault,
+            vertical: (4 / 5 * kSizeDefault) / 2,
+          ),
         ),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        visualDensity: VisualDensity.standard,
         shape: const MaterialStatePropertyAll(
           RoundedRectangleBorder(borderRadius: BorderRadius.zero),
         ),
@@ -239,9 +242,12 @@ ThemeData _basicThemeData({
         overlayColor: const MaterialStatePropertyAll(Colors.transparent),
         minimumSize: const MaterialStatePropertyAll(Size.zero),
         padding: const MaterialStatePropertyAll(
-          EdgeInsets.all(4 / 5 * kSizeDefault),
+          EdgeInsets.symmetric(
+            horizontal: 4 / 5 * kSizeDefault,
+            vertical: (4 / 5 * kSizeDefault) / 2,
+          ),
         ),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        visualDensity: VisualDensity.standard,
         shape: const MaterialStatePropertyAll(
           RoundedRectangleBorder(borderRadius: BorderRadius.zero),
         ),
@@ -256,7 +262,7 @@ ThemeData _basicThemeData({
         overlayColor: const MaterialStatePropertyAll(Colors.transparent),
         minimumSize: const MaterialStatePropertyAll(Size.zero),
         padding: const MaterialStatePropertyAll(EdgeInsets.zero),
-        visualDensity: VisualDensity.adaptivePlatformDensity,
+        visualDensity: VisualDensity.standard,
       ),
     ),
     tooltipTheme: TooltipThemeData(

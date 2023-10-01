@@ -217,7 +217,10 @@ class ReferenceView extends GetView<ReferenceController> {
                       onPressed: followLink,
                       style: ButtonStyle(
                         padding: const MaterialStatePropertyAll(
-                          EdgeInsets.all(kSizeDefault),
+                          EdgeInsets.symmetric(
+                            horizontal: kSizeDefault,
+                            vertical: kSizeDefault / 2,
+                          ),
                         ),
                         textStyle: MaterialStatePropertyAll(
                           context.bodyLarge.copyWith(
