@@ -1,6 +1,6 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/models/reference.dart';
-import 'package:cse_archive/app/models/reference_type.dart';
+import 'package:cse_archive/app/models/reference_type_enum.dart';
 import 'package:cse_archive/app/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,8 +8,8 @@ import 'package:get/get.dart';
 class ReferencesController extends GetxController with StateMixin {
   static const searchQueryParameter = 'search';
   static const typeQueryParameter = 'type';
-  static const typeQueryOptions = ReferenceTypeModel.options;
-  static const typeQueryDefault = ReferenceTypeModel.defaultOption;
+  static const typeQueryDefault = ReferenceTypeEnumModel.none;
+  static const typeQueryOptions = ReferenceTypeEnumModel.values;
 
   final selectedType = typeQueryDefault.obs;
 

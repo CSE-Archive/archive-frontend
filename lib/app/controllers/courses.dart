@@ -1,7 +1,7 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/models/course.dart';
-import 'package:cse_archive/app/models/course_type.dart';
-import 'package:cse_archive/app/models/course_units.dart';
+import 'package:cse_archive/app/models/course_type_enum.dart';
+import 'package:cse_archive/app/models/course_units_enum.dart';
 import 'package:cse_archive/app/services/api.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,10 +10,10 @@ class CoursesController extends GetxController with StateMixin {
   static const searchQueryParameter = 'search';
   static const typeQueryParameter = 'type';
   static const unitsQueryParameter = 'units';
-  static const typeQueryOptions = CourseTypeModel.options;
-  static const unitsQueryOptions = CourseUnitsModel.options;
-  static const typeQueryDefault = CourseTypeModel.defaultOption;
-  static const unitsQueryDefault = CourseUnitsModel.defaultOption;
+  static const typeQueryOptions = CourseTypeEnumModel.values;
+  static const unitsQueryOptions = CourseUnitsEnumModel.values;
+  static const typeQueryDefault = CourseTypeEnumModel.none;
+  static const unitsQueryDefault = CourseUnitsEnumModel.none;
 
   final selectedType = typeQueryDefault.obs;
   final selectedUnits = unitsQueryDefault.obs;

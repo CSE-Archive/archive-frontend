@@ -1,10 +1,10 @@
 import 'classroom.dart';
 import 'link.dart';
-import 'resource_type.dart';
+import 'resource_type_enum.dart';
 
 class ResourceModel {
   final String uuid;
-  final ResourceTypeModel type;
+  final ResourceTypeEnumModel type;
   final ClassroomModel? classroom;
   final Uri? file;
   final String? title;
@@ -31,7 +31,7 @@ class ResourceModel {
     final file = json['file'];
     final createdTime = json['created_time'];
     final modifiedTime = json['modified_time'];
-    final type = ResourceTypeModel.fromJson(json['type']);
+    final type = ResourceTypeEnumModel.fromJson(json['type']);
 
     return ResourceModel(
       uuid: json['uuid'],

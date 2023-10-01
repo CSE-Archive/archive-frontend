@@ -1,14 +1,14 @@
 import 'classroom.dart';
-import 'course_type.dart';
-import 'course_units.dart';
+import 'course_type_enum.dart';
+import 'course_units_enum.dart';
 import 'reference.dart';
 import 'professor.dart';
 
 class CourseModel {
   final String uuid;
   final String title;
-  final CourseUnitsModel units;
-  final CourseTypeModel type;
+  final CourseUnitsEnumModel units;
+  final CourseTypeEnumModel type;
   final String? titleEn;
   final String? description;
   final String? tag;
@@ -46,8 +46,8 @@ class CourseModel {
       uuid: json['uuid'],
       title: json['title'],
       titleEn: json['en_title'],
-      units: CourseUnitsModel.fromJson(json['units']),
-      type: CourseTypeModel.fromJson(json['type']),
+      units: CourseUnitsEnumModel.fromJson(json['units']),
+      type: CourseTypeEnumModel.fromJson(json['type']),
       description: json['description'],
       tag: json['tag'],
       knownAs: json['known_as'],

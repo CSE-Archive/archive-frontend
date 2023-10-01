@@ -1,5 +1,5 @@
 import 'package:cse_archive/app/constants/sizes.dart';
-import 'package:cse_archive/app/models/professor_department.dart';
+import 'package:cse_archive/app/models/professor_department_enum.dart';
 import 'package:cse_archive/app/models/professor.dart';
 import 'package:cse_archive/app/services/api.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +8,9 @@ import 'package:get/get.dart';
 class ProfessorsController extends GetxController with StateMixin {
   static const searchQueryParameter = 'search';
   static const departmentQueryParameter = 'department';
-  static const departmentQueryDefault = ProfessorDepartmentModel.defaultOption;
+  static const departmentQueryDefault = ProfessorDepartmentEnumModel.none;
 
-  late List<ProfessorDepartmentModel> departmentQueryOptions = [];
+  late List<ProfessorDepartmentEnumModel> departmentQueryOptions = [];
 
   final selectedDepartment = departmentQueryDefault.obs;
 
@@ -70,11 +70,10 @@ class ProfessorsController extends GetxController with StateMixin {
     if (departmentQueryOptions.isEmpty) {
       change(null, status: RxStatus.loading());
 
-      final options = await APIService.to.professorDepartments();
+      final options = await ProfessorDepartmentEnumModel.values;
 
       if (options != null) {
-        departmentQueryOptions = [ProfessorDepartmentModel.defaultOption];
-        departmentQueryOptions.addAll(options);
+        departmentQueryOptions = options;
 
         change(null, status: RxStatus.success());
       } else {

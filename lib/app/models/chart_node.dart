@@ -1,13 +1,13 @@
 import 'course.dart';
-import 'course_type.dart';
-import 'course_units.dart';
+import 'course_type_enum.dart';
+import 'course_units_enum.dart';
 
 class ChartNodeModel {
   final int semester;
   final int column;
   final CourseModel? course;
-  final CourseTypeModel? courseType;
-  final CourseUnitsModel? courseUnits;
+  final CourseTypeEnumModel? courseType;
+  final CourseUnitsEnumModel? courseUnits;
 
   ChartNodeModel({
     required this.semester,
@@ -29,12 +29,12 @@ class ChartNodeModel {
       course: CourseModel.fromJson(json['course']),
       courseType: courseType == null
           ? null
-          : CourseTypeModel.fromJson(
+          : CourseTypeEnumModel.fromJson(
               courseType,
             ),
       courseUnits: courseUnits == null
           ? null
-          : CourseUnitsModel.fromJson(
+          : CourseUnitsEnumModel.fromJson(
               courseUnits,
             ),
     );

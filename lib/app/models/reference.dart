@@ -1,11 +1,11 @@
 import 'course.dart';
 import 'link.dart';
-import 'reference_type.dart';
+import 'reference_type_enum.dart';
 
 class ReferenceModel {
   final String uuid;
   final String title;
-  final ReferenceTypeModel type;
+  final ReferenceTypeEnumModel type;
   final Uri? file;
   final Uri? image;
   final String? notes;
@@ -38,7 +38,7 @@ class ReferenceModel {
     final image = json['cover_image'];
     final createdTime = json['created_time'];
     final modifiedTime = json['modified_time'];
-    final type = ReferenceTypeModel.fromJson(json['type']);
+    final type = ReferenceTypeEnumModel.fromJson(json['type']);
     final courses = CourseModel.listFromJson(json['courses']);
 
     return ReferenceModel(

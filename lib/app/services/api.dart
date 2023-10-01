@@ -4,15 +4,15 @@ import 'package:cse_archive/app/constants/api_endpoints.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/models/chart_node.dart';
 import 'package:cse_archive/app/models/course.dart';
-import 'package:cse_archive/app/models/course_type.dart';
-import 'package:cse_archive/app/models/course_units.dart';
+import 'package:cse_archive/app/models/course_type_enum.dart';
+import 'package:cse_archive/app/models/course_units_enum.dart';
 import 'package:cse_archive/app/models/professor.dart';
-import 'package:cse_archive/app/models/professor_department.dart';
+import 'package:cse_archive/app/models/professor_department_enum.dart';
 import 'package:cse_archive/app/models/recorded_classroom.dart';
 import 'package:cse_archive/app/models/reference.dart';
-import 'package:cse_archive/app/models/reference_type.dart';
+import 'package:cse_archive/app/models/reference_type_enum.dart';
 import 'package:cse_archive/app/models/resource.dart';
-import 'package:cse_archive/app/models/resource_type.dart';
+import 'package:cse_archive/app/models/resource_type_enum.dart';
 import 'package:dio/dio.dart' as dio;
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
@@ -98,8 +98,8 @@ class APIService extends GetxService {
         List<CourseModel> courses,
         bool isThereMore,
       })?> courses({
-    CourseTypeModel? type,
-    CourseUnitsModel? units,
+    CourseTypeEnumModel? type,
+    CourseUnitsEnumModel? units,
     String? search,
     int? offset,
   }) =>
@@ -126,7 +126,7 @@ class APIService extends GetxService {
         List<ReferenceModel> references,
         bool isThereMore,
       })?> references({
-    ReferenceTypeModel? type,
+    ReferenceTypeEnumModel? type,
     String? search,
     int? offset,
   }) =>
@@ -152,7 +152,7 @@ class APIService extends GetxService {
         List<ProfessorModel> professors,
         bool isThereMore,
       })?> professors({
-    ProfessorDepartmentModel? department,
+    ProfessorDepartmentEnumModel? department,
     String? search,
     int? offset,
   }) =>
@@ -178,7 +178,7 @@ class APIService extends GetxService {
         List<ResourceModel> resources,
         bool isThereMore,
       })?> resources({
-    ResourceTypeModel? type,
+    ResourceTypeEnumModel? type,
     int? offset,
   }) =>
       _requestHandler(
@@ -222,7 +222,7 @@ class APIService extends GetxService {
         successDecoder: (json) => ChartNodeModel.listFromJson(json),
       );
 
-  Future<List<ProfessorDepartmentModel>?> professorDepartments() =>
+  Future<List<ProfessorDepartmentEnumModel>?> professorDepartments() =>
       _requestHandler(
         request: () => _client.get(
           ArchiveAPIEndpoints.departments,
@@ -230,7 +230,7 @@ class APIService extends GetxService {
         ),
         successStatusCode: HttpStatus.ok,
         successDecoder: (json) =>
-            ProfessorDepartmentModel.listFromJson(json['results']),
+            ProfessorDepartmentEnumModel.listFromJson(json['results']),
       );
 
   Future<CourseModel?> course({required String uuid}) => _requestHandler(

@@ -1,7 +1,7 @@
 class ArchiveStrings {
   ArchiveStrings._();
 
-  static const all = 'همه';
+  static const none = 'همه';
   static const loadMore = 'مشاهده‌ی موارد بیشتر';
   static const search = ' جستجو ...';
   static const loading = 'لطفا صبر کنید ...';

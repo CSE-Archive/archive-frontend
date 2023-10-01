@@ -1,10 +1,10 @@
 import 'course.dart';
 import 'link.dart';
-import 'professor_department.dart';
+import 'professor_department_enum.dart';
 
 class ProfessorModel {
   final String uuid;
-  final ProfessorDepartmentModel department;
+  final ProfessorDepartmentEnumModel department;
   final String? honorific;
   final String? firstName;
   final String? lastName;
@@ -47,7 +47,7 @@ class ProfessorModel {
 
     return ProfessorModel(
       uuid: json['uuid'],
-      department: ProfessorDepartmentModel.fromJson(json['department']),
+      department: ProfessorDepartmentEnumModel.fromJson(json['department']),
       honorific: json['honorific'],
       firstName: json['first_name'],
       lastName: json['last_name'],

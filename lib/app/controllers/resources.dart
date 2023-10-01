@@ -1,13 +1,13 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/models/resource.dart';
-import 'package:cse_archive/app/models/resource_type.dart';
+import 'package:cse_archive/app/models/resource_type_enum.dart';
 import 'package:cse_archive/app/services/api.dart';
 import 'package:get/get.dart';
 
 class ResourcesController extends GetxController with StateMixin {
   static const typeQueryParameter = 'type';
-  static const typeQueryOptions = ResourceTypeModel.options;
-  static const typeQueryDefault = ResourceTypeModel.defaultOption;
+  static const typeQueryOptions = ResourceTypeEnumModel.values;
+  static const typeQueryDefault = ResourceTypeEnumModel.none;
 
   final selectedType = typeQueryDefault.obs;
 
