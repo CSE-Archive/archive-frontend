@@ -18,4 +18,5 @@ class ArchiveAPIEndpoints {
   static String course(String uuid) => '$base/courses/$uuid';
   static String professor(String uuid) => '$base/professors/$uuid';
   static String reference(String uuid) => '$base/references/$uuid';
+  static String resource(String uuid) => '$base/resources/$uuid';
 }

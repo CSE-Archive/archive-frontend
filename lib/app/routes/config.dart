@@ -7,6 +7,7 @@ import 'package:cse_archive/app/controllers/professors.dart';
 import 'package:cse_archive/app/controllers/recordings.dart';
 import 'package:cse_archive/app/controllers/reference.dart';
 import 'package:cse_archive/app/controllers/references.dart';
+import 'package:cse_archive/app/controllers/resource.dart';
 import 'package:cse_archive/app/controllers/resources.dart';
 import 'package:cse_archive/app/controllers/search.dart';
 import 'package:cse_archive/app/routes/routes.dart';
@@ -20,6 +21,7 @@ import 'package:cse_archive/app/views/not_found.dart' deferred as not_found;
 import 'package:cse_archive/app/views/recordings.dart' deferred as recordings;
 import 'package:cse_archive/app/views/reference.dart' deferred as reference;
 import 'package:cse_archive/app/views/references.dart' deferred as references;
+import 'package:cse_archive/app/views/resource.dart' deferred as resource;
 import 'package:cse_archive/app/views/resources.dart' deferred as resources;
 import 'package:cse_archive/app/views/search.dart' deferred as search;
 import 'package:cse_archive/app/views/professor.dart' deferred as professor;
@@ -175,6 +177,39 @@ final kRouterConfig = GoRouter(
           ),
         );
       },
+      routes: [
+        GoRoute(
+          path: ':uuid',
+          pageBuilder: (context, state) {
+            PageTrackerService.to.activePage = ArchivePage.resource;
+
+            final uuid = state.pathParameters['uuid']!;
+
+            final controller = Get.put(
+              ResourceController(uuid: uuid),
+              tag: uuid,
+            );
+
+            controller.fetchData().then(
+              (_) {
+                if (controller.resource == null) {
+                  context.go(ArchiveRoutes.resources);
+                }
+              },
+            );
+
+            return _noTransitionBuilder(
+              state: state,
+              child: _viewLoader(
+                future: resource.loadLibrary(),
+                builder: () => resource.ResourceView(
+                  uuid: uuid,
+                ),
+              ),
+            );
+          },
+        ),
+      ],
     ),
     GoRoute(
       path: ArchiveRoutes.references,

@@ -5,10 +5,12 @@ import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/models/classroom.dart';
 import 'package:cse_archive/app/models/professor.dart';
 import 'package:cse_archive/app/models/resource.dart';
+import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
 import 'package:cse_archive/app/widgets/divider.dart';
 import 'package:cse_archive/app/widgets/expansion_tile.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/link.dart';
 
 class CourseExpansionTile extends StatelessWidget {
   final int year;
@@ -76,10 +78,16 @@ class CourseExpansionTile extends StatelessWidget {
                 runSpacing: kSizeDefault,
                 children: resources
                     .map(
-                      (resource) => ElevatedButton(
-                        onPressed: () {}, // TODO,
-                        child: Text(
-                          resource.title ?? resource.type.representation,
+                      (resource) => Link(
+                        uri: Uri(
+                          path: '${ArchiveRoutes.resources}/${resource.uuid}',
+                        ),
+                        target: LinkTarget.blank,
+                        builder: (_, followLink) => ElevatedButton(
+                          onPressed: followLink,
+                          child: Text(
+                            resource.title ?? resource.type.representation,
+                          ),
                         ),
                       ),
                     )

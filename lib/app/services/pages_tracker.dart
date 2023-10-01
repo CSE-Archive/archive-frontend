@@ -11,6 +11,7 @@ enum ArchivePage {
   recordings,
   reference,
   references,
+  resource,
   resources,
   search,
 }

@@ -2,8 +2,10 @@ import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/models/resource.dart';
+import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/en_to_fa_digits.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'gap.dart';
 import 'card.dart';
@@ -24,7 +26,8 @@ class ArchiveResourceCard extends StatelessWidget {
       width: width,
       color: context.primaryColor,
       padding: const EdgeInsets.all(kSizeDefault),
-      onPressed: () {}, // TODO: Add on press download options
+      onPressed: () =>
+          context.go('${ArchiveRoutes.resources}/${resource.uuid}'),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,

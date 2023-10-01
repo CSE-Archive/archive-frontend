@@ -79,6 +79,13 @@ class ArchiveStrings {
   static const resources = 'منابع';
   static const resourcesTypeFilter = 'نوع';
 
+  static const resourceType = 'نوع';
+  static const resourceNotes = '• توضیحات';
+  static const resourceProfessors = '• اساتید';
+  static const resourceDownload = 'دانلود فایل';
+  static const resourceRelatedCourse = 'درس مرتبط';
+  static const resourceRelatedProfessors = 'اساتید مرتبط';
+
   static const references = 'مراجع';
   static const referencesTitleAuthorFilter = 'عنوان/نویسنده';
   static const referencesTypeFilter = 'نوع';

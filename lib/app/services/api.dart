@@ -250,4 +250,10 @@ class APIService extends GetxService {
         successStatusCode: HttpStatus.ok,
         successDecoder: ReferenceModel.fromJson,
       );
+
+  Future<ResourceModel?> resource({required String uuid}) => _requestHandler(
+        request: () => _client.get(ArchiveAPIEndpoints.resource(uuid)),
+        successStatusCode: HttpStatus.ok,
+        successDecoder: ResourceModel.fromJson,
+      );
 }

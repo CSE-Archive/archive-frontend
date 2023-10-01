@@ -55,8 +55,8 @@ class CourseView extends GetView<CourseController> {
             SelectableText(
               course.title,
               style: context.headlineMedium.copyWith(
-                fontWeight: FontWeight.bold,
                 color: context.primaryColor,
+                fontWeight: FontWeight.bold,
               ),
             ),
             if (course.titleEn != null) ...[
