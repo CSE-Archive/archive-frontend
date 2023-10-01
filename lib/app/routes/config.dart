@@ -4,6 +4,7 @@ import 'package:cse_archive/app/controllers/courses.dart';
 import 'package:cse_archive/app/controllers/home.dart';
 import 'package:cse_archive/app/controllers/professor.dart';
 import 'package:cse_archive/app/controllers/professors.dart';
+import 'package:cse_archive/app/controllers/recording.dart';
 import 'package:cse_archive/app/controllers/recordings.dart';
 import 'package:cse_archive/app/controllers/reference.dart';
 import 'package:cse_archive/app/controllers/references.dart';
@@ -18,6 +19,7 @@ import 'package:cse_archive/app/views/courses.dart' deferred as courses;
 import 'package:cse_archive/app/views/home.dart' deferred as home;
 import 'package:cse_archive/app/views/loading.dart';
 import 'package:cse_archive/app/views/not_found.dart' deferred as not_found;
+import 'package:cse_archive/app/views/recording.dart' deferred as recording;
 import 'package:cse_archive/app/views/recordings.dart' deferred as recordings;
 import 'package:cse_archive/app/views/reference.dart' deferred as reference;
 import 'package:cse_archive/app/views/references.dart' deferred as references;
@@ -154,6 +156,39 @@ final kRouterConfig = GoRouter(
           ),
         );
       },
+      routes: [
+        GoRoute(
+          path: ':uuid',
+          pageBuilder: (context, state) {
+            PageTrackerService.to.activePage = ArchivePage.recording;
+
+            final uuid = state.pathParameters['uuid']!;
+
+            final controller = Get.put(
+              RecordingController(uuid: uuid),
+              tag: uuid,
+            );
+
+            controller.fetchData().then(
+              (_) {
+                if (controller.recording == null) {
+                  context.go(ArchiveRoutes.recordings);
+                }
+              },
+            );
+
+            return _noTransitionBuilder(
+              state: state,
+              child: _viewLoader(
+                future: recording.loadLibrary(),
+                builder: () => recording.RecordingView(
+                  uuid: uuid,
+                ),
+              ),
+            );
+          },
+        ),
+      ],
     ),
     GoRoute(
       path: ArchiveRoutes.resources,

@@ -8,6 +8,7 @@ enum ArchivePage {
   courses,
   professor,
   professors,
+  recording,
   recordings,
   reference,
   references,

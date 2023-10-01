@@ -5,6 +5,7 @@ import 'recorded_session.dart';
 class RecordedClassroomModel {
   final String uuid;
   final ClassroomModel classroom;
+  final String? notes;
   final DateTime? createdTime;
   final DateTime? modifiedTime;
   final List<RecordedSessionModel> sessions;
@@ -13,6 +14,7 @@ class RecordedClassroomModel {
   RecordedClassroomModel({
     required this.uuid,
     required this.classroom,
+    this.notes,
     this.createdTime,
     this.modifiedTime,
     this.sessions = const [],
@@ -28,6 +30,7 @@ class RecordedClassroomModel {
     return RecordedClassroomModel(
       uuid: json['uuid'],
       classroom: ClassroomModel.fromJson(json['classroom'])!,
+      notes: json['notes'],
       createdTime: createdTime == null ? null : DateTime.parse(createdTime),
       modifiedTime: modifiedTime == null ? null : DateTime.parse(modifiedTime),
       sessions: RecordedSessionModel.listFromJson(json['sessions']),

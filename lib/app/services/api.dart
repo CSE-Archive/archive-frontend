@@ -256,4 +256,11 @@ class APIService extends GetxService {
         successStatusCode: HttpStatus.ok,
         successDecoder: ResourceModel.fromJson,
       );
+
+  Future<RecordedClassroomModel?> recording({required String uuid}) =>
+      _requestHandler(
+        request: () => _client.get(ArchiveAPIEndpoints.recording(uuid)),
+        successStatusCode: HttpStatus.ok,
+        successDecoder: RecordedClassroomModel.fromJson,
+      );
 }

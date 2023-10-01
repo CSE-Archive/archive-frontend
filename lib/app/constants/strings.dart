@@ -62,6 +62,11 @@ class ArchiveStrings {
 
   static const recordings = 'کلاس‌های ضبط شده';
 
+  static const recordingPreTitle = 'کلاس‌های ضبط شده‌ی';
+  static const recordingNotes = '• توضیحات';
+  static const recordingRelatedCourse = 'درس مربوطه';
+  static const recordingRelatedProfessors = 'اساتید مربوطه';
+
   static const appbarCourses = 'دروس';
   static const appbarReferences = 'مراجع';
   static const appbarProfessors = 'اساتید';
@@ -83,8 +88,8 @@ class ArchiveStrings {
   static const resourceNotes = '• توضیحات';
   static const resourceProfessors = '• اساتید';
   static const resourceDownload = 'دانلود فایل';
-  static const resourceRelatedCourse = 'درس مرتبط';
-  static const resourceRelatedProfessors = 'اساتید مرتبط';
+  static const resourceRelatedCourse = 'درس مربوطه';
+  static const resourceRelatedProfessors = 'اساتید مربوطه';
 
   static const references = 'مراجع';
   static const referencesTitleAuthorFilter = 'عنوان/نویسنده';
