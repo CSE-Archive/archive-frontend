@@ -38,6 +38,11 @@ class CourseView extends GetView<CourseController> {
       (_) {
         final course = controller.course!;
 
+        final recordings = course.classrooms
+            .where((classroom) => classroom.recordings != null)
+            .map((classroom) => classroom.recordings!)
+            .toList();
+
         final unitsLabel = ArchiveLabel(
           title: ArchiveStrings.courseUnits,
           value: enToFaDigits(course.units.representation),
@@ -164,13 +169,21 @@ class CourseView extends GetView<CourseController> {
                 RelationsTabBar(
                   labels: [
                     if (course.preRequisites.isNotEmpty)
-                      ArchiveStrings.coursePreRequisites,
+                      course.preRequisites.length > 1
+                          ? ArchiveStrings.coursePreRequisitePlural
+                          : ArchiveStrings.coursePreRequisite,
                     if (course.coRequisites.isNotEmpty)
-                      ArchiveStrings.courseCoRequisites,
+                      course.coRequisites.length > 1
+                          ? ArchiveStrings.courseCoRequisitePlural
+                          : ArchiveStrings.courseCoRequisite,
                     if (course.incompatibles.isNotEmpty)
-                      ArchiveStrings.courseIncompatibles,
+                      course.incompatibles.length > 1
+                          ? ArchiveStrings.courseIncompatiblePlural
+                          : ArchiveStrings.courseIncompatible,
                     if (course.requisiteFor.isNotEmpty)
-                      ArchiveStrings.courseRequisiteFor,
+                      course.requisiteFor.length > 1
+                          ? ArchiveStrings.courseRequisiteForPlural
+                          : ArchiveStrings.courseRequisiteFor,
                   ],
                   listOfCourses: [
                     if (course.preRequisites.isNotEmpty) course.preRequisites,
@@ -187,8 +200,10 @@ class CourseView extends GetView<CourseController> {
                       BoxConstraints(maxWidth: context.platform.maxWidth),
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
-                  child: const ArchiveHeader(
-                    title: ArchiveStrings.courseReferences,
+                  child: ArchiveHeader(
+                    title: course.references.length > 1
+                        ? ArchiveStrings.courseReferencePlural
+                        : ArchiveStrings.courseReference,
                   ),
                 ),
                 referenceCardsBuilder(
@@ -204,8 +219,10 @@ class CourseView extends GetView<CourseController> {
                       BoxConstraints(maxWidth: context.platform.maxWidth),
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
-                  child: const ArchiveHeader(
-                    title: ArchiveStrings.courseProfessors,
+                  child: ArchiveHeader(
+                    title: course.professors.length > 1
+                        ? ArchiveStrings.courseProfessorPlural
+                        : ArchiveStrings.courseProfessor,
                   ),
                 ),
                 professorCardsBuilder(
@@ -214,25 +231,22 @@ class CourseView extends GetView<CourseController> {
                   infiniteWidth: true,
                 ),
               ],
-              if (course.classrooms.isNotEmpty &&
-                  course.classrooms.any(
-                    (classroom) => classroom.recordings != null,
-                  )) ...[
+              if (recordings.isNotEmpty) ...[
                 const Gap.vertical(2 * kSizeDefault),
                 Container(
                   constraints:
                       BoxConstraints(maxWidth: context.platform.maxWidth),
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
-                  child:
-                      const ArchiveHeader(title: ArchiveStrings.courseRecords),
+                  child: ArchiveHeader(
+                    title: recordings.length > 1
+                        ? ArchiveStrings.courseRecordingPlural
+                        : ArchiveStrings.courseRecording,
+                  ),
                 ),
                 recordingCardsBuilder(
                   context: context,
-                  recordings: course.classrooms
-                      .where((classroom) => classroom.recordings != null)
-                      .map((classroom) => classroom.recordings!)
-                      .toList(),
+                  recordings: recordings,
                   infiniteWidth: true,
                 ),
               ],
@@ -247,7 +261,7 @@ class CourseView extends GetView<CourseController> {
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
                   child: const ArchiveHeader(
-                    title: ArchiveStrings.courseResources,
+                    title: ArchiveStrings.courseResourcePlural,
                   ),
                 ),
                 Container(

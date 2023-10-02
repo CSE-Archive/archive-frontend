@@ -45,14 +45,12 @@ class ArchiveStrings {
   static const notFoundTitle = 'صفحه پیدا نشد';
   static const notFoundDescriptionP1 = 'متاسفانه صفحه‌ای با آدرس ';
   static const notFoundDescriptionP1_5 = 'مورد نظر';
-  static const notFoundDescriptionP2 =
-      ' پیدا نکردیم. لطفا از درستی آدرس اطمینان حاصل کنید. ';
+  static const notFoundDescriptionP2 = ' پیدا نکردیم.';
   static const notFoundButton = 'صفحه اصلی';
 
   static const searchNotFoundTitle = 'چیزی پیدا نشد';
-  static const searchNotFoundDescriptionP1 = 'متاسفانه نتیجه‌ای برای «';
-  static const searchNotFoundDescriptionP2 =
-      '» پیدا نکردیم. لطفا از درستی عبارت مورد جستجو اطمینان حاصل کنید. ';
+  static const searchNotFoundDescriptionP1 = 'متاسفانه نتیجه‌ای برای عبارت «';
+  static const searchNotFoundDescriptionP2 = '» پیدا نکردیم.';
 
   static const filters = 'فیلترها';
   static const filtersNotFoundTitle = 'چیزی پیدا نشد';
@@ -62,10 +60,11 @@ class ArchiveStrings {
 
   static const recordings = 'کلاس‌های ضبط شده';
 
-  static const recordingPreTitle = 'کلاس‌های ضبط شده‌ی';
+  static const recordingPreTitle = 'کلاس ضبط شده‌ی';
   static const recordingNotes = '• توضیحات';
-  static const recordingRelatedCourse = 'درس مربوطه';
-  static const recordingRelatedProfessors = 'اساتید مربوطه';
+  static const recordingCourse = 'درس';
+  static const recordingProfessor = 'استاد';
+  static const recordingProfessorPlural = 'اساتید';
 
   static const appbarCourses = 'دروس';
   static const appbarReferences = 'مراجع';
@@ -86,10 +85,12 @@ class ArchiveStrings {
 
   static const resourceType = 'نوع';
   static const resourceNotes = '• توضیحات';
-  static const resourceTAs = '• گریدرها:';
+  static const resourceTA = '• گریدر:';
+  static const resourceTAPlural = '• گریدرها:';
   static const resourceDownload = 'دانلود فایل';
-  static const resourceRelatedCourse = 'درس مربوطه';
-  static const resourceRelatedProfessors = 'اساتید مربوطه';
+  static const resourceCourse = 'درس';
+  static const resourceProfessor = 'استاد';
+  static const resourceProfessorPlural = 'اساتید';
 
   static const references = 'مراجع';
   static const referencesTitleAuthorFilter = 'عنوان/نویسنده';
@@ -97,18 +98,27 @@ class ArchiveStrings {
 
   static const referenceType = 'نوع';
   static const referenceNotes = '• توضیحات';
-  static const referenceAuthors = '• نویسندگان';
+  static const referenceAuthor = '• نویسنده';
+  static const referenceAuthorPlural = '• نویسندگان';
+  static const referenceCollector = '• گردآورنده';
+  static const referenceCollectorPlural = '• گردآورندگان';
   static const referenceDownload = 'دانلود فایل';
-  static const referenceRelatedCourses = 'دروس مرتبط';
-  static const referenceRelatedReferences = 'مراجع مرتبط';
+  static const referenceRelatedCourse = 'درس مرتبط';
+  static const referenceRelatedCoursePlural = 'دروس مرتبط';
+  static const referenceRelatedReference = 'مرجع مرتبط';
+  static const referenceRelatedReferencePlural = 'مراجع مرتبط';
 
   static const professors = 'اساتید';
   static const professorsNameFilter = 'نام استاد';
   static const professorsDepartmentFilter = 'بخش';
 
-  static const professorEmails = '• ایمیل‌ها';
-  static const professorRelatedLinks = '• لینک‌های مرتبط';
+  static const professorEmail = '• ایمیل';
+  static const professorEmailPlural = '• ایمیل‌ها';
+  static const professorRelatedLink = '• لینک مرتبط';
+  static const professorRelatedLinkPlural = '• لینک‌های مرتبط';
   static const professorDepartment = 'بخش';
+  static const professorRelatedCourse = 'درس مرتبط';
+  static const professorRelatedCoursePlural = 'دروس مرتبط';
 
   static const courses = 'دروس';
   static const coursesTitleFilter = 'عنوان';
@@ -117,15 +127,23 @@ class ArchiveStrings {
 
   static const courseType = 'نوع';
   static const courseUnits = 'تعداد واحد';
-  static const coursePreRequisites = 'پیش‌نیازها';
-  static const courseCoRequisites = 'هم‌نیازها';
-  static const courseIncompatibles = 'موانع جمع';
-  static const courseRequisiteFor = 'پیش‌نیاز چه درس‌هایی‌ست';
-  static const courseReferences = 'مراجع';
-  static const courseProfessors = 'اساتید';
-  static const courseResources = 'منابع';
-  static const courseRecords = 'کلاس‌های ضبط شده';
-  static const courseTAs = '• گریدرها:';
+  static const coursePreRequisite = 'پیش‌نیاز';
+  static const coursePreRequisitePlural = 'پیش‌نیازها';
+  static const courseCoRequisite = 'هم‌نیاز';
+  static const courseCoRequisitePlural = 'هم‌نیازها';
+  static const courseIncompatible = 'مانع جمع';
+  static const courseIncompatiblePlural = 'موانع جمع';
+  static const courseRequisiteFor = 'پیش‌نیاز چه درسی‌ست';
+  static const courseRequisiteForPlural = 'پیش‌نیاز چه درس‌هایی‌ست';
+  static const courseReference = 'مرجع';
+  static const courseReferencePlural = 'مراجع';
+  static const courseProfessor = 'استاد';
+  static const courseProfessorPlural = 'اساتید';
+  static const courseResourcePlural = 'منابع';
+  static const courseRecording = 'کلاس ضبط شده';
+  static const courseRecordingPlural = 'کلاس‌های ضبط شده';
+  static const courseTA = '• گریدر:';
+  static const courseTAPlural = '• گریدرها:';
 
   static const chart = 'چارت مهندسی کامپیوتر';
   static const chartHelp = 'راهنما';

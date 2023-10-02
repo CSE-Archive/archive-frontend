@@ -183,7 +183,7 @@ class RecordingView extends GetView<RecordingController> {
                 padding:
                     EdgeInsets.symmetric(horizontal: context.platform.margin),
                 child: const ArchiveHeader(
-                  title: ArchiveStrings.recordingRelatedCourse,
+                  title: ArchiveStrings.recordingCourse,
                 ),
               ),
               courseCardsBuilder(
@@ -198,8 +198,10 @@ class RecordingView extends GetView<RecordingController> {
                       BoxConstraints(maxWidth: context.platform.maxWidth),
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
-                  child: const ArchiveHeader(
-                    title: ArchiveStrings.recordingRelatedProfessors,
+                  child: ArchiveHeader(
+                    title: recording.classroom.professors.length > 1
+                        ? ArchiveStrings.recordingProfessorPlural
+                        : ArchiveStrings.recordingProfessor,
                   ),
                 ),
                 professorCardsBuilder(

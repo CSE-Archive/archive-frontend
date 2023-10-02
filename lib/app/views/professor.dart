@@ -111,7 +111,9 @@ class ProfessorView extends GetView<ProfessorController> {
             if (controller.professor!.emails.isNotEmpty) ...[
               const Gap.vertical(2 * kSizeDefault),
               SelectableText(
-                ArchiveStrings.professorEmails,
+                controller.professor!.emails.length > 1
+                    ? ArchiveStrings.professorEmailPlural
+                    : ArchiveStrings.professorEmail,
                 style: context.bodyLarge.copyWith(
                   color: context.primaryColor,
                   fontWeight: FontWeight.bold,
@@ -147,7 +149,9 @@ class ProfessorView extends GetView<ProfessorController> {
             if (controller.professor!.links.isNotEmpty) ...[
               const Gap.vertical(2 * kSizeDefault),
               SelectableText(
-                ArchiveStrings.professorRelatedLinks,
+                controller.professor!.links.length > 1
+                    ? ArchiveStrings.professorRelatedLinkPlural
+                    : ArchiveStrings.professorRelatedLink,
                 style: context.bodyLarge.copyWith(
                   color: context.primaryColor,
                   fontWeight: FontWeight.bold,
@@ -270,8 +274,10 @@ class ProfessorView extends GetView<ProfessorController> {
                       BoxConstraints(maxWidth: context.platform.maxWidth),
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
-                  child: const ArchiveHeader(
-                    title: ArchiveStrings.referenceRelatedCourses,
+                  child: ArchiveHeader(
+                    title: controller.professor!.courses.length > 1
+                        ? ArchiveStrings.professorRelatedCoursePlural
+                        : ArchiveStrings.professorRelatedCourse,
                   ),
                 ),
                 courseCardsBuilder(

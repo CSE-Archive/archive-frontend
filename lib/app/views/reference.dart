@@ -5,6 +5,7 @@ import 'package:cse_archive/app/controllers/reference.dart';
 import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:cse_archive/app/extensions/text_theme.dart';
+import 'package:cse_archive/app/models/reference_type_enum.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/utils/course_cards_builder.dart';
 import 'package:cse_archive/app/utils/reference_cards_builder.dart';
@@ -104,7 +105,13 @@ class ReferenceView extends GetView<ReferenceController> {
             if (reference.writers.isNotEmpty) ...[
               const Gap.vertical(2 * kSizeDefault),
               SelectableText(
-                ArchiveStrings.referenceAuthors,
+                reference.type == ReferenceTypeEnumModel.slide
+                    ? reference.writers.length > 1
+                        ? ArchiveStrings.referenceCollectorPlural
+                        : ArchiveStrings.referenceCollector
+                    : reference.writers.length > 1
+                        ? ArchiveStrings.referenceAuthorPlural
+                        : ArchiveStrings.referenceAuthor,
                 style: context.bodyLarge.copyWith(
                   color: context.primaryColor,
                   fontWeight: FontWeight.bold,
@@ -242,8 +249,10 @@ class ReferenceView extends GetView<ReferenceController> {
                       BoxConstraints(maxWidth: context.platform.maxWidth),
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
-                  child: const ArchiveHeader(
-                    title: ArchiveStrings.referenceRelatedCourses,
+                  child: ArchiveHeader(
+                    title: reference.courses.length > 1
+                        ? ArchiveStrings.referenceRelatedCoursePlural
+                        : ArchiveStrings.referenceRelatedCourse,
                   ),
                 ),
                 courseCardsBuilder(
@@ -259,8 +268,10 @@ class ReferenceView extends GetView<ReferenceController> {
                       BoxConstraints(maxWidth: context.platform.maxWidth),
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
-                  child: const ArchiveHeader(
-                    title: ArchiveStrings.referenceRelatedReferences,
+                  child: ArchiveHeader(
+                    title: reference.relatedReferences.length > 1
+                        ? ArchiveStrings.referenceRelatedReferencePlural
+                        : ArchiveStrings.referenceRelatedReference,
                   ),
                 ),
                 referenceCardsBuilder(

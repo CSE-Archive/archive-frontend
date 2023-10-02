@@ -59,7 +59,9 @@ class CourseExpansionTile extends StatelessWidget {
             children: [
               if (tas.isNotEmpty) ...[
                 Text(
-                  ArchiveStrings.courseTAs,
+                  tas.length > 1
+                      ? ArchiveStrings.courseTAPlural
+                      : ArchiveStrings.courseTA,
                   style: context.bodySmall.copyWith(
                     color: context.secondaryColor.withOpacity(0.8),
                   ),

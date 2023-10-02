@@ -93,7 +93,9 @@ class ResourceView extends GetView<ResourceController> {
             if (resource.classroom!.tas.isNotEmpty) ...[
               const Gap.vertical(2 * kSizeDefault),
               SelectableText(
-                ArchiveStrings.resourceTAs,
+                resource.classroom!.tas.length > 1
+                    ? ArchiveStrings.resourceTAPlural
+                    : ArchiveStrings.resourceTA,
                 style: context.bodyLarge.copyWith(
                   color: context.primaryColor,
                   fontWeight: FontWeight.bold,
@@ -217,7 +219,7 @@ class ResourceView extends GetView<ResourceController> {
                 padding:
                     EdgeInsets.symmetric(horizontal: context.platform.margin),
                 child: const ArchiveHeader(
-                  title: ArchiveStrings.resourceRelatedCourse,
+                  title: ArchiveStrings.resourceCourse,
                 ),
               ),
               courseCardsBuilder(
@@ -232,8 +234,10 @@ class ResourceView extends GetView<ResourceController> {
                       BoxConstraints(maxWidth: context.platform.maxWidth),
                   padding:
                       EdgeInsets.symmetric(horizontal: context.platform.margin),
-                  child: const ArchiveHeader(
-                    title: ArchiveStrings.resourceRelatedProfessors,
+                  child: ArchiveHeader(
+                    title: resource.classroom!.professors.length > 1
+                        ? ArchiveStrings.resourceProfessorPlural
+                        : ArchiveStrings.resourceProfessor,
                   ),
                 ),
                 professorCardsBuilder(
