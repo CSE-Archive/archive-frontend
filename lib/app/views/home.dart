@@ -70,7 +70,7 @@ class HomeView extends GetView<HomeController> {
                 title: context.isMobile
                     ? ArchiveStrings.homeLatestReferencesMobile
                     : ArchiveStrings.homeLatestReferences,
-                seeAllUri: Uri(path: ArchiveRoutes.recordings),
+                seeAllUri: Uri(path: ArchiveRoutes.references),
               ),
             ),
             referenceCardsBuilder(
