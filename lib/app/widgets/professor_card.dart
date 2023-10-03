@@ -7,7 +7,6 @@ import 'package:cse_archive/app/models/professor.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:image_network/image_network.dart';
 
 import 'gap.dart';
 import 'card.dart';
@@ -24,23 +23,6 @@ class ArchiveProfessorCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const imageSize = 6 * kSizeDefault;
-
-    final noImage = Container(
-      width: imageSize,
-      height: imageSize,
-      decoration: BoxDecoration(
-        border: Border.all(color: context.secondaryColor),
-      ),
-      child: Center(
-        child: Icon(
-          ArchiveIcons.photoOff,
-          size: 2 * kSizeDefault,
-          color: context.secondaryColor,
-        ),
-      ),
-    );
-
     return ArchiveCard(
       width: width,
       color: context.primaryColor,
@@ -75,17 +57,28 @@ class ArchiveProfessorCard extends StatelessWidget {
             ),
           ),
           const Gap.horizontal(kSizeDefault),
-          (professor.image != null)
-              ? ImageNetwork(
-                  duration: 0,
-                  width: imageSize,
-                  height: imageSize,
-                  image: professor.image.toString(),
-                  onError: noImage,
-                  onLoading:
-                      CircularProgressIndicator(color: context.secondaryColor),
-                )
-              : noImage,
+          Container(
+            width: 6 * kSizeDefault,
+            height: 6 * kSizeDefault,
+            decoration: BoxDecoration(
+              image: (professor.image != null)
+                  ? DecorationImage(
+                      image: NetworkImage(professor.image.toString()),
+                      fit: BoxFit.cover,
+                    )
+                  : null,
+              border: Border.all(color: context.secondaryColor),
+            ),
+            child: (professor.image != null)
+                ? null
+                : Center(
+                    child: Icon(
+                      ArchiveIcons.photoOff,
+                      size: 2 * kSizeDefault,
+                      color: context.secondaryColor,
+                    ),
+                  ),
+          ),
         ],
       ),
     );
