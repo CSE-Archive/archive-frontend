@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class GeneralController extends GetxController {
-  static void openDrawer({required BuildContext context}) =>
-      Scaffold.of(context).openDrawer();
+  late GlobalKey<ScaffoldState> _scaffoldKey;
 
-  static void closeDrawer({required BuildContext context}) =>
-      Scaffold.of(context).closeDrawer();
+  set scaffoldKey(GlobalKey<ScaffoldState> value) => _scaffoldKey = value;
+
+  final drawerOpen = false.obs;
 
   final appbarSearchController = TextEditingController();
   final appbarSearchControllerEmpty = true.obs;
@@ -29,4 +29,7 @@ class GeneralController extends GetxController {
 
     super.onClose();
   }
+
+  void openDrawer() => _scaffoldKey.currentState!.openDrawer();
+  void closeDrawer() => _scaffoldKey.currentState!.closeDrawer();
 }

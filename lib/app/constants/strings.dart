@@ -71,6 +71,7 @@ class ArchiveStrings {
   static const appbarProfessors = 'اساتید';
   static const appbarChart = 'چارت مهندسی کامپیوتر';
   static const appbarSupport = 'حمایت';
+  static const appbarLogoTitle = 'CSE\nArchive';
 
   static const homeSeeAll = 'مشاهده‌ی همه';
   static const homeLatestResources = 'تازه‌ترین منابع';

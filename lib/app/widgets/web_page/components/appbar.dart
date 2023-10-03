@@ -6,6 +6,7 @@ import 'package:cse_archive/app/controllers/general.dart';
 import 'package:cse_archive/app/controllers/search.dart';
 import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
+import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:cse_archive/app/services/pages_tracker.dart';
 import 'package:cse_archive/app/services/theme_mode.dart';
@@ -25,33 +26,42 @@ import 'appbar_text_button.dart';
 class ArchiveSliverAppbar extends StatelessWidget {
   const ArchiveSliverAppbar({super.key});
 
-  static const _logoWidth = 2 * kSizeDefault;
-
   static Widget _supportButton(BuildContext context) {
     return ElevatedButton(
-      onPressed: () => showSupportDialog(context: context),
+      onPressed: () {
+        Get.find<GeneralController>().closeDrawer();
+        showSupportDialog(context: context);
+      },
       child: const Text(ArchiveStrings.appbarSupport),
     );
   }
 
-  static Widget _logo(BuildContext context) {
-    return Link(
-      uri: Uri(path: ArchiveRoutes.home),
-      builder: (_, followLink) => GestureDetector(
-        onTap: followLink,
-        child: MouseRegion(
-          cursor: SystemMouseCursors.click,
-          child: SvgPicture.asset(
-            ArchiveAssets.svg.logo,
-            width: _logoWidth,
-            height: _logoWidth,
-            colorFilter: ColorFilter.mode(
-              context.secondaryColor,
-              BlendMode.srcIn,
-            ),
-          ),
-        ),
-      ),
+  static Widget _searchBox({required BuildContext context}) {
+    final generalController = Get.find<GeneralController>();
+
+    return searchBar(
+      onInit: () {
+        if (PageTrackerService.to.activePage != ArchivePage.search) {
+          generalController.appbarSearchController.clear();
+        }
+      },
+      context: context,
+      controller: generalController.appbarSearchController,
+      controllerEmpty: generalController.appbarSearchControllerEmpty,
+      primaryColor: context.secondaryColor,
+      secondaryColor: context.primaryColor,
+      onSubmitted: (query) {
+        if (query.trim().isEmpty) return;
+
+        context.go(
+          Uri(
+            path: ArchiveRoutes.search,
+            queryParameters: {
+              SearchViewController.searchQueryParameter: query.trim(),
+            },
+          ).toString(),
+        );
+      },
     );
   }
 
@@ -79,42 +89,16 @@ class ArchiveSliverAppbar extends StatelessWidget {
     page: ArchivePage.chart,
   );
 
-  static Widget _themeSwitchButton(BuildContext context) {
-    return ArchiveIconButton(
-      icon: ThemeModeService.to.isDarkMode(context)
-          ? ArchiveIcons.sunFilled
-          : ArchiveIcons.moonStarsFilled,
-      onPressed: () => ThemeModeService.to.toggle(context),
-      size: 1.7 * kSizeDefault,
-      color: context.secondaryColor,
-    );
-  }
-
   static Drawer drawer(BuildContext context) {
     return Drawer(
-      width: 4 / 5 * context.screenWidth,
       shadowColor: context.shadowColor.withOpacity(0.5),
       backgroundColor: context.primaryColor,
       child: Padding(
-        padding: EdgeInsets.only(
-          left: context.platform.margin,
-          right: context.platform.margin,
-          bottom: context.platform.margin,
-        ),
+        padding: EdgeInsets.all(context.platform.margin),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
-              height: ArchiveThemes.appbarHeight(context),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  _logo(context),
-                  const Spacer(),
-                  _themeSwitchButton(context),
-                ],
-              ),
-            ),
+            _searchBox(context: context),
             const Gap.vertical(1.5 * kSizeDefault),
             _coursesButton,
             const Gap.vertical(kSizeDefault),
@@ -135,54 +119,91 @@ class ArchiveSliverAppbar extends StatelessWidget {
   Widget build(BuildContext context) {
     final generalController = Get.find<GeneralController>();
 
-    final searchBox = searchBar(
-      onInit: () {
-        if (PageTrackerService.to.activePage != ArchivePage.search) {
-          generalController.appbarSearchController.clear();
-        }
-      },
-      context: context,
-      controller: generalController.appbarSearchController,
-      controllerEmpty: generalController.appbarSearchControllerEmpty,
-      primaryColor: context.secondaryColor,
-      secondaryColor: context.primaryColor,
-      onSubmitted: (query) {
-        if (query.trim().isEmpty) return;
+    final logo = Link(
+      uri: Uri(path: ArchiveRoutes.home),
+      builder: (_, followLink) => GestureDetector(
+        onTap: followLink,
+        child: MouseRegion(
+          cursor: SystemMouseCursors.click,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (context.isMobileOrTablet) ...[
+                Transform.translate(
+                  offset: const Offset(0, 4),
+                  child: Text(
+                    ArchiveStrings.footerTitleDesktop,
+                    textAlign: TextAlign.left,
+                    style: context.bodyLarge.copyWith(
+                      fontWeight: FontWeight.w600,
+                      height: 1,
+                    ),
+                  ),
+                ),
+                const Gap.horizontal(kSizeDefault / 2),
+              ],
+              SvgPicture.asset(
+                ArchiveAssets.svg.logo,
+                width: 2 * kSizeDefault,
+                height: 2 * kSizeDefault,
+                colorFilter: ColorFilter.mode(
+                  context.secondaryColor,
+                  BlendMode.srcIn,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
 
-        context.go(
-          Uri(
-            path: ArchiveRoutes.search,
-            queryParameters: {
-              SearchViewController.searchQueryParameter: query.trim(),
-            },
-          ).toString(),
-        );
-      },
+    final themeSwitchButton = ArchiveIconButton(
+      icon: ThemeModeService.to.isDarkMode(context)
+          ? ArchiveIcons.sunFilled
+          : ArchiveIcons.moonStarsFilled,
+      onPressed: () => ThemeModeService.to.toggle(context),
+      size: 1.7 * kSizeDefault,
+      color: context.secondaryColor,
     );
 
     return SliverAppBar(
+      elevation: 8,
       floating: true,
       forceElevated: true,
-      elevation: 8,
-      toolbarHeight: ArchiveThemes.appbarHeight(context),
-      leadingWidth: context.responsiveHorizontalPadding + _logoWidth,
+      automaticallyImplyLeading: false,
+      leadingWidth: context.responsiveHorizontalPadding +
+          (context.isMobileOrTablet ? 150 : 2.1 * kSizeDefault),
       backgroundColor: context.tertiaryColor,
+      toolbarHeight: ArchiveThemes.appbarHeight(context),
       shadowColor: context.shadowColor.withOpacity(0.7),
       leading: Padding(
         padding: EdgeInsets.only(right: context.responsiveHorizontalPadding),
-        child: Center(
-          child: _logo(context),
+        child: context.responsiveBuilder(
+          mobile: Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ArchiveIconButton(
+                icon: ArchiveIcons.menu,
+                onPressed: generalController.openDrawer,
+              ),
+              const Gap.horizontal(kSizeDefault / 2),
+              themeSwitchButton,
+            ],
+          ),
+          desktop: logo,
         ),
       ),
       title: context.isMobileOrTablet
-          ? searchBox
+          ? null
           : Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
                   width: 15 * kSizeDefault,
-                  child: searchBox,
+                  child: _searchBox(context: context),
                 ),
                 const Gap.horizontal(kSizeDefault),
                 _coursesButton,
@@ -196,19 +217,11 @@ class ArchiveSliverAppbar extends StatelessWidget {
             ),
       actions: [
         context.responsiveBuilder(
-          mobile: SizedBox.square(
-            dimension: 2 * kSizeDefault,
-            child: Center(
-              child: ArchiveIconButton(
-                icon: ArchiveIcons.menu,
-                onPressed: () => GeneralController.openDrawer(context: context),
-              ),
-            ),
-          ),
+          mobile: logo,
           desktop: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              _themeSwitchButton(context),
+              themeSwitchButton,
               const Gap.horizontal(kSizeDefault),
               Center(child: _supportButton(context)),
             ],
@@ -219,7 +232,3 @@ class ArchiveSliverAppbar extends StatelessWidget {
     );
   }
 }
-
-// SliverAppBar sliverAppbar({required BuildContext context}) {
-
-// }

@@ -1,10 +1,12 @@
 import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/controllers/general.dart';
 import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:cse_archive/app/themes.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
 import 'package:cse_archive/app/widgets/web_page/components/footer.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'components/appbar.dart';
 
@@ -24,13 +26,18 @@ class ArchiveWebPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const footerHeight = 200;
+    final scaffoldKey = GlobalKey<ScaffoldState>();
+
+    final generalController = Get.find<GeneralController>()
+      ..scaffoldKey = scaffoldKey;
 
     final verticalPadding =
         context.isMobileOrTablet ? 2 * kSizeDefault : 3 * kSizeDefault;
 
     final scaffold = Scaffold(
-      drawerScrimColor: context.shadowColor.withOpacity(0.1),
+      key: scaffoldKey,
+      drawerScrimColor: context.shadowColor.withOpacity(0.5),
+      onDrawerChanged: generalController.drawerOpen,
       drawer:
           context.isMobileOrTablet ? ArchiveSliverAppbar.drawer(context) : null,
       body: CustomScrollView(
@@ -50,7 +57,7 @@ class ArchiveWebPage extends StatelessWidget {
                         (applyPlatformVerticalPadding
                             ? 2 * verticalPadding
                             : 0) -
-                        footerHeight,
+                        200, // 200 is approximal footer height
                   ),
                   child: applyPlatformConstraints
                       ? Container(
