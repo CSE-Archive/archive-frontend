@@ -17,6 +17,7 @@ import 'package:cse_archive/app/widgets/path.dart';
 import 'package:cse_archive/app/widgets/web_page/web_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_network/image_network.dart';
 import 'package:url_launcher/link.dart';
 
 import 'loading.dart';
@@ -38,34 +39,44 @@ class ReferenceView extends GetView<ReferenceController> {
       (_) {
         final reference = controller.reference!;
 
+        const imageWidth = 17 * kSizeDefault;
+        const imageHeight = 20 * kSizeDefault;
+
+        final imageBorderRadius = BorderRadius.circular(kSizeDefault / 2);
+
+        final noImage = DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: imageBorderRadius,
+            border: Border.all(
+              width: 4,
+              color: context.primaryColor,
+            ),
+          ),
+          child: Center(
+            child: Icon(
+              ArchiveIcons.photoOff,
+              size: 5 * kSizeDefault,
+              color: context.primaryColor,
+            ),
+          ),
+        );
+
         final image = ArchiveCard(
           onPressed: null,
-          width: 17 * kSizeDefault,
-          height: 20 * kSizeDefault,
+          width: imageWidth,
+          height: imageHeight,
           child: (reference.image != null)
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(kSizeDefault / 2),
-                  child: Image.network(
-                    reference.image.toString(),
-                    fit: BoxFit.cover,
-                  ),
+              ? ImageNetwork(
+                  duration: 0,
+                  width: imageWidth,
+                  height: imageHeight,
+                  borderRadius: imageBorderRadius,
+                  image: reference.image.toString(),
+                  onError: noImage,
+                  onLoading:
+                      CircularProgressIndicator(color: context.primaryColor),
                 )
-              : DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(kSizeDefault / 2),
-                    border: Border.all(
-                      width: 4,
-                      color: context.primaryColor,
-                    ),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      ArchiveIcons.photoOff,
-                      size: 5 * kSizeDefault,
-                      color: context.primaryColor,
-                    ),
-                  ),
-                ),
+              : noImage,
         );
 
         final typeLabel = ArchiveLabel(

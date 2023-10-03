@@ -6,6 +6,7 @@ import 'package:cse_archive/app/models/reference.dart';
 import 'package:cse_archive/app/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_network/image_network.dart';
 
 import 'gap.dart';
 import 'card.dart';
@@ -22,6 +23,23 @@ class ArchiveReferenceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const imageSize = 6 * kSizeDefault;
+
+    final noImage = Container(
+      width: imageSize,
+      height: imageSize,
+      decoration: BoxDecoration(
+        border: Border.all(color: context.secondaryColor),
+      ),
+      child: Center(
+        child: Icon(
+          ArchiveIcons.photoOff,
+          size: 2 * kSizeDefault,
+          color: context.secondaryColor,
+        ),
+      ),
+    );
+
     return ArchiveCard(
       width: width,
       color: context.primaryColor,
@@ -64,28 +82,17 @@ class ArchiveReferenceCard extends StatelessWidget {
             ),
           ),
           const Gap.horizontal(kSizeDefault),
-          Container(
-            width: 6 * kSizeDefault,
-            height: 6 * kSizeDefault,
-            decoration: BoxDecoration(
-              image: (reference.image != null)
-                  ? DecorationImage(
-                      image: NetworkImage(reference.image.toString()),
-                      fit: BoxFit.cover,
-                    )
-                  : null,
-              border: Border.all(color: context.secondaryColor),
-            ),
-            child: (reference.image != null)
-                ? null
-                : Center(
-                    child: Icon(
-                      ArchiveIcons.photoOff,
-                      size: 2 * kSizeDefault,
-                      color: context.secondaryColor,
-                    ),
-                  ),
-          ),
+          (reference.image != null)
+              ? ImageNetwork(
+                  duration: 0,
+                  width: imageSize,
+                  height: imageSize,
+                  image: reference.image.toString(),
+                  onError: noImage,
+                  onLoading:
+                      CircularProgressIndicator(color: context.secondaryColor),
+                )
+              : noImage,
         ],
       ),
     );

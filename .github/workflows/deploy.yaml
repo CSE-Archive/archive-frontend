@@ -30,7 +30,7 @@ jobs:
 
       # CI is set to false to prevent treating warnings as errors
       - name: Build Flutter for Web
-        run: CI=false flutter build web --web-renderer html --release --no-tree-shake-icons
+        run: CI=false flutter build web --web-renderer canvaskit --release --no-tree-shake-icons
 
       - name: Run Post-Build Script
         run: |

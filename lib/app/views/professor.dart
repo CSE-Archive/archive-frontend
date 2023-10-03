@@ -15,6 +15,7 @@ import 'package:cse_archive/app/widgets/header.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_network/image_network.dart';
 import 'package:url_launcher/link.dart';
 
 import 'loading.dart';
@@ -34,39 +35,48 @@ class ProfessorView extends GetView<ProfessorController> {
   Widget build(BuildContext context) {
     return controller.obx(
       (_) {
-        final departmentLabel = ArchiveLabel(
-          title: ArchiveStrings.professorDepartment,
-          value: controller.professor!.department.representation,
+        const imageSize = 17 * kSizeDefault;
+
+        final imageBorderRadius = BorderRadius.circular(kSizeDefault / 2);
+
+        final noImage = DecoratedBox(
+          decoration: BoxDecoration(
+            borderRadius: imageBorderRadius,
+            border: Border.all(
+              width: 4,
+              color: context.primaryColor,
+            ),
+          ),
+          child: Center(
+            child: Icon(
+              ArchiveIcons.photoOff,
+              size: 5 * kSizeDefault,
+              color: context.primaryColor,
+            ),
+          ),
         );
 
         final image = ArchiveCard(
-          width: 17 * kSizeDefault,
-          height: 17 * kSizeDefault,
+          width: imageSize,
+          height: imageSize,
           onPressed: null,
           child: (controller.professor!.image != null)
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(kSizeDefault / 2),
-                  child: Image.network(
-                    controller.professor!.image.toString(),
-                    fit: BoxFit.cover,
-                  ),
+              ? ImageNetwork(
+                  duration: 0,
+                  width: imageSize,
+                  height: imageSize,
+                  borderRadius: imageBorderRadius,
+                  image: controller.professor!.image.toString(),
+                  onError: noImage,
+                  onLoading:
+                      CircularProgressIndicator(color: context.primaryColor),
                 )
-              : DecoratedBox(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(kSizeDefault / 2),
-                    border: Border.all(
-                      width: 4,
-                      color: context.primaryColor,
-                    ),
-                  ),
-                  child: Center(
-                    child: Icon(
-                      ArchiveIcons.photoOff,
-                      size: 5 * kSizeDefault,
-                      color: context.primaryColor,
-                    ),
-                  ),
-                ),
+              : noImage,
+        );
+
+        final departmentLabel = ArchiveLabel(
+          title: ArchiveStrings.professorDepartment,
+          value: controller.professor!.department.representation,
         );
 
         final nameColumn = Align(
