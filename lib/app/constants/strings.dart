@@ -181,6 +181,7 @@ class ArchiveStrings {
   static const footerTitleDesktop = 'CSE\nArchive';
   static const footerAboutUs = 'درباره ما';
   static const footerContactUs = 'ارتباط با ما';
+  static const footerDisclaimer = 'سلب مسئولیت';
   static const footerSupport = 'حمایت';
   static const footerCourses = 'دروس';
   static const footerReferences = 'مراجع';
@@ -188,6 +189,23 @@ class ArchiveStrings {
   static const footerChart = 'چارت';
   static const footerNoteP1 = 'ساخته شده با';
   static const footerNoteP2 = 'برای استفاده‌ی عموم';
+
+  static const disclaimer = 'سلب مسئولیت';
+  static const disclaimerCopyright = 'کپی‌رایت';
+  static const disclaimerCopyrightDescription =
+      'همه‌ی مراجع قرار گرفته داخل سایت مشمول قوانین کپی‌رایت ایران نمی‌شن. با این حال، اگر صاحب‌اثر مرجعی هستید و مخالف قرار گرفتن اون توی سایت‌اید، لطفا از طریق بخش «ارتباط با ما» بهمون اطلاع بدید تا در اسرع وقت مرجع رو از سایت حذف کنیم.';
+  static const disclaimerResponsibility = 'مسئولیت';
+  static const disclaimerResponsibilityDescription =
+      'وبسایت ما اطلاعات و منابع مختلفی رو ارائه می‌ده، اما هیچ تضمینی در مورد صحت یا کامل بودن این اطلاعات نیست. بهتره قبل از استفاده از هرگونه اطلاعاتی که داخل سایت ما پیدا می‌کنید، تحقیقات خودتون رو هم انجام بدید.';
+  static const disclaimerOtherWebsites = 'لینک به وب‌سایت‌های دیگر';
+  static const disclaimerOtherWebsitesDescription =
+      'وب‌سایت ما ممکنه شامل لینک‌هایی به وب‌سایت‌های دیگه باشه. ما هیچ کنترلی روی این وب‌سایت‌ها نداریم و مسئولیت محتوای اون‌ها رو بر عهده نمی‌گیریم.';
+  static const disclaimerChanges = 'تغییرات';
+  static const disclaimerChangesDescription =
+      'ما حق داریم این ضمانت‌نامه رو در هر زمان، بدون اطلاع قبلی تغییر بدیم.';
+  static const disclaimerContact = 'تماس';
+  static const disclaimerContactDescription =
+      'اگر سوال یا نگرانی‌ای در مورد این ضمانت‌نامه دارید، لطفا از طریق بخش «ارتباط با ما» بهمون منتقل کنید.';
 
   static const support = 'حمایت';
   static const supportStart =

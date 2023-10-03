@@ -139,22 +139,22 @@ Widget _getHelpDialog(BuildContext context) {
   return ArchiveDialog(
     title: ArchiveStrings.chartHelp,
     children: [
-      SelectableText(
+      Text(
         ArchiveStrings.chartHelpPreRequisitesTitle,
         style: titleStyle,
       ),
       const Gap.vertical(kSizeDefault / 2),
-      SelectableText(
+      Text(
         ArchiveStrings.chartHelpPreRequisitesDescription,
         style: textStyle,
       ),
       const Gap.vertical(kSizeDefault),
-      SelectableText(
+      Text(
         ArchiveStrings.chartHelpCoRequisitesTitle,
         style: titleStyle,
       ),
       const Gap.vertical(kSizeDefault / 2),
-      SelectableText(
+      Text(
         ArchiveStrings.chartHelpCoRequisitesDescription,
         style: textStyle,
       ),

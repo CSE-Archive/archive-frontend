@@ -41,7 +41,7 @@ class ArchiveLoadMoreButton extends StatelessWidget {
                             builder: (context) => ArchiveDialog(
                               title: ArchiveStrings.errorTitle,
                               children: [
-                                SelectableText(
+                                Text(
                                   ArchiveStrings.errorDescription,
                                   style: context.bodyLarge.copyWith(
                                     color:

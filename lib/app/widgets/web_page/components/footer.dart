@@ -17,6 +17,7 @@ import 'package:url_launcher/link.dart';
 import 'footer_icon_button.dart';
 import 'footer_show_about_us_dialog.dart';
 import 'footer_show_contact_us_dialog.dart';
+import 'footer_show_disclaimer_dialog.dart';
 import 'footer_text_button.dart';
 
 Widget footer({required BuildContext context}) {
@@ -117,6 +118,11 @@ Widget footer({required BuildContext context}) {
   final contactUsButton = FooterTextButton(
     label: ArchiveStrings.footerContactUs,
     onPressed: () => showContactUsDialog(context: context),
+  );
+
+  final disclaimerButton = FooterTextButton(
+    label: ArchiveStrings.footerDisclaimer,
+    onPressed: () => showDisclaimerDialog(context: context),
   );
 
   final socialButtons = Row(
@@ -254,6 +260,12 @@ Widget footer({required BuildContext context}) {
                     ),
                     child: contactUsButton,
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: kSizeDefault / 2,
+                    ),
+                    child: disclaimerButton,
+                  ),
                 ],
               ),
               const Gap.vertical(1.5 * kSizeDefault),
@@ -278,8 +290,12 @@ Widget footer({required BuildContext context}) {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       supportButton,
+                      const Gap.vertical(kSizeDefault / 4),
                       aboutUsButton,
+                      const Gap.vertical(kSizeDefault / 4),
                       contactUsButton,
+                      const Gap.vertical(kSizeDefault / 4),
+                      disclaimerButton
                     ],
                   ),
                   const Gap.horizontal(2 * kSizeDefault),
@@ -289,8 +305,11 @@ Widget footer({required BuildContext context}) {
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       coursesButton,
+                      const Gap.vertical(kSizeDefault / 4),
                       referencesButton,
+                      const Gap.vertical(kSizeDefault / 4),
                       professorsButton,
+                      const Gap.vertical(kSizeDefault / 4),
                       chartButton,
                     ],
                   ),
