@@ -40,11 +40,6 @@ class ArchiveSliverAppbar extends StatelessWidget {
     final generalController = Get.find<GeneralController>();
 
     return searchBar(
-      onInit: () {
-        if (PageTrackerService.to.activePage != ArchivePage.search) {
-          generalController.appbarSearchController.clear();
-        }
-      },
       context: context,
       controller: generalController.appbarSearchController,
       controllerEmpty: generalController.appbarSearchControllerEmpty,

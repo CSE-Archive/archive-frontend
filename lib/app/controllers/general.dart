@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class GeneralController extends GetxController {
-  late GlobalKey<ScaffoldState> _scaffoldKey;
-
-  set scaffoldKey(GlobalKey<ScaffoldState> value) => _scaffoldKey = value;
-
-  final drawerOpen = false.obs;
+  final List<GlobalKey<ScaffoldState>> _scaffoldKeys = [];
 
   final appbarSearchController = TextEditingController();
   final appbarSearchControllerEmpty = true.obs;
@@ -30,6 +26,19 @@ class GeneralController extends GetxController {
     super.onClose();
   }
 
-  void openDrawer() => _scaffoldKey.currentState!.openDrawer();
-  void closeDrawer() => _scaffoldKey.currentState!.closeDrawer();
+  void addScaffoldKey(GlobalKey<ScaffoldState> newKey) {
+    _scaffoldKeys.add(newKey);
+  }
+
+  void openDrawer() {
+    for (var scaffoldKey in _scaffoldKeys) {
+      scaffoldKey.currentState?.openDrawer();
+    }
+  }
+
+  void closeDrawer() {
+    for (var scaffoldKey in _scaffoldKeys) {
+      scaffoldKey.currentState?.closeDrawer();
+    }
+  }
 }

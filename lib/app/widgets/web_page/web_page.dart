@@ -28,8 +28,9 @@ class ArchiveWebPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final scaffoldKey = GlobalKey<ScaffoldState>();
 
-    final generalController = Get.find<GeneralController>()
-      ..scaffoldKey = scaffoldKey;
+    final generalController = Get.find<GeneralController>();
+
+    generalController.addScaffoldKey(scaffoldKey);
 
     final verticalPadding =
         context.isMobileOrTablet ? 2 * kSizeDefault : 3 * kSizeDefault;
@@ -37,7 +38,6 @@ class ArchiveWebPage extends StatelessWidget {
     final scaffold = Scaffold(
       key: scaffoldKey,
       drawerScrimColor: context.shadowColor.withOpacity(0.5),
-      onDrawerChanged: generalController.drawerOpen,
       drawer:
           context.isMobileOrTablet ? ArchiveSliverAppbar.drawer(context) : null,
       body: CustomScrollView(

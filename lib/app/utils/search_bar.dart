@@ -12,12 +12,9 @@ Widget searchBar({
   required Color primaryColor,
   required Color secondaryColor,
   String? hintText,
-  void Function()? onInit,
   void Function()? onClear,
   void Function(String)? onSubmitted,
 }) {
-  if (onInit != null) onInit();
-
   return Obx(
     () => TextField(
       maxLines: 1,

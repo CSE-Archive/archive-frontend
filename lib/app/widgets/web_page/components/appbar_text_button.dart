@@ -1,6 +1,5 @@
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/controllers/general.dart';
-import 'package:cse_archive/app/extensions/responsive.dart';
 import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/services/pages_tracker.dart';
 import 'package:cse_archive/app/widgets/gap.dart';
@@ -32,9 +31,8 @@ class AppbarTextButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hovered = false.obs;
-    final textStyle =
-        (context.isMobileOrTablet ? context.bodyLarge : context.bodyMedium)
-            .copyWith(
+
+    final textStyle = (context.bodyMedium).copyWith(
       fontWeight: FontWeight.w500,
     );
 
@@ -60,11 +58,11 @@ class AppbarTextButton extends StatelessWidget {
                 () => hovered.value ||
                         (PageTrackerService.to.activePage == page)
                     ? Container(
-                        height: 1.5,
-                        margin: const EdgeInsets.only(top: kSizeDefault / 4),
+                        height: 1,
                         width: _textSize(label, textStyle).width -
                             (kSizeDefault / 2),
                         color: textStyle.color,
+                        margin: const EdgeInsets.only(top: kSizeDefault / 4),
                       )
                     : Gap.zero,
               ),
