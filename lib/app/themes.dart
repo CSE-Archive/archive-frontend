@@ -106,6 +106,7 @@ ThemeData _basicThemeData({
     hoverColor: Colors.transparent,
     highlightColor: Colors.transparent,
     dividerColor: Colors.transparent,
+    visualDensity: VisualDensity.standard,
     colorScheme: ColorScheme(
       brightness: brightness,
       primary: primaryColor,
@@ -219,6 +220,7 @@ ThemeData _basicThemeData({
           ),
         ),
         visualDensity: VisualDensity.standard,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         shape: const MaterialStatePropertyAll(
           RoundedRectangleBorder(borderRadius: BorderRadius.zero),
         ),
@@ -248,6 +250,7 @@ ThemeData _basicThemeData({
           ),
         ),
         visualDensity: VisualDensity.standard,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         shape: const MaterialStatePropertyAll(
           RoundedRectangleBorder(borderRadius: BorderRadius.zero),
         ),
@@ -263,6 +266,7 @@ ThemeData _basicThemeData({
         minimumSize: const MaterialStatePropertyAll(Size.zero),
         padding: const MaterialStatePropertyAll(EdgeInsets.zero),
         visualDensity: VisualDensity.standard,
+        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       ),
     ),
     tooltipTheme: TooltipThemeData(
