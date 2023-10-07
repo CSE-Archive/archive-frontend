@@ -2,8 +2,9 @@ import 'package:cse_archive/app/constants/icons.dart';
 import 'package:cse_archive/app/constants/sizes.dart';
 import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/text_theme.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:url_launcher/link.dart';
+import 'package:go_router/go_router.dart';
 
 class ArchivePath extends StatelessWidget {
   final List<String> labels;
@@ -20,27 +21,27 @@ class ArchivePath extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 1.5 * kSizeDefault,
-      child: ListView.separated(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        itemCount: routes.length,
-        itemBuilder: (_, index) => Link(
-          uri: Uri(path: routes[index]),
-          builder: (_, followLink) => TextButton(
-            onPressed: followLink,
-            child: Text(
-              labels[index],
-              style: context.bodySmall,
+    final length = labels.length;
+
+    final separator = Icon(
+      ArchiveIcons.chevronRight,
+      size: kSizeDefault,
+      color: context.secondaryColor.withOpacity(0.5),
+    );
+
+    return Text.rich(
+      TextSpan(
+        style: context.bodySmall,
+        children: [
+          for (var index = 0; index < length; index++) ...[
+            TextSpan(
+              text: labels[index],
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => context.go(routes[index]),
             ),
-          ),
-        ),
-        separatorBuilder: (_, __) => Icon(
-          ArchiveIcons.chevronRight,
-          size: kSizeDefault,
-          color: context.secondaryColor,
-        ),
+            if (index != length - 1) WidgetSpan(child: separator),
+          ],
+        ],
       ),
     );
   }
