@@ -42,7 +42,7 @@ class ResourceView extends GetView<ResourceController> {
         );
 
         final title =
-            '${resource.title ?? resource.type.representation} ${resource.classroom!.course.title}';
+            '${resource.title ?? resource.type.concatenation} ${resource.classroom!.course.title}';
 
         final semester = enToFaDigits(
           '${resource.classroom!.semester} ${resource.classroom!.year}',
