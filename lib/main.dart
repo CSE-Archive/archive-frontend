@@ -8,12 +8,28 @@ import 'package:sentry_flutter/sentry_flutter.dart';
 
 import 'app/bindings/controllers.dart';
 import 'app/bindings/services.dart';
+import 'app/constants/strings.dart';
 import 'app/routes/config.dart';
 import 'app/services/theme_mode.dart';
 import 'app/scroll_behavior.dart';
 import 'app/themes.dart';
+import 'app/widgets/error.dart';
 
 void main() async {
+  // Widget to show on errors instead of default grey screen
+  ErrorWidget.builder = (errorDetails) {
+    return Scaffold(
+      body: Center(
+        child: ArchiveError(
+          title: ArchiveStrings.errorTitle,
+          description: kDebugMode
+              ? errorDetails.summary.toString()
+              : ArchiveStrings.errorUnknownDescription,
+        ),
+      ),
+    );
+  };
+
   await dotenv.load();
 
   await servicesBinding();

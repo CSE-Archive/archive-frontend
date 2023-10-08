@@ -11,6 +11,8 @@ class ArchiveStrings {
   static const errorTitle = 'خطایی رخ داد';
   static const errorDescription =
       'لطفا از برقراری اتصال اینترنت خود مطمئن شوید و مجددا تلاش کنید.';
+  static const errorUnknownDescription =
+      'لطفا Cache را پاک کرده و صفحه را Refresh کنید.';
   static const errorButton = 'تلاش مجدد';
 
   static const courseTypeBasic = 'پایه';
