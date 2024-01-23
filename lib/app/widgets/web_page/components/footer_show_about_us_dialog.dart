@@ -13,7 +13,7 @@ void showAboutUsDialog({required BuildContext context}) {
   showDialog(
     context: context,
     builder: (context) {
-      final textStyle = context.bodyMedium.copyWith(
+      final textStyle = context.bodyLarge.copyWith(
         color: context.secondaryColor.withOpacity(0.9),
         fontWeight: FontWeight.w300,
       );
@@ -41,6 +41,12 @@ void showAboutUsDialog({required BuildContext context}) {
             style: textStyle,
           ),
           const Gap.vertical(kSizeDefault / 2),
+          _memberBulletText(
+            context: context,
+            text: ArchiveStrings.aboutMemberSina,
+            url: ArchiveLinks.linkedinSina,
+          ),
+          const Gap.vertical(kSizeDefault / 4),
           _memberBulletText(
             context: context,
             text: ArchiveStrings.aboutMemberSetia,
@@ -77,7 +83,6 @@ BulletText _memberBulletText({
 }) {
   return BulletText(
     richText: Text.rich(
-      style: context.bodyMedium.copyWith(fontWeight: FontWeight.w500),
       WidgetSpan(
         child: Link(
           uri: Uri.parse(url),
@@ -88,7 +93,7 @@ BulletText _memberBulletText({
               cursor: SystemMouseCursors.click,
               child: Text(
                 text,
-                style: TextStyle(
+                style: context.bodyLarge.copyWith(
                   fontWeight: FontWeight.w500,
                   decoration: TextDecoration.underline,
                   decorationColor: context.secondaryColor.withOpacity(0.4),

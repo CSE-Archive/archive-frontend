@@ -239,11 +239,12 @@ class ArchiveStrings {
   static const aboutDescriptionP3 =
       'هدف ما اینه که دانشجوها بتونن به راحتی منابع مورد نیاز خودشون رو پیدا کنن و از اونا برای یادگیری و موفقیت توی دوره‌ی تحصیلات کارشناسی‌شون استفاده کنن.';
   static const aboutMembersAnnounce =
-      'هسته اصلی تیم که جمع‌آوری و مرتب‌سازی منابع طی این سال‌ها رو برعهده داشته از چهار دانشجوی بخش مهندسی کامپیوتر تشکیل شده:';
+      'اعضای تیم که جمع‌آوری و مرتب‌سازی منابع طی این سال‌ها رو برعهده داشتن از پنچ دانشجوی بخش مهندسی کامپیوتر تشکیل شده:';
   static const aboutMemberReza = 'رضا فرجام (ورودی ۹۸)';
   static const aboutMemberAmirR = 'امیررضا اکتسابی (ورودی ۹۸)';
   static const aboutMemberAmirH = 'امیرحسین رودکی (ورودی ۹۹)';
   static const aboutMemberSetia = 'ستیا کمالی (ورودی ۱۴۰۰)';
+  static const aboutMemberSina = 'سینا حکیم‌زاده (ورودی ۱۴۰۱)';
 
   static const contact = 'ارتباط با ما';
   static const contactDescriptionP1 =

@@ -8,6 +8,7 @@ class ArchiveLinks {
   static const linkedinAmirR = 'https://linkedin.com/in/amirreza-ektesabi';
   static const linkedinAmirH = 'https://linkedin.com/in/amirhossein-roodaki';
   static const linkedinSetia = 'https://linkedin.com/in/setia-kamali-78958223a';
+  static const linkedinSina = 'https://linkedin.com/in/sinahz';
 
   static const email = 'cse.archive.shirazu@gmail.com';
   static const telegramBot = 'https://t.me/CSE_Archive_Bot';

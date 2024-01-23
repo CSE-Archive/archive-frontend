@@ -10,12 +10,12 @@ void showDisclaimerDialog({required BuildContext context}) {
   showDialog(
     context: context,
     builder: (context) {
-      final textStyle = context.bodyMedium.copyWith(
+      final textStyle = context.bodyLarge.copyWith(
         color: context.secondaryColor.withOpacity(0.9),
         fontWeight: FontWeight.w300,
       );
 
-      final titleStyle = context.bodyMedium.copyWith(
+      final titleStyle = context.bodyLarge.copyWith(
         fontWeight: FontWeight.w500,
       );
 
