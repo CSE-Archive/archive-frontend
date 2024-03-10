@@ -86,6 +86,7 @@ class ArchiveStrings {
   static const resources = 'منابع';
   static const resourcesTypeFilter = 'نوع';
 
+  static const resourceSolution = 'راه‌حل';
   static const resourceType = 'نوع';
   static const resourceNotes = '• توضیحات';
   static const resourceTA = '• گریدر:';

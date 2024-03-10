@@ -6,6 +6,7 @@ class ResourceModel {
   final String uuid;
   final ResourceTypeEnumModel type;
   final ClassroomModel? classroom;
+  final bool isSolution;
   final Uri? file;
   final String? title;
   final String? notes;
@@ -17,6 +18,7 @@ class ResourceModel {
     required this.uuid,
     required this.type,
     required this.classroom,
+    required this.isSolution,
     this.file,
     this.title,
     this.notes,
@@ -38,6 +40,7 @@ class ResourceModel {
       title: json['title'],
       type: type,
       classroom: ClassroomModel.fromJson(json['classroom']),
+      isSolution: json['is_solution'],
       file: file == null ? null : Uri.parse(file),
       notes: json['notes'],
       createdTime: createdTime == null ? null : DateTime.parse(createdTime),

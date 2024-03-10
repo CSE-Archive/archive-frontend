@@ -1,4 +1,5 @@
 import 'package:cse_archive/app/constants/sizes.dart';
+import 'package:cse_archive/app/constants/strings.dart';
 import 'package:cse_archive/app/extensions/color_scheme.dart';
 import 'package:cse_archive/app/extensions/text_theme.dart';
 import 'package:cse_archive/app/models/resource.dart';
@@ -33,7 +34,7 @@ class ArchiveResourceCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${resource.title ?? resource.type.concatenation} ${resource.classroom!.course.title}',
+            '${resource.isSolution ? '${ArchiveStrings.resourceSolution} ':''}${resource.title ?? resource.type.concatenation} ${resource.classroom!.course.title}',
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: context.bodyLarge,
