@@ -1,77 +1,126 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <base href="$FLUTTER_BASE_HREF">
+  <head>
+    <base href="$FLUTTER_BASE_HREF" />
 
-  <!-- HTML meta tags -->
-  <meta charset="UTF-8">
-  <title>CSE Archive</title>
-  <meta name="description" content="Comprehensive archive of course resources and references from the Shiraz University Computer Engineering Department.">
-  <meta name="keywords" content="CSE Archive, آرشیو منابع درسی, دانشگاه شیراز, بخش مهندسی و علوم کامپیوتر, جزوه, رفرنس فارسی و انگلیسی, Shiraz University, نمونه سوال امتحانی, حل المسائل فارسی و انگلیسی">
-  
-  <!-- Open Graph (Facebook) meta tags -->
-  <meta property="og:url" content="https://csearchive.com">
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="CSE Archive">
-  <meta property="og:description" content="Comprehensive archive of course resources and references from the Shiraz University Computer Engineering Department.">
-  <meta property="og:image" content="/images/og_image.png">
-  
-  <!-- Twitter Meta Tags -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta property="twitter:domain" content="csearchive.com">
-  <meta property="twitter:url" content="https://csearchive.com">
-  <meta name="twitter:title" content="CSE Archive">
-  <meta name="twitter:description" content="Comprehensive archive of course resources and references from the Shiraz University Computer Engineering Department.">
-  <meta name="twitter:image" content="/images/og_image.png">
+    <title>CSE Archive | آرشیو مهندسی کامپیوتر دانشگاه شیراز</title>
+    <link rel="canonical" href="https://www.csearchive.ir/" />
 
-  <!-- Browser meta tags & icons -->
-  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="#394955">
-  <meta name="apple-mobile-web-app-title" content="CSE Archive">
-  <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16x16.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
-  <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#394955">
-  <link rel="shortcut icon" href="/icons/favicon.ico">
-  <meta name="msapplication-TileColor" content="#394955">
-  <meta name="msapplication-config" content="/icons/browserconfig.xml">
-  <meta name="theme-color" content="#ebedee">
-  <link rel="manifest" href="manifest.json">
+    <!-- General meta tags -->
 
-  <!-- CSS Stylesheet -->
-  <link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8" />
+    <meta name="robots" content="max-image-preview:large" />
+    <meta
+      name="description"
+      content="آرشیو جامع منابع، مراجع، چارت‌ها، ویدیوهای کلاس‌های ضبط‌شده و دیگر مطالب مرتبط با بخش مهندسی کامپیوتر دانشگاه شیراز."
+    />
+    <meta
+      name="keywords"
+      content="دانشگاه شیراز, مهندسی کامپیوتر دانشگاه شیراز, منابع درسی مهندسی کامپیوتر, مراجع مهندسی کامپیوتر, چارت درسی مهندسی کامپیوتر, ویدیوهای ضبط شده کلاس, منابع آموزشی دانشگاه, فایل های کلاسی دانشگاه شیراز, منابع دانشگاهی شیراز, آموزش مهندسی کامپیوتر, آرشیو منابع دانشگاه شیراز, منابع مهندسی کامپیوتر ایران, Shiraz University Computer Engineering, Computer Engineering course materials, Shiraz University course archive, Computer Science resources Shiraz, Classroom videos Shiraz University, Computer Science charts and references, Engineering department materials, University of Shiraz study resources, Educational materials Shiraz University"
+    />
 
-  <script>
-    var serviceWorkerVersion = null;
-  </script>
+    <!-- Open Graph / Facebook meta tags -->
 
-  <script src="flutter.js" defer></script>
-</head>
-<body>
-  <div class="bookshelf_wrapper">
-    <ul class="books_list">
-      <li class="book_item first"></li>
-      <li class="book_item second"></li>
-      <li class="book_item third"></li>
-      <li class="book_item fourth"></li>
-      <li class="book_item fifth"></li>
-      <li class="book_item sixth"></li>
-    </ul>
-    <div class="shelf"></div>
-  </div>
-  <script>
-    window.addEventListener('load', function(ev) {
-      _flutter.loader.loadEntrypoint({
-        serviceWorker: {
-          serviceWorkerVersion: serviceWorkerVersion,
-        }
-      }).then(function(engineInitializer) {
-        return engineInitializer.initializeEngine();
-      }).then(function(appRunner) {
-        return appRunner.runApp();
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="CSE Archive | آرشیو مهندسی کامپیوتر دانشگاه شیراز"
+    />
+    <meta
+      property="og:description"
+      content="آرشیو جامع منابع، مراجع، چارت‌ها، ویدیوهای کلاس‌های ضبط‌شده و دیگر مطالب مرتبط با بخش مهندسی کامپیوتر دانشگاه شیراز"
+    />
+    <meta property="og:image" content="/images/og_image.png" />
+    <meta property="og:url" content="https://csearchive.ir" />
+
+    <!-- Twitter Meta Tags -->
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="CSE Archive | آرشیو مهندسی کامپیوتر دانشگاه شیراز"
+    />
+    <meta
+      name="twitter:description"
+      content="آرشیو جامع منابع، مراجع، چارت‌ها، ویدیوهای کلاس‌های ضبط‌شده و دیگر مطالب مرتبط با بخش مهندسی کامپیوتر دانشگاه شیراز"
+    />
+    <meta name="twitter:image" content="/images/og_image.png" />
+    <meta property="twitter:url" content="https://csearchive.ir" />
+
+    <!-- Browser meta tags & icons -->
+
+    <link rel="manifest" href="manifest.json" />
+
+    <meta name="theme-color" content="#ebedee" />
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible" />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="#394955" />
+    <meta
+      name="apple-mobile-web-app-title"
+      content="CSE Archive | آرشیو مهندسی کامپیوتر دانشگاه شیراز"
+    />
+
+    <meta name="msapplication-TileColor" content="#394955" />
+    <meta name="msapplication-config" content="/icons/browserconfig.xml" />
+
+    <meta name="msapplication-TileImage" content="/icons/mstile-150x150.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/icons/apple-touch-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/icons/favicon-16x16.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/icons/favicon-32x32.png"
+    />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#394955" />
+    <link rel="shortcut icon" href="/icons/favicon.ico" />
+
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="./style.css" />
+
+    <script>
+      var serviceWorkerVersion = null;
+    </script>
+
+    <script src="flutter.js" defer></script>
+  </head>
+  <body>
+    <div class="bookshelf_wrapper">
+      <ul class="books_list">
+        <li class="book_item first"></li>
+        <li class="book_item second"></li>
+        <li class="book_item third"></li>
+        <li class="book_item fourth"></li>
+        <li class="book_item fifth"></li>
+        <li class="book_item sixth"></li>
+      </ul>
+      <div class="shelf"></div>
+    </div>
+    <script>
+      window.addEventListener("load", function (ev) {
+        _flutter.loader
+          .loadEntrypoint({
+            serviceWorker: {
+              serviceWorkerVersion: serviceWorkerVersion,
+            },
+          })
+          .then(function (engineInitializer) {
+            return engineInitializer.initializeEngine();
+          })
+          .then(function (appRunner) {
+            return appRunner.runApp();
+          });
       });
-    });
-  </script>
-</body>
+    </script>
+  </body>
 </html>
