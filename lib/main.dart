@@ -58,7 +58,7 @@ class CSEArchive extends StatelessWidget {
   Widget build(BuildContext context) {
     return Obx(
       () => MaterialApp.router(
-        title: 'CSE Archive',
+        title: 'CSE Archive | آرشیو مهندسی کامپیوتر دانشگاه شیراز',
         debugShowCheckedModeBanner: false,
         routerConfig: kRouterConfig,
         theme: ArchiveThemes.light,
