@@ -9,13 +9,16 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    concurrency:
+      group: production-deploy
+      cancel-in-progress: false
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-      
+
       - name: 'Create .env file'
         run: echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
 
@@ -23,7 +26,9 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.13.6'
+          # Era-pinned to match pubspec.lock (sdk: flutter >=3.16.6)
+          flutter-version: '3.16.9'
+          cache: true
 
       - name: Install dependencies
         run: flutter pub get
@@ -37,14 +42,28 @@ jobs:
           chmod 755 ./post_build.sh
           ./post_build.sh
 
-      - name: Upload build files to VPS via SSH
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          port: ${{ secrets.SSH_PORT }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          rm: true
-          source: "./build/web/*"
-          target: "${{ secrets.SCP_TARGET }}"
-          strip_components: 2
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          printf '%s\n' "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+
+      # Build the SPA image on the runner and ship it as a docker save
+      # tarball (same path as the mashinaam CDs) — nothing builds on the VM.
+      - name: Build the image on the runner and ship it to the VM
+        run: |
+          docker build -q -t csearchive-frontend:latest .
+          docker save csearchive-frontend:latest | gzip > /tmp/csearchive-frontend-image.tar.gz
+          scp -q /tmp/csearchive-frontend-image.tar.gz root@94.184.47.154:/tmp/
+          ssh root@94.184.47.154 '
+            set -e
+            gunzip -c /tmp/csearchive-frontend-image.tar.gz | docker load
+            rm /tmp/csearchive-frontend-image.tar.gz
+          '
+
+      - name: Roll out the new image
+        run: ssh root@94.184.47.154 'cd /opt/csearchive && docker compose up -d frontend'
+
+      - name: Verify
+        run: curl -sf --max-time 20 https://csearchive.ir/ | grep -q '<title>'
