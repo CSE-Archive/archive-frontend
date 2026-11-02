@@ -1,0 +1,6 @@
+# Only build/web and nginx/ are COPYed into the image; keep the context lean
+# and keep the build-time env (baked into assets already) out of it.
+.git
+.dart_tool
+.fvm
+.env
