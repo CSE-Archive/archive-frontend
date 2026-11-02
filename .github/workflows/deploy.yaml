@@ -8,6 +8,11 @@ on:
   # Enable running this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  # Repository variable (Settings -> Secrets and variables -> Actions ->
+  # Variables): the production VM's address. Set it before the first run.
+  VM_HOST: ${{ vars.VM_HOST }}
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -44,6 +49,7 @@ jobs:
 
       - name: Set up SSH
         run: |
+          test -n "$VM_HOST" || { echo '::error::Set the VM_HOST repository variable (Settings -> Secrets and variables -> Actions -> Variables)'; exit 1; }
           mkdir -p ~/.ssh
           printf '%s\n' "${{ secrets.DEPLOY_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
@@ -55,15 +61,15 @@ jobs:
         run: |
           docker build -q -t csearchive-frontend:latest .
           docker save csearchive-frontend:latest | gzip > /tmp/csearchive-frontend-image.tar.gz
-          scp -q /tmp/csearchive-frontend-image.tar.gz root@94.184.47.154:/tmp/
-          ssh root@94.184.47.154 '
+          scp -q /tmp/csearchive-frontend-image.tar.gz root@$VM_HOST:/tmp/
+          ssh root@$VM_HOST '
             set -e
             gunzip -c /tmp/csearchive-frontend-image.tar.gz | docker load
             rm /tmp/csearchive-frontend-image.tar.gz
           '
 
       - name: Roll out the new image
-        run: ssh root@94.184.47.154 'cd /opt/csearchive && docker compose up -d frontend'
+        run: ssh root@$VM_HOST 'cd /opt/csearchive && docker compose up -d frontend'
 
       - name: Verify
         # nginx starts instantly, but keep the same tolerant retry as the api
