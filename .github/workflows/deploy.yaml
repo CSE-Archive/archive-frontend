@@ -66,4 +66,16 @@ jobs:
         run: ssh root@94.184.47.154 'cd /opt/csearchive && docker compose up -d frontend'
 
       - name: Verify
-        run: curl -sf --max-time 20 https://csearchive.ir/ | grep -q '<title>'
+        # nginx starts instantly, but keep the same tolerant retry as the api
+        # pipeline so a slow VM never fails a healthy deploy.
+        run: |
+          for i in $(seq 1 12); do
+            if curl -sf --max-time 10 https://csearchive.ir/ | grep -q '<title>'; then
+              echo "SPA is live"
+              exit 0
+            fi
+            echo "not ready yet (attempt $i/12); retrying in 10s..."
+            sleep 10
+          done
+          echo "SPA did not become ready in time"
+          exit 1
