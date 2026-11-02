@@ -10,11 +10,13 @@ RANDOM_NUMBER=$(date +%Y%m%d%H%M%S)
 VERSION_STR="${VERSION_NAME}r${RANDOM_NUMBER}"
 
 # Update flutter.js by specifying app version on the main.dart.js import
+# printf '%s' (not echo): zsh's echo interprets \n escapes in the content,
+# which silently corrupts flutter.js string literals and breaks the JS parse.
 JS_CONTENT=$(cat $JS_PATH)
 JS_UPDATED="${JS_CONTENT//main.dart.js/main.dart.js?v=$VERSION_STR}"
-echo "$JS_UPDATED" > $JS_PATH
+printf '%s' "$JS_UPDATED" > $JS_PATH
 
 # Update index.html by specifying app version on the flutter.js import
 INDEX_CONTENT=$(cat $INDEX_PATH)
 INDEX_UPDATED="${INDEX_CONTENT//flutter.js/flutter.js?v=$VERSION_STR}"
-echo "$INDEX_UPDATED" > $INDEX_PATH
+printf '%s' "$INDEX_UPDATED" > $INDEX_PATH
