@@ -50,7 +50,7 @@ jobs:
           printf '%s\n' "${{ secrets.DEPLOY_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
 
       # Build the SPA image on the runner and ship it as a docker save
-      # tarball (same path as the mashinaam CDs) — nothing builds on the VM.
+      # tarball — nothing builds on the VM.
       - name: Build the image on the runner and ship it to the VM
         run: |
           docker build -q -t csearchive-frontend:latest .
